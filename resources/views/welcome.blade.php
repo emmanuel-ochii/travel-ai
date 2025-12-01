@@ -1,145 +1,3110 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.frontend')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
-        <!-- Styles -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="antialiased font-sans">
-        <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
-            <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-                        <div class="flex lg:justify-center lg:col-start-2">
-                            <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z" fill="currentColor"/></svg>
+@section('content')
+    <!-- ================================
+        START HERO-WRAPPER AREA
+    ================================= -->
+    <section class="hero-wrapper">
+        <div class="hero-box hero-bg">
+            <span class="line-bg line-bg1"></span>
+            <span class="line-bg line-bg2"></span>
+            <span class="line-bg line-bg3"></span>
+            <span class="line-bg line-bg4"></span>
+            <span class="line-bg line-bg5"></span>
+            <span class="line-bg line-bg6"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto responsive--column-l">
+                        <div class="hero-content pb-5">
+                            <div class="section-heading">
+                                <h2 class="sec__title cd-headline zoom">
+                                    Amazing
+                                    <span class="cd-words-wrapper">
+                                        <b class="is-visible">Tours</b>
+                                        <b>Adventures</b>
+                                        <b>Flights</b>
+                                        <b>Hotels</b>
+                                        <b>Cars</b>
+                                        <b>Cruises</b>
+                                        <b>Package Deals</b>
+                                        <b>Fun</b>
+                                        <b>People</b>
+                                    </span>
+                                    Waiting for You
+                                </h2>
+                            </div>
                         </div>
-                        @if (Route::has('login'))
-                            <livewire:welcome.navigation />
-                        @endif
-                    </header>
-
-                    <main class="mt-6">
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <a
-                                href="https://laravel.com/docs"
-                                id="docs-card"
-                                class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div id="screenshot-container" class="relative flex w-full flex-1 items-stretch">
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-light.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
-                                        onerror="
-                                            document.getElementById('screenshot-container').classList.add('!hidden');
-                                            document.getElementById('docs-card').classList.add('!row-span-1');
-                                            document.getElementById('docs-card-content').classList.add('!flex-row');
-                                            document.getElementById('background').classList.add('!hidden');
-                                        "
-                                    />
-                                    <img
-                                        src="https://laravel.com/assets/img/welcome/docs-dark.svg"
-                                        alt="Laravel documentation screenshot"
-                                        class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block"
-                                    />
-                                    <div
-                                        class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"
-                                    ></div>
+                        <!-- end hero-content -->
+                        <div class="section-tab text-center ps-4">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center active" id="flight-tab"
+                                        data-bs-toggle="tab" href="#flight" role="tab" aria-controls="flight"
+                                        aria-selected="true">
+                                        <i class="la la-plane me-1"></i>Flights
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="hotel-tab" data-bs-toggle="tab"
+                                        href="#hotel" role="tab" aria-controls="hotel" aria-selected="false">
+                                        <i class="la la-hotel me-1"></i>Hotels
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="package-tab" data-bs-toggle="tab"
+                                        href="#package" role="tab" aria-controls="package" aria-selected="false">
+                                        <i class="la la-shopping-bag me-1"></i>Vacation Packages
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="car-tab" data-bs-toggle="tab"
+                                        href="#car" role="tab" aria-controls="car" aria-selected="true">
+                                        <i class="la la-car me-1"></i>Cars
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="cruise-tab" data-bs-toggle="tab"
+                                        href="#cruise" role="tab" aria-controls="cruise" aria-selected="false">
+                                        <i class="la la-ship me-1"></i>Cruises
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="tour-tab" data-bs-toggle="tab"
+                                        href="#tour" role="tab" aria-controls="tour" aria-selected="false">
+                                        <i class="la la-globe me-1"></i>Tours
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end section-tab -->
+                        <div class="tab-content search-fields-container" id="myTabContent">
+                            <div class="tab-pane fade show active" id="flight" role="tabpanel"
+                                aria-labelledby="flight-tab">
+                                <div class="section-tab section-tab-2 pb-3">
+                                    <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="one-way-tab" data-bs-toggle="tab" href="#one-way"
+                                                role="tab" aria-controls="one-way" aria-selected="true">
+                                                One way
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="round-trip-tab" data-bs-toggle="tab" href="#round-trip"
+                                                role="tab" aria-controls="round-trip" aria-selected="false">
+                                                Round-trip
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="multi-city-tab" data-bs-toggle="tab"
+                                                href="#multi-city" role="tab" aria-controls="multi-city"
+                                                aria-selected="false">
+                                                Multi-city
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-
-                                <div class="relative flex items-center gap-6 lg:items-end">
-                                    <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                        <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                            <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#FF2D20" d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z"/><path fill="#FF2D20" d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z"/></svg>
-                                        </div>
-
-                                        <div class="pt-3 sm:pt-5 lg:pt-0">
-                                            <h2 class="text-xl font-semibold text-black dark:text-white">Documentation</h2>
-
-                                            <p class="mt-4 text-sm/relaxed">
-                                                Laravel has wonderful documentation covering every aspect of the framework. Whether you are a newcomer or have prior experience with Laravel, we recommend reading our documentation from beginning to end.
-                                            </p>
+                                <!-- end section-tab -->
+                                <div class="tab-content" id="myTabContent3">
+                                    <div class="tab-pane fade show active" id="one-way" role="tabpanel"
+                                        aria-labelledby="one-way-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-6 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange-single" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Passengers</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Infants</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="infants_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Coach</label>
+                                                        <div
+                                                            class="form-group select-contain select2-container-wrapper w-auto">
+                                                            <select class="select-contain-select">
+                                                                <option value="1" selected>Economy</option>
+                                                                <option value="2">Business</option>
+                                                                <option value="3">First class</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3">
+                                                    <a href="flight-search-result.html"
+                                                        class="theme-btn w-100 text-center margin-top-20px">Search
+                                                        Now</a>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-
-                                    <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+                                    <!-- end tab-pane -->
+                                    <div class="tab-pane fade" id="round-trip" role="tabpanel"
+                                        aria-labelledby="round-trip-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-6 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing - Returning</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Passengers</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Infants</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="infants_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Coach</label>
+                                                        <div class="form-group select2-container-wrapper">
+                                                            <div class="select-contain w-auto">
+                                                                <select class="select-contain-select">
+                                                                    <option value="1" selected>Economy</option>
+                                                                    <option value="2">Business</option>
+                                                                    <option value="3">First class</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3">
+                                                    <a href="flight-search-result.html"
+                                                        class="theme-btn w-100 text-center margin-top-20px">Search
+                                                        Now</a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="advanced-wrap">
+                                            <a class="btn collapse-btn theme-btn-hover-gray font-size-15"
+                                                data-bs-toggle="collapse" href="#collapseThree" role="button"
+                                                aria-expanded="false" aria-controls="collapseThree">
+                                                Advanced options <i class="la la-angle-down ms-1"></i>
+                                            </a>
+                                            <div class="collapse pt-3" id="collapseThree">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="input-box">
+                                                            <label class="label-text">Preferred airline</label>
+                                                            <div class="form-group select2-container-wrapper">
+                                                                <div class="select-contain w-100">
+                                                                    <select class="select-contain-select">
+                                                                        <option selected="selected" value="">
+                                                                            No preference
+                                                                        </option>
+                                                                        <option value="AN">Advanced Air</option>
+                                                                        <option value="A3">Aegean</option>
+                                                                        <option value="EI">Aer Lingus</option>
+                                                                        <option value="5G">
+                                                                            Aerocuahonte / Mayair
+                                                                        </option>
+                                                                        <option value="SU">
+                                                                            Aeroflot-Russian Airlines
+                                                                        </option>
+                                                                        <option value="AR">
+                                                                            Aerolineas Argentinas
+                                                                        </option>
+                                                                        <option value="VW">
+                                                                            Aeromar Airlines
+                                                                        </option>
+                                                                        <option value="AM">Aeromexico</option>
+                                                                        <option value="ZI">Aigle Azur</option>
+                                                                        <option value="AH">Air Algerie</option>
+                                                                        <option value="KC">Air Astana</option>
+                                                                        <option value="UU">Air Austral</option>
+                                                                        <option value="BT">Air Baltic</option>
+                                                                        <option value="BP">Air Botswana</option>
+                                                                        <option value="AC">Air Canada</option>
+                                                                        <option value="TX">Air Caraibes</option>
+                                                                        <option value="CA">Air China</option>
+                                                                        <option value="3E">Air Choice One</option>
+                                                                        <option value="XK">Air Corsica</option>
+                                                                        <option value="UX">Air Europa</option>
+                                                                        <option value="X4">
+                                                                            Air Excursions LLC
+                                                                        </option>
+                                                                        <option value="AF">Air France</option>
+                                                                        <option value="NY">
+                                                                            Air Iceland Connect
+                                                                        </option>
+                                                                        <option value="AI">Air India</option>
+                                                                        <option value="IG">Air Italy</option>
+                                                                        <option value="MD">Air Madagascar</option>
+                                                                        <option value="KM">Air Malta</option>
+                                                                        <option value="MK">Air Mauritius</option>
+                                                                        <option value="9U">Air Moldova</option>
+                                                                        <option value="NZ">
+                                                                            Air New Zealand
+                                                                        </option>
+                                                                        <option value="PX">Air Niugini</option>
+                                                                        <option value="OG">Air Onix</option>
+                                                                        <option value="JU">Air Serbia</option>
+                                                                        <option value="TN">Air Tahiti Nui</option>
+                                                                        <option value="TS">Air Transat</option>
+                                                                        <option value="H/">
+                                                                            AirAsia with baggage
+                                                                        </option>
+                                                                        <option value="AS">
+                                                                            Alaska Airlines
+                                                                        </option>
+                                                                        <option value="AZ">Alitalia</option>
+                                                                        <option value="NH">
+                                                                            All Nippon Airways
+                                                                        </option>
+                                                                        <option value="G4">Allegiant Air</option>
+                                                                        <option value="AA">
+                                                                            American Airlines
+                                                                        </option>
+                                                                        <option value="OY">
+                                                                            Andes Lineas Aereas
+                                                                        </option>
+                                                                        <option value="OZ">
+                                                                            Asiana Airlines
+                                                                        </option>
+                                                                        <option value="KP">ASKY</option>
+                                                                        <option value="OS">
+                                                                            Austrian Airlines
+                                                                        </option>
+                                                                        <option value="AV">Avianca</option>
+                                                                        <option value="2K">
+                                                                            Avianca Ecuador
+                                                                        </option>
+                                                                        <option value="9V">Avior Airlines</option>
+                                                                        <option value="J2">
+                                                                            Azerbaijan Airlines
+                                                                        </option>
+                                                                        <option value="AD">Azul</option>
+                                                                        <option value="JD">
+                                                                            Beijing Capital Airlines
+                                                                        </option>
+                                                                        <option value="0B">BlueAir</option>
+                                                                        <option value="OB">
+                                                                            Boliviana De Aviacion
+                                                                        </option>
+                                                                        <option value="4B">Boutique Air</option>
+                                                                        <option value="BA">
+                                                                            British Airways
+                                                                        </option>
+                                                                        <option value="SN">
+                                                                            Brussels Airlines
+                                                                        </option>
+                                                                        <option value="A7">
+                                                                            Calafia Airlines
+                                                                        </option>
+                                                                        <option value="K6">
+                                                                            Cambodia Angkor Air
+                                                                        </option>
+                                                                        <option value="BW">
+                                                                            Caribbean Airlines
+                                                                        </option>
+                                                                        <option value="CX">Cathay Pacific</option>
+                                                                        <option value="KX">Cayman Airways</option>
+                                                                        <option value="CI">China Airlines</option>
+                                                                        <option value="MU">
+                                                                            China Eastern Airlines
+                                                                        </option>
+                                                                        <option value="CZ">
+                                                                            China Southern Airlines
+                                                                        </option>
+                                                                        <option value="CC">CM Airlines</option>
+                                                                        <option value="DE">Condor</option>
+                                                                        <option value="LF">
+                                                                            Contour Airlines
+                                                                        </option>
+                                                                        <option value="CM">Copa</option>
+                                                                        <option value="SS">Corsair</option>
+                                                                        <option value="OK">Czech Airlines</option>
+                                                                        <option value="DL">Delta</option>
+                                                                        <option value="KG">
+                                                                            Denver Air Connection
+                                                                        </option>
+                                                                        <option value="U2">easyJet</option>
+                                                                        <option value="MS">Egyptair</option>
+                                                                        <option value="LY">
+                                                                            EL AL Israel Airlines
+                                                                        </option>
+                                                                        <option value="7Q">Elite Airways</option>
+                                                                        <option value="EL">Ellinair</option>
+                                                                        <option value="EK">Emirates</option>
+                                                                        <option value="ET">
+                                                                            Ethiopian Airlines
+                                                                        </option>
+                                                                        <option value="EY">Etihad Airways</option>
+                                                                        <option value="EW">Eurowings</option>
+                                                                        <option value="BR">EVA Airways</option>
+                                                                        <option value="FJ">Fiji Airways</option>
+                                                                        <option value="AY">Finnair</option>
+                                                                        <option value="FY">Firefly</option>
+                                                                        <option value="F8">Flair Airlines</option>
+                                                                        <option value="BE">Flybe</option>
+                                                                        <option value="FZ">flydubai</option>
+                                                                        <option value="XY">flynas</option>
+                                                                        <option value="F9">
+                                                                            Frontier Airlines
+                                                                        </option>
+                                                                        <option value="GA">
+                                                                            Garuda Indonesia
+                                                                        </option>
+                                                                        <option value="GM">
+                                                                            Germania Flug AG
+                                                                        </option>
+                                                                        <option value="4U">Germanwings</option>
+                                                                        <option value="G3">
+                                                                            GOL Linhas Aereas S.A.
+                                                                        </option>
+                                                                        <option value="ZK">
+                                                                            Great Lakes Airlines
+                                                                        </option>
+                                                                        <option value="GF">Gulf Air</option>
+                                                                        <option value="HU">
+                                                                            Hainan Airlines
+                                                                        </option>
+                                                                        <option value="HA">
+                                                                            Hawaiian Airlines
+                                                                        </option>
+                                                                        <option value="HX">
+                                                                            Hong Kong Airlines
+                                                                        </option>
+                                                                        <option value="IB">Iberia</option>
+                                                                        <option value="FI">Icelandair</option>
+                                                                        <option value="JY">
+                                                                            interCaribbean Airways
+                                                                        </option>
+                                                                        <option value="4O">Interjet</option>
+                                                                        <option value="03">Involatus</option>
+                                                                        <option value="JL">Japan Airlines</option>
+                                                                        <option value="9W">Jet Airways</option>
+                                                                        <option value="B6">
+                                                                            JetBlue Airways
+                                                                        </option>
+                                                                        <option value="DV">
+                                                                            JSC Aircompany SCAT
+                                                                        </option>
+                                                                        <option value="KQ">Kenya Airways</option>
+                                                                        <option value="KL">KLM</option>
+                                                                        <option value="KE">Korean Air</option>
+                                                                        <option value="B0">La Compagnie</option>
+                                                                        <option value="LR">LACSA</option>
+                                                                        <option value="QV">Lao Airlines</option>
+                                                                        <option value="LP">
+                                                                            LATAM Airlines Group
+                                                                        </option>
+                                                                        <option value="LA">
+                                                                            LATAM Airlines Group
+                                                                        </option>
+                                                                        <option value="JJ">
+                                                                            LATAM Airlines Group
+                                                                        </option>
+                                                                        <option value="XL">
+                                                                            LATAM Airlines Group
+                                                                        </option>
+                                                                        <option value="4M">
+                                                                            LATAM Airlines Group
+                                                                        </option>
+                                                                        <option value="W4">LC Peru</option>
+                                                                        <option value="LI">Liat</option>
+                                                                        <option value="LO">
+                                                                            LOT-Polish Airlines
+                                                                        </option>
+                                                                        <option value="LH">Lufthansa</option>
+                                                                        <option value="LG">Luxair</option>
+                                                                        <option value="MH">
+                                                                            Malaysia Airlines
+                                                                        </option>
+                                                                        <option value="OD">Malindo Air</option>
+                                                                        <option value="2M">
+                                                                            Maya Island Air
+                                                                        </option>
+                                                                        <option value="7M">Mayair</option>
+                                                                        <option value="OM">
+                                                                            MIAT-Mongolian Airlines
+                                                                        </option>
+                                                                        <option value="ME">
+                                                                            Middle East Airlines
+                                                                        </option>
+                                                                        <option value="YM">Montenegro</option>
+                                                                        <option value="8M">
+                                                                            Myanmar Airways International
+                                                                        </option>
+                                                                        <option value="NO">Neos S.P.A.</option>
+                                                                        <option value="RA">Nepal Airlines</option>
+                                                                        <option value="NP">Nile Air</option>
+                                                                        <option value="W/">
+                                                                            NokScoot with baggage
+                                                                        </option>
+                                                                        <option value="DN">
+                                                                            Norwegian Air Argentina
+                                                                        </option>
+                                                                        <option value="D8">
+                                                                            Norwegian Air International Ltd
+                                                                        </option>
+                                                                        <option value="DY">
+                                                                            Norwegian Air Shuttle
+                                                                        </option>
+                                                                        <option value="DI">
+                                                                            Norwegian Air UK
+                                                                        </option>
+                                                                        <option value="Y/">
+                                                                            Olympic Air with baggage
+                                                                        </option>
+                                                                        <option value="WY">Oman Air</option>
+                                                                        <option value="8Q">Onur Air</option>
+                                                                        <option value="8P">
+                                                                            Pacific Coastal Airlines
+                                                                        </option>
+                                                                        <option value="PK">
+                                                                            Pakistan International Airlines
+                                                                        </option>
+                                                                        <option value="ZM">Pegasus Asia</option>
+                                                                        <option value="KS">PenAir</option>
+                                                                        <option value="PR">
+                                                                            Philippine Airlines
+                                                                        </option>
+                                                                        <option value="PU">
+                                                                            Plus Ultra Lineas Aereas S. A.
+                                                                        </option>
+                                                                        <option value="PD">
+                                                                            Porter Airlines
+                                                                        </option>
+                                                                        <option value="PW">PrecisionAir</option>
+                                                                        <option value="P0">
+                                                                            Proflight Zambia
+                                                                        </option>
+                                                                        <option value="QF">Qantas Airways</option>
+                                                                        <option value="QR">Qatar Airways</option>
+                                                                        <option value="7H">Ravn Alaska</option>
+                                                                        <option value="WZ">
+                                                                            Red Wings Airlines
+                                                                        </option>
+                                                                        <option value="4P">Regional Sky</option>
+                                                                        <option value="AT">
+                                                                            Royal Air Maroc
+                                                                        </option>
+                                                                        <option value="BI">
+                                                                            Royal Brunei Airlines
+                                                                        </option>
+                                                                        <option value="RJ">
+                                                                            Royal Jordanian
+                                                                        </option>
+                                                                        <option value="WB">Rwandair</option>
+                                                                        <option value="SK">SAS</option>
+                                                                        <option value="S4">
+                                                                            SATA International-Azores Airlines S.A.
+                                                                        </option>
+                                                                        <option value="SV">
+                                                                            Saudi Arabian Airlines
+                                                                        </option>
+                                                                        <option value="/Y">
+                                                                            Scoot with baggage
+                                                                        </option>
+                                                                        <option value="BB">
+                                                                            Seaborne Airlines
+                                                                        </option>
+                                                                        <option value="SC">
+                                                                            Shandong Airlines
+                                                                        </option>
+                                                                        <option value="3U">
+                                                                            Sichuan Airlines
+                                                                        </option>
+                                                                        <option value="3M">Silver Airways</option>
+                                                                        <option value="SQ">
+                                                                            Singapore Airlines
+                                                                        </option>
+                                                                        <option value="H2">Sky Airlines</option>
+                                                                        <option value="GQ">Sky Express</option>
+                                                                        <option value="IE">
+                                                                            Solomon Airlines
+                                                                        </option>
+                                                                        <option value="SA">
+                                                                            South African Airways
+                                                                        </option>
+                                                                        <option value="9X">
+                                                                            Southern Airways
+                                                                        </option>
+                                                                        <option value="NK">
+                                                                            Spirit Airlines
+                                                                        </option>
+                                                                        <option value="UL">
+                                                                            SriLankan Airlines
+                                                                        </option>
+                                                                        <option value="2I">STAR PERU</option>
+                                                                        <option value="6G">
+                                                                            Sun Air Express
+                                                                        </option>
+                                                                        <option value="SY">
+                                                                            Sun Country Airlines
+                                                                        </option>
+                                                                        <option value="PY">
+                                                                            Surinam Airways
+                                                                        </option>
+                                                                        <option value="LX">
+                                                                            Swiss International Air Lines
+                                                                        </option>
+                                                                        <option value="WO">Swoop</option>
+                                                                        <option value="DT">
+                                                                            TAAG Angola Airlines
+                                                                        </option>
+                                                                        <option value="TA">TACA Airlines</option>
+                                                                        <option value="VR">
+                                                                            TACV-Cabo Verde Airlines
+                                                                        </option>
+                                                                        <option value="5U">TAG Airlines</option>
+                                                                        <option value="EQ">Tame</option>
+                                                                        <option value="TP">TAP Portugal</option>
+                                                                        <option value="RO">
+                                                                            Tarom-Romanian Air Transport
+                                                                        </option>
+                                                                        <option value="TG">
+                                                                            Thai Airways International
+                                                                        </option>
+                                                                        <option value="MT">
+                                                                            Thomas Cook Airlines
+                                                                        </option>
+                                                                        <option value="/X">
+                                                                            Tigerair Australia with Bag
+                                                                        </option>
+                                                                        <option value="IT">
+                                                                            Tigerair Taiwan
+                                                                        </option>
+                                                                        <option value="/Z">
+                                                                            Tigerair Taiwan with bag
+                                                                        </option>
+                                                                        <option value="TJ">
+                                                                            Tradewind Aviation
+                                                                        </option>
+                                                                        <option value="9N">Tropic Air</option>
+                                                                        <option value="TB">TUI fly</option>
+                                                                        <option value="TK">
+                                                                            Turkish Airlines
+                                                                        </option>
+                                                                        <option value="PS">
+                                                                            Ukraine International Airlines
+                                                                        </option>
+                                                                        <option value="UA">United</option>
+                                                                        <option value="UT">Utair Aviation</option>
+                                                                        <option value="HY">
+                                                                            Uzbekistan Airways
+                                                                        </option>
+                                                                        <option value="VN">
+                                                                            Vietnam Airlines
+                                                                        </option>
+                                                                        <option value="VX">Virgin America</option>
+                                                                        <option value="VS">
+                                                                            Virgin Atlantic
+                                                                        </option>
+                                                                        <option value="VA">
+                                                                            Virgin Australia
+                                                                        </option>
+                                                                        <option value="V2">
+                                                                            Vision Airlines
+                                                                        </option>
+                                                                        <option value="VB">Viva Aerobus</option>
+                                                                        <option value="F1">
+                                                                            Viva Air Colombia
+                                                                        </option>
+                                                                        <option value="VV">
+                                                                            Viva Airlines Peru
+                                                                        </option>
+                                                                        <option value="Y4">Volaris</option>
+                                                                        <option value="V7">Volotea</option>
+                                                                        <option value="VY">
+                                                                            Vueling Airlines
+                                                                        </option>
+                                                                        <option value="WS">WestJet</option>
+                                                                        <option value="WM">
+                                                                            Windward Island Airways International
+                                                                        </option>
+                                                                        <option value="MF">
+                                                                            Xiamen Airlines
+                                                                        </option>
+                                                                        <option value="SE">XL Airways</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end advanced-wrap -->
+                                    </div>
+                                    <!-- end tab-pane -->
+                                    <div class="tab-pane fade multi-flight-wrap" id="multi-city" role="tabpanel"
+                                        aria-labelledby="multi-city-tab">
+                                        <div class="contact-form-action multi-flight-field d-flex align-items-center">
+                                            <form action="#" class="row flex-grow-1 align-items-center">
+                                                <div class="col-lg-4 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-4 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-4">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control date-multi-picker"
+                                                                id="date" type="text" name="daterange-single" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                            </form>
+                                            <div class="multi-flight-delete-wrap pt-3 ps-3">
+                                                <button class="multi-flight-remove" type="button">
+                                                    <i class="la la-remove"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 pe-0">
+                                                <div class="form-group">
+                                                    <button class="theme-btn add-flight-btn margin-top-40px w-100"
+                                                        type="button">
+                                                        <i class="la la-plus me-1"></i>Add another flight
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 pe-0">
+                                                <div class="input-box">
+                                                    <label class="label-text">Passengers</label>
+                                                    <div class="form-group">
+                                                        <div class="dropdown dropdown-contain gty-container">
+                                                            <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                role="button" data-bs-toggle="dropdown"
+                                                                aria-expanded="false" data-bs-auto-close="outside">
+                                                                <span class="adult" data-text="Adult"
+                                                                    data-text-multi="Adults">0 Adult</span>
+                                                                -
+                                                                <span class="children" data-text="Child"
+                                                                    data-text-multi="Children">0 Child</span>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-wrap">
+                                                                <div class="dropdown-item">
+                                                                    <div
+                                                                        class="qty-box d-flex align-items-center justify-content-between">
+                                                                        <label>Adults</label>
+                                                                        <div class="qtyBtn d-flex align-items-center">
+                                                                            <div class="qtyDec">
+                                                                                <i class="la la-minus"></i>
+                                                                            </div>
+                                                                            <input type="text" name="adult_number"
+                                                                                value="0" />
+                                                                            <div class="qtyInc">
+                                                                                <i class="la la-plus"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item">
+                                                                    <div
+                                                                        class="qty-box d-flex align-items-center justify-content-between">
+                                                                        <label>Children</label>
+                                                                        <div class="qtyBtn d-flex align-items-center">
+                                                                            <div class="qtyDec">
+                                                                                <i class="la la-minus"></i>
+                                                                            </div>
+                                                                            <input type="text" name="child_number"
+                                                                                value="0" />
+                                                                            <div class="qtyInc">
+                                                                                <i class="la la-plus"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dropdown-item">
+                                                                    <div
+                                                                        class="qty-box d-flex align-items-center justify-content-between">
+                                                                        <label>Infants</label>
+                                                                        <div class="qtyBtn d-flex align-items-center">
+                                                                            <div class="qtyDec">
+                                                                                <i class="la la-minus"></i>
+                                                                            </div>
+                                                                            <input type="text" name="infants_number"
+                                                                                value="0" />
+                                                                            <div class="qtyInc">
+                                                                                <i class="la la-plus"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end dropdown -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col-lg-3 -->
+                                            <div class="col-lg-3 pe-0">
+                                                <div class="input-box">
+                                                    <label class="label-text">Coach</label>
+                                                    <div class="form-group select2-container-wrapper">
+                                                        <div class="select-contain w-auto">
+                                                            <select class="select-contain-select">
+                                                                <option value="1" selected>Economy</option>
+                                                                <option value="2">Business</option>
+                                                                <option value="3">First class</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col-lg-3 -->
+                                            <div class="col-lg-3">
+                                                <a href="flight-search-result.html"
+                                                    class="theme-btn w-100 text-center margin-top-20px">Search Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end tab-pane -->
                                 </div>
-                            </a>
-
-                            <a
-                                href="https://laracasts.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M24 8.25a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v12a2.5 2.5 0 0 0 2.5 2.5h19a2.5 2.5 0 0 0 2.5-2.5v-12Zm-7.765 5.868a1.221 1.221 0 0 1 0 2.264l-6.626 2.776A1.153 1.153 0 0 1 8 18.123v-5.746a1.151 1.151 0 0 1 1.609-1.035l6.626 2.776ZM19.564 1.677a.25.25 0 0 0-.177-.427H15.6a.106.106 0 0 0-.072.03l-4.54 4.543a.25.25 0 0 0 .177.427h3.783c.027 0 .054-.01.073-.03l4.543-4.543ZM22.071 1.318a.047.047 0 0 0-.045.013l-4.492 4.492a.249.249 0 0 0 .038.385.25.25 0 0 0 .14.042h5.784a.5.5 0 0 0 .5-.5v-2a2.5 2.5 0 0 0-1.925-2.432ZM13.014 1.677a.25.25 0 0 0-.178-.427H9.101a.106.106 0 0 0-.073.03l-4.54 4.543a.25.25 0 0 0 .177.427H8.4a.106.106 0 0 0 .073-.03l4.54-4.543ZM6.513 1.677a.25.25 0 0 0-.177-.427H2.5A2.5 2.5 0 0 0 0 3.75v2a.5.5 0 0 0 .5.5h1.4a.106.106 0 0 0 .073-.03l4.54-4.543Z"/></g></svg>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
+                                <div class="contact-form-action">
+                                    <form action="#" class="row align-items-center">
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Destination / Hotel name</label>
+                                                <div class="form-group">
+                                                    <span class="la la-map-marker form-icon"></span>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Enter city or property" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Check in</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Check out</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3">
+                                            <div class="input-box">
+                                                <label class="label-text">Guests and Rooms</label>
+                                                <div class="form-group">
+                                                    <div class="dropdown dropdown-contain gty-container">
+                                                        <a class="dropdown-toggle dropdown-btn" href="#"
+                                                            role="button" data-bs-toggle="dropdown"
+                                                            aria-expanded="false" data-bs-auto-close="outside">
+                                                            <span class="adult" data-text="Adult"
+                                                                data-text-multi="Adults">0
+                                                                Adult</span>
+                                                            -
+                                                            <span class="children" data-text="Child"
+                                                                data-text-multi="Children">0 Child</span>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-wrap">
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Rooms</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="room_number"
+                                                                            value="0" class="qty-input" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Adults</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="adult_number"
+                                                                            value="0" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Children</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="child_number"
+                                                                            value="0" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end dropdown -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                    </form>
                                 </div>
+                                <div class="btn-box">
+                                    <a href="hotel-search-result.html" class="theme-btn">Search Now</a>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="package" role="tabpanel" aria-labelledby="package-tab">
+                                <div class="section-tab section-tab-2 pb-3">
+                                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="flight-hotel-tab" data-bs-toggle="tab"
+                                                href="#flight-hotel" role="tab" aria-controls="flight-hotel"
+                                                aria-selected="true">
+                                                Flight + Hotel
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="flight-hotel-car-tab" data-bs-toggle="tab"
+                                                href="#flight-hotel-car" role="tab" aria-controls="flight-hotel-car"
+                                                aria-selected="false">
+                                                Flight + Hotel + Car
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="flight-car-tab" data-bs-toggle="tab"
+                                                href="#flight-car" role="tab" aria-controls="flight-car"
+                                                aria-selected="false">
+                                                Flight + Car
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="hotel-car-tab" data-bs-toggle="tab"
+                                                href="#hotel-car" role="tab" aria-controls="hotel-car"
+                                                aria-selected="true">
+                                                Hotel + Car
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end section-tab -->
+                                <div class="tab-content" id="myTabContent2">
+                                    <div class="tab-pane fade show active" id="flight-hotel" role="tabpanel"
+                                        aria-labelledby="flight-hotel-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing - Returning</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Guests and Rooms</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Rooms</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="room_number"
+                                                                                    value="0" class="qty-input" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                            </form>
+                                        </div>
+                                        <div class="checkmark-wrap">
+                                            <div class="custom-checkbox d-inline-block mb-0 me-3">
+                                                <input type="checkbox" class="form-check-input" id="directFlightChb" />
+                                                <label for="directFlightChb">Direct flights only</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block mb-0">
+                                                <input type="checkbox" class="form-check-input" id="onlyHotelChb" />
+                                                <label for="onlyHotelChb">I only need a hotel for part of my
+                                                    stay</label>
+                                            </div>
+                                        </div>
+                                        <!-- end checkmark-wrap -->
+                                        <div class="btn-box pt-3">
+                                            <a href="activity-search-result.html" class="theme-btn">Search Now</a>
+                                        </div>
+                                    </div>
+                                    <!-- end tab-pane -->
+                                    <div class="tab-pane fade" id="flight-hotel-car" role="tabpanel"
+                                        aria-labelledby="flight-hotel-car-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing - Returning</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Guests and Rooms</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Rooms</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="room_number"
+                                                                                    value="0" class="qty-input" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                            </form>
+                                        </div>
+                                        <div class="checkmark-wrap">
+                                            <div class="custom-checkbox d-inline-block mb-0 me-3">
+                                                <input type="checkbox" class="form-check-input" id="directFlightChb2" />
+                                                <label for="directFlightChb2">Direct flights only</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block mb-0">
+                                                <input type="checkbox" class="form-check-input" id="onlyHotelChb2" />
+                                                <label for="onlyHotelChb2">I only need a hotel for part of my
+                                                    stay</label>
+                                            </div>
+                                        </div>
+                                        <!-- end checkmark-wrap -->
+                                        <div class="btn-box pt-3">
+                                            <a href="activity-search-result.html" class="theme-btn">Search Now</a>
+                                        </div>
+                                    </div>
+                                    <!-- end tab-pane -->
+                                    <div class="tab-pane fade" id="flight-car" role="tabpanel"
+                                        aria-labelledby="flight-car-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying from</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Flying to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="City or airport" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Departing - Returning</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Passengers</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Rooms</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="room_number"
+                                                                                    value="0" class="qty-input" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <!-- end row -->
+                                        </div>
+                                        <div class="checkmark-wrap">
+                                            <div class="custom-checkbox d-inline-block mb-0">
+                                                <input type="checkbox" class="form-check-input"
+                                                    id="directFlightChb3" />
+                                                <label for="directFlightChb3">Direct flights only</label>
+                                            </div>
+                                        </div>
+                                        <!-- end checkmark-wrap -->
+                                        <div class="btn-box pt-3">
+                                            <a href="activity-search-result.html" class="theme-btn">Search Now</a>
+                                        </div>
+                                    </div>
+                                    <!-- end tab-pane -->
+                                    <div class="tab-pane fade" id="hotel-car" role="tabpanel"
+                                        aria-labelledby="hotel-car-tab">
+                                        <div class="contact-form-action">
+                                            <form action="#" class="row align-items-center">
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Going to</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-map-marker form-icon"></span>
+                                                            <input class="form-control" type="text"
+                                                                placeholder="Enter City or property" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Check in - Check-out</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-calendar form-icon"></span>
+                                                            <input class="date-range form-control" type="text"
+                                                                name="daterange" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3 pe-0">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Room Type</label>
+                                                        <div class="form-group select2-container-wrapper">
+                                                            <div class="select-contain w-auto">
+                                                                <select class="select-contain-select">
+                                                                    <option value="0">Select Type</option>
+                                                                    <option value="1">Single</option>
+                                                                    <option value="2">Double</option>
+                                                                    <option value="3">Triple</option>
+                                                                    <option value="4">Quad</option>
+                                                                    <option value="5">Queen</option>
+                                                                    <option value="6">King</option>
+                                                                    <option value="7">Twin</option>
+                                                                    <option value="8">Double-double</option>
+                                                                    <option value="9">Studio</option>
+                                                                    <option value="10">Suite</option>
+                                                                    <option value="11">Mini Suite</option>
+                                                                    <option value="12">President Suite</option>
+                                                                    <option value="13">President Suite</option>
+                                                                    <option value="14">Apartments</option>
+                                                                    <option value="15">Connecting rooms</option>
+                                                                    <option value="16">Murphy Room</option>
+                                                                    <option value="17">Accessible Room</option>
+                                                                    <option value="18">Cabana</option>
+                                                                    <option value="19">Adjoining rooms</option>
+                                                                    <option value="20">Adjacent rooms</option>
+                                                                    <option value="21">Villa</option>
+                                                                    <option value="22">Executive Floor</option>
+                                                                    <option value="23">Smoking room</option>
+                                                                    <option value="24">Non-Smoking Room</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                                <div class="col-lg-3">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Guests and Rooms</label>
+                                                        <div class="form-group">
+                                                            <div class="dropdown dropdown-contain gty-container">
+                                                                <a class="dropdown-toggle dropdown-btn" href="#"
+                                                                    role="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false" data-bs-auto-close="outside">
+                                                                    <span class="adult" data-text="Adult"
+                                                                        data-text-multi="Adults">0 Adult</span>
+                                                                    -
+                                                                    <span class="children" data-text="Child"
+                                                                        data-text-multi="Children">0 Child</span>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-wrap">
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Rooms</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text" name="room_number"
+                                                                                    value="0" class="qty-input" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Adults</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="adult_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dropdown-item">
+                                                                        <div
+                                                                            class="qty-box d-flex align-items-center justify-content-between">
+                                                                            <label>Children</label>
+                                                                            <div class="qtyBtn d-flex align-items-center">
+                                                                                <div class="qtyDec">
+                                                                                    <i class="la la-minus"></i>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    name="child_number"
+                                                                                    value="0" />
+                                                                                <div class="qtyInc">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end dropdown -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-3 -->
+                                            </form>
+                                        </div>
+                                        <div class="btn-box pt-2">
+                                            <a href="activity-search-result.html" class="theme-btn">Search Now</a>
+                                        </div>
+                                    </div>
+                                    <!-- end tab-pane -->
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="car" role="tabpanel" aria-labelledby="car-tab">
+                                <div class="contact-form-action">
+                                    <form action="#" class="row align-items-center">
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Picking up</label>
+                                                <div class="form-group">
+                                                    <span class="la la-map-marker form-icon"></span>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="City, airport or address" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Pick-up date</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4">
+                                            <div class="input-box">
+                                                <label class="label-text">Time</label>
+                                                <div class="form-group select2-container-wrapper">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="select-contain-select">
+                                                            <option value="1200AM">12:00AM</option>
+                                                            <option value="1230AM">12:30AM</option>
+                                                            <option value="0100AM">1:00AM</option>
+                                                            <option value="0130AM">1:30AM</option>
+                                                            <option value="0200AM">2:00AM</option>
+                                                            <option value="0230AM">2:30AM</option>
+                                                            <option value="0300AM">3:00AM</option>
+                                                            <option value="0330AM">3:30AM</option>
+                                                            <option value="0400AM">4:00AM</option>
+                                                            <option value="0430AM">4:30AM</option>
+                                                            <option value="0500AM">5:00AM</option>
+                                                            <option value="0530AM">5:30AM</option>
+                                                            <option value="0600AM">6:00AM</option>
+                                                            <option value="0630AM">6:30AM</option>
+                                                            <option value="0700AM">7:00AM</option>
+                                                            <option value="0730AM">7:30AM</option>
+                                                            <option value="0800AM">8:00AM</option>
+                                                            <option value="0830AM">8:30AM</option>
+                                                            <option value="0900AM" selected>9:00AM</option>
+                                                            <option value="0930AM">9:30AM</option>
+                                                            <option value="1000AM">10:00AM</option>
+                                                            <option value="1030AM">10:30AM</option>
+                                                            <option value="1100AM">11:00AM</option>
+                                                            <option value="1130AM">11:30AM</option>
+                                                            <option value="1200PM">12:00PM</option>
+                                                            <option value="1230PM">12:30PM</option>
+                                                            <option value="0100PM">1:00PM</option>
+                                                            <option value="0130PM">1:30PM</option>
+                                                            <option value="0200PM">2:00PM</option>
+                                                            <option value="0230PM">2:30PM</option>
+                                                            <option value="0300PM">3:00PM</option>
+                                                            <option value="0330PM">3:30PM</option>
+                                                            <option value="0400PM">4:00PM</option>
+                                                            <option value="0430PM">4:30PM</option>
+                                                            <option value="0500PM">5:00PM</option>
+                                                            <option value="0530PM">5:30PM</option>
+                                                            <option value="0600PM">6:00PM</option>
+                                                            <option value="0630PM">6:30PM</option>
+                                                            <option value="0700PM">7:00PM</option>
+                                                            <option value="0730PM">7:30PM</option>
+                                                            <option value="0800PM">8:00PM</option>
+                                                            <option value="0830PM">8:30PM</option>
+                                                            <option value="0900PM">9:00PM</option>
+                                                            <option value="0930PM">9:30PM</option>
+                                                            <option value="1000PM">10:00PM</option>
+                                                            <option value="1030PM">10:30PM</option>
+                                                            <option value="1100PM">11:00PM</option>
+                                                            <option value="1130PM">11:30PM</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                    </form>
+                                    <form action="#" class="row align-items-center">
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Drop-off</label>
+                                                <div class="form-group">
+                                                    <span class="la la-map-marker form-icon"></span>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Same as pick-up" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Drop-off date</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4">
+                                            <div class="input-box">
+                                                <label class="label-text">Time</label>
+                                                <div class="form-group select2-container-wrapper">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="select-contain-select">
+                                                            <option value="1200AM">12:00AM</option>
+                                                            <option value="1230AM">12:30AM</option>
+                                                            <option value="0100AM">1:00AM</option>
+                                                            <option value="0130AM">1:30AM</option>
+                                                            <option value="0200AM">2:00AM</option>
+                                                            <option value="0230AM">2:30AM</option>
+                                                            <option value="0300AM">3:00AM</option>
+                                                            <option value="0330AM">3:30AM</option>
+                                                            <option value="0400AM">4:00AM</option>
+                                                            <option value="0430AM">4:30AM</option>
+                                                            <option value="0500AM">5:00AM</option>
+                                                            <option value="0530AM">5:30AM</option>
+                                                            <option value="0600AM">6:00AM</option>
+                                                            <option value="0630AM">6:30AM</option>
+                                                            <option value="0700AM">7:00AM</option>
+                                                            <option value="0730AM">7:30AM</option>
+                                                            <option value="0800AM">8:00AM</option>
+                                                            <option value="0830AM">8:30AM</option>
+                                                            <option value="0900AM" selected>9:00AM</option>
+                                                            <option value="0930AM">9:30AM</option>
+                                                            <option value="1000AM">10:00AM</option>
+                                                            <option value="1030AM">10:30AM</option>
+                                                            <option value="1100AM">11:00AM</option>
+                                                            <option value="1130AM">11:30AM</option>
+                                                            <option value="1200PM">12:00PM</option>
+                                                            <option value="1230PM">12:30PM</option>
+                                                            <option value="0100PM">1:00PM</option>
+                                                            <option value="0130PM">1:30PM</option>
+                                                            <option value="0200PM">2:00PM</option>
+                                                            <option value="0230PM">2:30PM</option>
+                                                            <option value="0300PM">3:00PM</option>
+                                                            <option value="0330PM">3:30PM</option>
+                                                            <option value="0400PM">4:00PM</option>
+                                                            <option value="0430PM">4:30PM</option>
+                                                            <option value="0500PM">5:00PM</option>
+                                                            <option value="0530PM">5:30PM</option>
+                                                            <option value="0600PM">6:00PM</option>
+                                                            <option value="0630PM">6:30PM</option>
+                                                            <option value="0700PM">7:00PM</option>
+                                                            <option value="0730PM">7:30PM</option>
+                                                            <option value="0800PM">8:00PM</option>
+                                                            <option value="0830PM">8:30PM</option>
+                                                            <option value="0900PM">9:00PM</option>
+                                                            <option value="0930PM">9:30PM</option>
+                                                            <option value="1000PM">10:00PM</option>
+                                                            <option value="1030PM">10:30PM</option>
+                                                            <option value="1100PM">11:00PM</option>
+                                                            <option value="1130PM">11:30PM</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                    </form>
+                                    <!-- end row -->
+                                </div>
+                                <div class="advanced-wrap">
+                                    <a class="btn collapse-btn theme-btn-hover-gray font-size-15"
+                                        data-bs-toggle="collapse" href="#collapseSix" role="button"
+                                        aria-expanded="false" aria-controls="collapseSix">
+                                        Advanced options <i class="la la-angle-down ms-1"></i>
+                                    </a>
+                                    <div class="pt-3 collapse" id="collapseSix">
+                                        <div class="row">
+                                            <div class="col-lg-3 pe-0">
+                                                <div class="input-box">
+                                                    <label class="label-text">Car type</label>
+                                                    <div class="form-group select2-container-wrapper">
+                                                        <div class="select-contain w-auto">
+                                                            <select class="select-contain-select">
+                                                                <option value="1">No preference</option>
+                                                                <option value="2">Economy</option>
+                                                                <option value="3">Compact</option>
+                                                                <option value="4">Midsize</option>
+                                                                <option value="5">Standard</option>
+                                                                <option value="6">Fullsize</option>
+                                                                <option value="7">Premium</option>
+                                                                <option value="8">Luxury</option>
+                                                                <option value="9">Convertible</option>
+                                                                <option value="10">Minivan</option>
+                                                                <option value="11">Sport Utility</option>
+                                                                <option value="12">Sports car</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col-lg-3 -->
+                                            <div class="col-lg-3 pe-0">
+                                                <div class="input-box">
+                                                    <label class="label-text">Rental car company</label>
+                                                    <div class="form-group select2-container-wrapper">
+                                                        <div class="select-contain w-auto">
+                                                            <select class="select-contain-select">
+                                                                <option value="">No preference</option>
+                                                                <option value="AC">ACE Rent A Car</option>
+                                                                <option value="AD">
+                                                                    Advantage Rent-A-Car
+                                                                </option>
+                                                                <option value="AL">Alamo Rent A Car</option>
+                                                                <option value="ZI">Avis</option>
+                                                                <option value="ZD">Budget</option>
+                                                                <option value="ZR">Dollar Rent A Car</option>
+                                                                <option value="EY">Economy Rent a Car</option>
+                                                                <option value="ET">Enterprise</option>
+                                                                <option value="EP">Europcar</option>
+                                                                <option value="FX">Fox Rental Cars</option>
+                                                                <option value="ZE">Hertz</option>
+                                                                <option value="MW">Midway Car Rental</option>
+                                                                <option value="ZL">
+                                                                    National Car Rental
+                                                                </option>
+                                                                <option value="NU">Nü Car</option>
+                                                                <option value="ZA">Payless</option>
+                                                                <option value="RO">Routes Car Rental</option>
+                                                                <option value="SX">Sixt</option>
+                                                                <option value="ZT">Thrifty Car Rental</option>
+                                                                <option value="SV">U-Save</option>
+                                                                <option value="SC">Silvercar</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col-lg-3 -->
+                                            <div class="col-lg-3">
+                                                <div class="input-box">
+                                                    <label class="label-text">Discount code</label>
+                                                    <div class="form-group select2-container-wrapper">
+                                                        <div class="select-contain w-auto">
+                                                            <select class="select-contain-select">
+                                                                <option value="0">I don't have a code</option>
+                                                                <option value="1">
+                                                                    Corporate or contracted
+                                                                </option>
+                                                                <option value="2">
+                                                                    Special or advertised
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col-lg-3 -->
+                                        </div>
+                                        <!-- end row -->
+                                    </div>
+                                </div>
+                                <!-- end advanced-wrap -->
+                                <div class="btn-box pt-3">
+                                    <a href="car-search-result.html" class="theme-btn">Search Now</a>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="cruise" role="tabpanel" aria-labelledby="cruise-tab">
+                                <div class="contact-form-action">
+                                    <form action="#" class="row align-items-center">
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Going to</label>
+                                                <div class="form-group select2-container-wrapper">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="select-contain-select">
+                                                            <option value="">Select destination</option>
+                                                            <optgroup label="Most Popular">
+                                                                <option value="caribbean">Caribbean</option>
+                                                                <option value="bahamas">Bahamas</option>
+                                                                <option value="mexico">Mexico</option>
+                                                                <option value="alaska">Alaska</option>
+                                                                <option value="europe">Europe</option>
+                                                                <option value="bermuda">Bermuda</option>
+                                                                <option value="hawaii">Hawaii</option>
+                                                                <option value="nepal">Nepal</option>
+                                                                <option value="italy">Italy</option>
+                                                                <option value="canada-new-england">
+                                                                    Canada / New England
+                                                                </option>
+                                                            </optgroup>
+                                                            <optgroup label="Other Destinations">
+                                                                <option value="arctic-antarctic">
+                                                                    Arctic / Antarctic
+                                                                </option>
+                                                                <option value="middle-east">
+                                                                    Middle East
+                                                                </option>
+                                                                <option value="africa">Africa</option>
+                                                                <option value="panama-canal">
+                                                                    Panama Canal
+                                                                </option>
+                                                                <option value="asia">Asia</option>
+                                                                <option value="pacific-coastal">
+                                                                    Pacific Coastal
+                                                                </option>
+                                                                <option value="australia-new-zealand">
+                                                                    Australia / New Zealand
+                                                                </option>
+                                                                <option value="central-america">
+                                                                    Central America
+                                                                </option>
+                                                                <option value="galapagos">Galapagos</option>
+                                                                <option value="getaway-at-sea">
+                                                                    Getaway at Sea
+                                                                </option>
+                                                                <option value="transatlantic">
+                                                                    Transatlantic
+                                                                </option>
+                                                                <option value="world-cruise">World</option>
+                                                                <option value="south-america">
+                                                                    South America
+                                                                </option>
+                                                                <option value="south-pacific">
+                                                                    South Pacific
+                                                                </option>
+                                                                <option value="transpacific">
+                                                                    Transpacific
+                                                                </option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Departs as early as</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Departs as late as</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                        <div class="col-lg-3">
+                                            <div class="input-box">
+                                                <label class="label-text">Travelers in the cabin</label>
+                                                <div class="form-group">
+                                                    <div class="dropdown dropdown-contain gty-container">
+                                                        <a class="dropdown-toggle dropdown-btn" href="#"
+                                                            role="button" data-bs-toggle="dropdown"
+                                                            aria-expanded="false" data-bs-auto-close="outside">
+                                                            <span class="adult" data-text="Adult"
+                                                                data-text-multi="Adults">0
+                                                                Adult</span>
+                                                            -
+                                                            <span class="children" data-text="Child"
+                                                                data-text-multi="Children">0 Child</span>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-wrap">
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Adults</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="adult_number"
+                                                                            value="0" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Children</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="child_number"
+                                                                            value="0" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <div
+                                                                    class="qty-box d-flex align-items-center justify-content-between">
+                                                                    <label>Infants</label>
+                                                                    <div class="qtyBtn d-flex align-items-center">
+                                                                        <div class="qtyDec">
+                                                                            <i class="la la-minus"></i>
+                                                                        </div>
+                                                                        <input type="text" name="infants_number"
+                                                                            value="0" class="qty-input" />
+                                                                        <div class="qtyInc">
+                                                                            <i class="la la-plus"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end dropdown -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-3 -->
+                                    </form>
+                                </div>
+                                <div class="btn-box">
+                                    <a href="cruise-search-result.html" class="theme-btn">Search Now</a>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="tour" role="tabpanel" aria-labelledby="tour-tab">
+                                <div class="contact-form-action">
+                                    <form action="#" class="row align-items-center">
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">Where would like to go?</label>
+                                                <div class="form-group">
+                                                    <span class="la la-map-marker form-icon"></span>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Destination, city, or region" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4 pe-0">
+                                            <div class="input-box">
+                                                <label class="label-text">From</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                        <div class="col-lg-4">
+                                            <div class="input-box">
+                                                <label class="label-text">To</label>
+                                                <div class="form-group">
+                                                    <span class="la la-calendar form-icon"></span>
+                                                    <input class="date-range form-control" type="text"
+                                                        name="daterange-single" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-4 -->
+                                    </form>
+                                </div>
+                                <div class="advanced-wrap">
+                                    <a class="btn collapse-btn theme-btn-hover-gray font-size-15"
+                                        data-bs-toggle="collapse" href="#collapseSeven" role="button"
+                                        aria-expanded="false" aria-controls="collapseSeven">
+                                        Advanced search <i class="la la-angle-down ms-1"></i>
+                                    </a>
+                                    <div class="pt-3 collapse" id="collapseSeven">
+                                        <div class="slider-range-wrap">
+                                            <div class="price-slider-amount padding-bottom-20px">
+                                                <label for="amount" class="filter__label">Price Range</label>
+                                                <input type="text" id="amount" class="amounts" />
+                                            </div>
+                                            <!-- end price-slider-amount -->
+                                            <div id="slider-range"></div>
+                                            <!-- end slider-range -->
+                                        </div>
+                                        <!-- end slider-range-wrap -->
+                                        <div class="checkbox-wrap padding-top-30px">
+                                            <h3 class="title font-size-15 pb-3">Tour Categories</h3>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb1" />
+                                                <label for="tourChb1">Active Adventure Tours</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb2" />
+                                                <label for="tourChb2">Ecotourism</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb3" />
+                                                <label for="tourChb3">Escorted Tours</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb4" />
+                                                <label for="tourChb4">Group Tours</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb5" />
+                                                <label for="tourChb5">Ligula</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb6" />
+                                                <label for="tourChb6">Family Tours</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb7" />
+                                                <label for="tourChb7">City Trips</label>
+                                            </div>
+                                            <div class="custom-checkbox d-inline-block me-4">
+                                                <input type="checkbox" class="form-check-input" id="tourChb8" />
+                                                <label for="tourChb8">National Parks Tours</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-box pt-3">
+                                    <a href="tour-search-result.html" class="theme-btn">Search Now</a>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                        </div>
+                    </div>
+                    <!-- end col-lg-12 -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+            <svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10"
+                preserveAspectRatio="none">
+                <path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path>
+            </svg>
+        </div>
+    </section>
+    <!-- end hero-wrapper -->
+    <!-- ================================
+        END HERO-WRAPPER AREA
+    ================================= -->
 
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laracasts</h2>
+    <!-- ================================
+        START INFO AREA
+    ================================= -->
+    <section class="info-area info-bg padding-top-50px padding-bottom-50px text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="icon-box">
+                        <div class="info-icon">
+                            <i class="la la-bullhorn"></i>
+                        </div>
+                        <!-- end info-icon-->
+                        <div class="info-content">
+                            <h4 class="info__title">You'll never roam alone</h4>
+                            <p class="info__desc">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do eiusmod tempor
+                            </p>
+                        </div>
+                        <!-- end info-content -->
+                    </div>
+                    <!-- end icon-box -->
+                </div>
+                <!-- end col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="icon-box margin-top-50px">
+                        <div class="info-icon">
+                            <i class="la la-globe"></i>
+                        </div>
+                        <!-- end info-icon-->
+                        <div class="info-content">
+                            <h4 class="info__title">
+                                A world of choice – anytime, anywhere
+                            </h4>
+                            <p class="info__desc">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do eiusmod tempor
+                            </p>
+                        </div>
+                        <!-- end info-content -->
+                    </div>
+                    <!-- end icon-box -->
+                </div>
+                <!-- end col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="icon-box">
+                        <div class="info-icon">
+                            <i class="la la-thumbs-up"></i>
+                        </div>
+                        <!-- end info-icon-->
+                        <div class="info-content">
+                            <h4 class="info__title">Peace of mind, wherever you wander</h4>
+                            <p class="info__desc">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                do eiusmod tempor
+                            </p>
+                        </div>
+                        <!-- end info-content -->
+                    </div>
+                    <!-- end icon-box -->
+                </div>
+                <!-- end col-lg-4 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </section>
+    <!-- end info-area -->
+    <!-- ================================
+        END INFO AREA
+    ================================= -->
 
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
+    <div class="section-block"></div>
+
+    <!-- ================================
+        START ROUND-TRIP AREA
+    ================================= -->
+    <section class="round-trip-flight section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        <h2 class="sec__title line-height-55">
+                            Most Popular Round-trip <br />
+                            Flight Destinations
+                        </h2>
+                    </div>
+                    <!-- end section-heading -->
+                </div>
+                <!-- end col-lg-12 -->
+            </div>
+            <!-- end row -->
+
+            <div class="row padding-top-50px">
+                <div class="col-lg-12">
+                    <div class="flight-filter-tab text-center">
+                        <div class="section-tab section-tab-3">
+                            <ul class="nav nav-tabs justify-content-center" id="myTab4" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="new-york-tab" data-bs-toggle="tab"
+                                        href="#new-york" role="tab" aria-controls="new-york"
+                                        aria-selected="false">
+                                        New York
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="hong-kong-tab" data-bs-toggle="tab" href="#hong-kong"
+                                        role="tab" aria-controls="hong-kong" aria-selected="false">
+                                        Hong Kong
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end section-tab -->
+                    </div>
+
+                    <!-- end flight-filter-tab -->
+                    <div class="popular-round-trip-wrap padding-top-40px">
+                        <div class="tab-content" id="myTabContent4">
+                            <div class="tab-pane fade show active" id="new-york" role="tabpanel"
+                                aria-labelledby="new-york-tab">
+                                <div class="row">
+                                    <div class="col-lg-4 responsive-column">
+                                        <div class="deal-card">
+                                            <div class="deal-title d-flex align-items-center">
+                                                <img src="images/airline-img.png" alt="air-line-img" />
+                                                <h3 class="deal__title">
+                                                    <a href="flight-single.html" class="d-flex align-items-center">
+                                                        New York<i class="la la-exchange mx-2"></i>Los
+                                                        Angeles
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <p class="deal__meta">Tue, Jul 14-Fri, Jul 24</p>
+                                            <div
+                                                class="deal-action-box d-flex align-items-center justify-content-between">
+                                                <div class="price-box d-flex align-items-center">
+                                                    <span class="price__from me-1">From</span><span
+                                                        class="price__num">$340</span>
+                                                </div>
+                                                <a href="flight-single.html" class="btn-text">See details<i
+                                                        class="la la-angle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- end deal-card -->
+                                    </div>
+                                    <!-- end col-lg-4 -->
+                                    <div class="col-lg-4 responsive-column">
+                                        <div class="deal-card">
+                                            <div class="deal-title d-flex align-items-center">
+                                                <img src="images/airline-img2.png" alt="air-line-img" />
+                                                <h3 class="deal__title">
+                                                    <a href="flight-single.html" class="d-flex align-items-center">
+                                                        New York<i class="la la-exchange mx-2"></i>Barcelona
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <p class="deal__meta">Tue, Jul 14-Fri, Jul 24</p>
+                                            <div
+                                                class="deal-action-box d-flex align-items-center justify-content-between">
+                                                <div class="price-box d-flex align-items-center">
+                                                    <span class="price__from me-1">From</span><span
+                                                        class="price__num">$740</span>
+                                                </div>
+                                                <a href="flight-single.html" class="btn-text">See details<i
+                                                        class="la la-angle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- end deal-card -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                            <div class="tab-pane fade" id="hong-kong" role="tabpanel"
+                                aria-labelledby="hong-kong-tab">
+                                <div class="row">
+                                    <div class="col-lg-4 responsive-column">
+                                        <div class="deal-card">
+                                            <div class="deal-title d-flex align-items-center">
+                                                <img src="images/airline-img.png" alt="air-line-img" />
+                                                <h3 class="deal__title">
+                                                    <a href="flight-single.html" class="d-flex align-items-center">
+                                                        Hong Kong<i class="la la-exchange mx-2"></i>Singapore
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <p class="deal__meta">Tue, Jul 14-Fri, Jul 24</p>
+                                            <div
+                                                class="deal-action-box d-flex align-items-center justify-content-between">
+                                                <div class="price-box d-flex align-items-center">
+                                                    <span class="price__from me-1">From</span><span
+                                                        class="price__num">$340</span>
+                                                </div>
+                                                <a href="flight-single.html" class="btn-text">See details<i
+                                                        class="la la-angle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- end deal-card -->
+                                    </div>
+                                    <!-- end col-lg-4 -->
+                                    <div class="col-lg-4 responsive-column">
+                                        <div class="deal-card">
+                                            <div class="deal-title d-flex align-items-center">
+                                                <img src="images/airline-img2.png" alt="air-line-img" />
+                                                <h3 class="deal__title">
+                                                    <a href="flight-single.html" class="d-flex align-items-center">
+                                                        Hong Kong<i class="la la-exchange mx-2"></i>Tokyo
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                            <p class="deal__meta">Tue, Jul 14-Fri, Jul 24</p>
+                                            <div
+                                                class="deal-action-box d-flex align-items-center justify-content-between">
+                                                <div class="price-box d-flex align-items-center">
+                                                    <span class="price__from me-1">From</span><span
+                                                        class="price__num">$740</span>
+                                                </div>
+                                                <a href="flight-single.html" class="btn-text">See details<i
+                                                        class="la la-angle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- end deal-card -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end tab-pane -->
+                        </div>
+                        <!-- end tab-content -->
+                        <div class="tab-content-info d-flex justify-content-between align-items-center">
+                            <p class="font-size-15">
+                                <i class="la la-question-circle me-1"></i>Average round-trip
+                                price per person, taxes and fees included.
+                            </p>
+                            <a href="#" class="btn-text font-size-15">Discover More <i
+                                    class="la la-angle-right"></i></a>
+                        </div>
+                        <!-- end tab-content-info -->
+                    </div>
+                </div>
+                <!-- end col-lg-12 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </section>
+    <!-- end round-trip-flight -->
+    <!-- ================================
+        END ROUND-TRIP AREA
+    ================================= -->
+
+    <!-- ================================
+        START HOTEL AREA
+    ================================= -->
+    <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        <h2 class="sec__title line-height-55">
+                            Most Popular Hotel <br />
+                            Destinations
+                        </h2>
+                    </div>
+                    <!-- end section-heading -->
+                </div>
+                <!-- end col-lg-12 -->
+            </div>
+            <!-- end row -->
+            <div class="row padding-top-50px">
+                <div class="col-lg-12">
+                    <div class="hotel-card-wrap">
+                        <div class="hotel-card-carousel carousel-action">
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img1.jpg" alt="hotel-img" />
+                                    </a>
+                                    <span class="badge">Bestseller</span>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">The Millennium Hilton New York</a>
+                                    </h3>
+                                    <p class="card-meta">124 E Huron St, New york</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img2.jpg" alt="hotel-img" />
+                                    </a>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Best Western Grant Park Hotel</a>
+                                    </h3>
+                                    <p class="card-meta">124 E Huron St, Chicago</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$58.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img3.jpg" alt="hotel-img" />
+                                    </a>
+                                    <span class="badge">Featured</span>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Hyatt Regency Maui Resort & Spa</a>
+                                    </h3>
+                                    <p class="card-meta">200 Nohea Kai Dr, Lahaina, HI</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img4.jpg" alt="hotel-img" />
+                                    </a>
+                                    <span class="badge">Popular</span>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Four Seasons Resort Maui at Wailea</a>
+                                    </h3>
+                                    <p class="card-meta">3900 Wailea Alanui Drive, Kihei, HI</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img5.jpg" alt="hotel-img" />
+                                    </a>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Ibis Styles London Heathrow</a>
+                                    </h3>
+                                    <p class="card-meta">272 Bath Road, Harlington, England</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img6.jpg" alt="hotel-img" />
+                                    </a>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Hotel Europe Saint Severin Paris</a>
+                                    </h3>
+                                    <p class="card-meta">
+                                        38-40 Rue Saint Séverin, Paris, Paris
                                     </p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
                                 </div>
-
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
-
-                            <a
-                                href="https://laravel-news.com"
-                                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                            >
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g fill="#FF2D20"><path d="M8.75 4.5H5.5c-.69 0-1.25.56-1.25 1.25v4.75c0 .69.56 1.25 1.25 1.25h3.25c.69 0 1.25-.56 1.25-1.25V5.75c0-.69-.56-1.25-1.25-1.25Z"/><path d="M24 10a3 3 0 0 0-3-3h-2V2.5a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2V20a3.5 3.5 0 0 0 3.5 3.5h17A3.5 3.5 0 0 0 24 20V10ZM3.5 21.5A1.5 1.5 0 0 1 2 20V3a.5.5 0 0 1 .5-.5h14a.5.5 0 0 1 .5.5v17c0 .295.037.588.11.874a.5.5 0 0 1-.484.625L3.5 21.5ZM22 20a1.5 1.5 0 1 1-3 0V9.5a.5.5 0 0 1 .5-.5H21a1 1 0 0 1 1 1v10Z"/><path d="M12.751 6.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 7.3v-.5a.75.75 0 0 1 .751-.753ZM12.751 10.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 11.3v-.5a.75.75 0 0 1 .751-.753ZM4.751 14.047h10a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-10A.75.75 0 0 1 4 15.3v-.5a.75.75 0 0 1 .751-.753ZM4.75 18.047h7.5a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-7.5A.75.75 0 0 1 4 19.3v-.5a.75.75 0 0 1 .75-.753Z"/></g></svg>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img1.jpg" alt="hotel-img" />
+                                    </a>
+                                    <span class="badge">Bestseller</span>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
                                 </div>
-
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Laravel News</h2>
-
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                    </p>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">The Millennium Hilton New York</a>
+                                    </h3>
+                                    <p class="card-meta">124 E Huron St, New york</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$88.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
                                 </div>
-
-                                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-                            </a>
-
-                            <div class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
-                                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                                    <svg class="size-5 sm:size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <g fill="#FF2D20">
-                                            <path
-                                                d="M16.597 12.635a.247.247 0 0 0-.08-.237 2.234 2.234 0 0 1-.769-1.68c.001-.195.03-.39.084-.578a.25.25 0 0 0-.09-.267 8.8 8.8 0 0 0-4.826-1.66.25.25 0 0 0-.268.181 2.5 2.5 0 0 1-2.4 1.824.045.045 0 0 0-.045.037 12.255 12.255 0 0 0-.093 3.86.251.251 0 0 0 .208.214c2.22.366 4.367 1.08 6.362 2.118a.252.252 0 0 0 .32-.079 10.09 10.09 0 0 0 1.597-3.733ZM13.616 17.968a.25.25 0 0 0-.063-.407A19.697 19.697 0 0 0 8.91 15.98a.25.25 0 0 0-.287.325c.151.455.334.898.548 1.328.437.827.981 1.594 1.619 2.28a.249.249 0 0 0 .32.044 29.13 29.13 0 0 0 2.506-1.99ZM6.303 14.105a.25.25 0 0 0 .265-.274 13.048 13.048 0 0 1 .205-4.045.062.062 0 0 0-.022-.07 2.5 2.5 0 0 1-.777-.982.25.25 0 0 0-.271-.149 11 11 0 0 0-5.6 2.815.255.255 0 0 0-.075.163c-.008.135-.02.27-.02.406.002.8.084 1.598.246 2.381a.25.25 0 0 0 .303.193 19.924 19.924 0 0 1 5.746-.438ZM9.228 20.914a.25.25 0 0 0 .1-.393 11.53 11.53 0 0 1-1.5-2.22 12.238 12.238 0 0 1-.91-2.465.248.248 0 0 0-.22-.187 18.876 18.876 0 0 0-5.69.33.249.249 0 0 0-.179.336c.838 2.142 2.272 4 4.132 5.353a.254.254 0 0 0 .15.048c1.41-.01 2.807-.282 4.117-.802ZM18.93 12.957l-.005-.008a.25.25 0 0 0-.268-.082 2.21 2.21 0 0 1-.41.081.25.25 0 0 0-.217.2c-.582 2.66-2.127 5.35-5.75 7.843a.248.248 0 0 0-.09.299.25.25 0 0 0 .065.091 28.703 28.703 0 0 0 2.662 2.12.246.246 0 0 0 .209.037c2.579-.701 4.85-2.242 6.456-4.378a.25.25 0 0 0 .048-.189 13.51 13.51 0 0 0-2.7-6.014ZM5.702 7.058a.254.254 0 0 0 .2-.165A2.488 2.488 0 0 1 7.98 5.245a.093.093 0 0 0 .078-.062 19.734 19.734 0 0 1 3.055-4.74.25.25 0 0 0-.21-.41 12.009 12.009 0 0 0-10.4 8.558.25.25 0 0 0 .373.281 12.912 12.912 0 0 1 4.826-1.814ZM10.773 22.052a.25.25 0 0 0-.28-.046c-.758.356-1.55.635-2.365.833a.25.25 0 0 0-.022.48c1.252.43 2.568.65 3.893.65.1 0 .2 0 .3-.008a.25.25 0 0 0 .147-.444c-.526-.424-1.1-.917-1.673-1.465ZM18.744 8.436a.249.249 0 0 0 .15.228 2.246 2.246 0 0 1 1.352 2.054c0 .337-.08.67-.23.972a.25.25 0 0 0 .042.28l.007.009a15.016 15.016 0 0 1 2.52 4.6.25.25 0 0 0 .37.132.25.25 0 0 0 .096-.114c.623-1.464.944-3.039.945-4.63a12.005 12.005 0 0 0-5.78-10.258.25.25 0 0 0-.373.274c.547 2.109.85 4.274.901 6.453ZM9.61 5.38a.25.25 0 0 0 .08.31c.34.24.616.561.8.935a.25.25 0 0 0 .3.127.631.631 0 0 1 .206-.034c2.054.078 4.036.772 5.69 1.991a.251.251 0 0 0 .267.024c.046-.024.093-.047.141-.067a.25.25 0 0 0 .151-.23A29.98 29.98 0 0 0 15.957.764a.25.25 0 0 0-.16-.164 11.924 11.924 0 0 0-2.21-.518.252.252 0 0 0-.215.076A22.456 22.456 0 0 0 9.61 5.38Z"
-                                            />
-                                        </g>
-                                    </svg>
+                            </div>
+                            <!-- end card-item -->
+                            <div class="card-item mb-0">
+                                <div class="card-img">
+                                    <a href="hotel-single.html" class="d-block">
+                                        <img src="images/img2.jpg" alt="hotel-img" />
+                                    </a>
+                                    <div class="add-to-wishlist icon-element" data-bs-toggle="tooltip"
+                                        data-placement="top" title="Bookmark">
+                                        <i class="la la-heart-o"></i>
+                                    </div>
                                 </div>
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        <a href="hotel-single.html">Best Western Grant Park Hotel</a>
+                                    </h3>
+                                    <p class="card-meta">124 E Huron St, Chicago</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">4.4/5</span>
+                                        <span class="review__text">Average</span>
+                                        <span class="rating__text">(30 Reviews)</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__from">From</span>
+                                            <span class="price__num">$58.00</span>
+                                            <span class="price__text">Per night</span>
+                                        </p>
+                                        <a href="hotel-single.html" class="btn-text">See details<i
+                                                class="la la-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-item -->
+                        </div>
+                        <!-- end hotel-card-carousel -->
+                    </div>
+                </div>
+                <!-- end col-lg-12 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container-fluid -->
+    </section>
+    <!-- end hotel-area -->
+    <!-- ================================
+        END HOTEL AREA
+    ================================= -->
 
-                                <div class="pt-3 sm:pt-5">
-                                    <h2 class="text-xl font-semibold text-black dark:text-white">Vibrant Ecosystem</h2>
+    <!-- ================================
+        START DESTINATION AREA
+    ================================= -->
+    <section class="destination-area section--padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="section-heading">
+                        <h2 class="sec__title">Top Visited Places</h2>
+                        <p class="sec__desc pt-3">
+                            Morbi convallis bibendum urna ut viverra Maecenas quis
+                        </p>
+                    </div>
 
-                                    <p class="mt-4 text-sm/relaxed">
-                                        Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]">Forge</a>, <a href="https://vapor.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Vapor</a>, <a href="https://nova.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Nova</a>, <a href="https://envoyer.io" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Envoyer</a>, and <a href="https://herd.laravel.com" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Herd</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Echo</a>, <a href="https://laravel.com/docs/horizon" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white">Telescope</a>, and more.
-                                    </p>
+                    <!-- end section-heading -->
+                </div>
+                <!-- end col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="btn-box btn--box text-end">
+                        <a href="tour-grid.html" class="theme-btn">Discover More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+            <div class="row padding-top-50px">
+                <div class="col-lg-4">
+                    <div class="card-item destination-card">
+                        <div class="card-img">
+                            <img src="{{asset('guest/images/destination-img2.jpg')}}" alt="destination-img" />
+                            <span class="badge">new york</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="tour-details.html">Main Street Park</a>
+                            </h3>
+                            <div class="card-rating d-flex align-items-center">
+                                <span class="ratings d-flex align-items-center me-1">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star-o"></i>
+                                    <i class="la la-star-o"></i>
+                                </span>
+                                <span class="rating__text">(70694 Reviews)</span>
+                            </div>
+                            <div class="card-price d-flex align-items-center justify-content-between">
+                                <p class="tour__text">50 Tours</p>
+                                <p>
+                                    <span class="price__from">Price</span>
+                                    <span class="price__num">$58.00</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-item -->
+                    <div class="card-item destination-card">
+                        <div class="card-img">
+                            <img src="{{asset('guest/images/destination-img3.jpg')}}" alt="destination-img" />
+                            <span class="badge">chicago</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="tour-details.html">Chicago Cultural Center</a>
+                            </h3>
+                            <div class="card-rating d-flex align-items-center">
+                                <span class="ratings d-flex align-items-center me-1">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star-o"></i>
+                                </span>
+                                <span class="rating__text">(70694 Reviews)</span>
+                            </div>
+                            <div class="card-price d-flex align-items-center justify-content-between">
+                                <p class="tour__text">50 Tours</p>
+                                <p>
+                                    <span class="price__from">Price</span>
+                                    <span class="price__num">$68.00</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-item -->
+                </div>
+                <!-- end col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="card-item destination-card">
+                        <div class="card-img">
+                            <img src="{{asset('guest/images/destination-img4.jpg')}}" alt="destination-img" />
+                            <span class="badge">Hong Kong</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="tour-details.html">Lugard Road Lookout</a>
+                            </h3>
+                            <div class="card-rating d-flex align-items-center">
+                                <span class="ratings d-flex align-items-center me-1">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star-o"></i>
+                                    <i class="la la-star-o"></i>
+                                </span>
+                                <span class="rating__text">(70694 Reviews)</span>
+                            </div>
+                            <div class="card-price d-flex align-items-center justify-content-between">
+                                <p class="tour__text">150 Tours</p>
+                                <p>
+                                    <span class="price__from">Price</span>
+                                    <span class="price__num">$79.00</span>
+                                    <span class="price__num before-price">$89.00</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-item -->
+                    <div class="card-item destination-card">
+                        <div class="card-img">
+                            <img src="{{asset('guest/images/destination-img5.jpg')}}" alt="destination-img" />
+                            <span class="badge">Las Vegas</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="tour-details.html">Planet Hollywood Resort</a>
+                            </h3>
+                            <div class="card-rating d-flex align-items-center">
+                                <span class="ratings d-flex align-items-center me-1">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star-o"></i>
+                                </span>
+                                <span class="rating__text">(70694 Reviews)</span>
+                            </div>
+                            <div class="card-price d-flex align-items-center justify-content-between">
+                                <p class="tour__text">50 Tours</p>
+                                <p>
+                                    <span class="price__from">Price</span>
+                                    <span class="price__num">$88.00</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-item -->
+                </div>
+                <!-- end col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="card-item destination-card">
+                        <div class="card-img">
+                            <img src="{{asset('guest/images/destination-img.jpg')}}" alt="destination-img" />
+                            <span class="badge">Shanghai</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="tour-details.html">Oriental Pearl TV Tower</a>
+                            </h3>
+                            <div class="card-rating d-flex align-items-center">
+                                <span class="ratings d-flex align-items-center me-1">
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                    <i class="la la-star"></i>
+                                </span>
+                                <span class="rating__text">(70694 Reviews)</span>
+                            </div>
+                            <div class="card-price d-flex align-items-center justify-content-between">
+                                <p class="tour__text">50 Tours</p>
+                                <p>
+                                    <span class="price__from">Price</span>
+                                    <span class="price__num">$58.00</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card-item -->
+                </div>
+                <!-- end col-lg-4 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </section>
+    <!-- end destination-area -->
+    <!-- ================================
+        END DESTINATION AREA
+    ================================= -->
+
+    <!-- ================================
+           START TESTIMONIAL AREA
+    ================================= -->
+    <section class="testimonial-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="section-heading">
+                        <h2 class="sec__title line-height-50">
+                            What our customers are saying us?
+                        </h2>
+                        <p class="sec__desc padding-top-30px">
+                            Morbi convallis bibendum urna ut viverra. Maecenas quis
+                            consequat libero
+                        </p>
+                        <div class="btn-box padding-top-35px">
+                            <a href="#" class="theme-btn">Explore All</a>
+                        </div>
+                    </div>
+                    <!-- end section-heading -->
+                </div>
+                <!-- end col-lg-4 -->
+                <div class="col-lg-8">
+                    <div class="testimonial-carousel carousel-action">
+                        <div class="testimonial-card">
+                            <div class="testi-desc-box">
+                                <p class="testi__desc">
+                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
+                                    officia deserunt mollit anim laborum sint occaecat cupidatat
+                                    non proident. Occaecat cupidatat non proident des.
+                                </p>
+                            </div>
+                            <div class="author-content d-flex align-items-center">
+                                <div class="author-img">
+                                    <img src="images/team8.jpg" alt="testimonial image" />
+                                </div>
+                                <div class="author-bio">
+                                    <h4 class="author__title">Leroy Bell</h4>
+                                    <span class="author__meta">United States</span>
+                                    <span class="ratings d-flex align-items-center">
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    </main>
-
-                    <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </footer>
+                        <!-- end testimonial-card -->
+                        <div class="testimonial-card">
+                            <div class="testi-desc-box">
+                                <p class="testi__desc">
+                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
+                                    officia deserunt mollit anim laborum sint occaecat cupidatat
+                                    non proident. Occaecat cupidatat non proident des.
+                                </p>
+                            </div>
+                            <div class="author-content d-flex align-items-center">
+                                <div class="author-img">
+                                    <img src="images/team9.jpg" alt="testimonial image" />
+                                </div>
+                                <div class="author-bio">
+                                    <h4 class="author__title">Richard Pam</h4>
+                                    <span class="author__meta">Canada</span>
+                                    <span class="ratings d-flex align-items-center">
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end testimonial-card -->
+                        <div class="testimonial-card">
+                            <div class="testi-desc-box">
+                                <p class="testi__desc">
+                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
+                                    officia deserunt mollit anim laborum sint occaecat cupidatat
+                                    non proident. Occaecat cupidatat non proident des.
+                                </p>
+                            </div>
+                            <div class="author-content d-flex align-items-center">
+                                <div class="author-img">
+                                    <img src="images/team10.jpg" alt="testimonial image" />
+                                </div>
+                                <div class="author-bio">
+                                    <h4 class="author__title">Luke Jacobs</h4>
+                                    <span class="author__meta">Australia</span>
+                                    <span class="ratings d-flex align-items-center">
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end testimonial-card -->
+                        <div class="testimonial-card">
+                            <div class="testi-desc-box">
+                                <p class="testi__desc">
+                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
+                                    officia deserunt mollit anim laborum sint occaecat cupidatat
+                                    non proident. Occaecat cupidatat non proident des.
+                                </p>
+                            </div>
+                            <div class="author-content d-flex align-items-center">
+                                <div class="author-img">
+                                    <img src="images/team8.jpg" alt="testimonial image" />
+                                </div>
+                                <div class="author-bio">
+                                    <h4 class="author__title">Chulbul Panday</h4>
+                                    <span class="author__meta">Italy</span>
+                                    <span class="ratings d-flex align-items-center">
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                        <i class="la la-star"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end testimonial-card -->
+                    </div>
+                    <!-- end testimonial-carousel -->
                 </div>
+                <!-- end col-lg-8 -->
             </div>
+            <!-- end row -->
         </div>
-    </body>
-</html>
+        <!-- end container -->
+    </section>
+    <!-- end testimonial-area -->
+    <!-- ================================
+           START TESTIMONIAL AREA
+    ================================= -->
+
+    <!-- ================================
+        START CTA AREA
+    ================================= -->
+    <section class="cta-area padding-top-100px padding-bottom-180px text-center">
+        <div class="video-bg">
+            <video autoplay loop>
+                <source src="video/video-bg.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading">
+                        <h2 class="sec__title text-white line-height-55">
+                            Let us show you the world <br />
+                            Discover our most popular destinations
+                        </h2>
+                    </div>
+                    <!-- end section-heading -->
+                    <div class="btn-box padding-top-35px">
+                        <a href="become-local-expert.html" class="theme-btn border-0">Join with us</a>
+                    </div>
+                </div>
+                <!-- end col-lg-12 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+        <svg class="cta-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
+            <path d="M-31.31,170.22 C164.50,33.05 334.36,-32.06 547.11,196.88 L500.00,150.00 L0.00,150.00 Z"></path>
+        </svg>
+    </section>
+    <!-- end cta-area -->
+    <!-- ================================
+        END CTA AREA
+    ================================= -->
+@endsection
