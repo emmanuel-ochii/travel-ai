@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'flight_api' => [
+        'base_url' => env('FLIGHT_API_BASE_URL', null),
+        'key' => env('FLIGHT_API_KEY', null),
+    ],
+
 ];
