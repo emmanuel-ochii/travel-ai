@@ -3,6 +3,7 @@
 namespace App\Livewire\Flight;
 
 use Livewire\Component;
+use App\Models\Airport;
 
 class SearchForm extends Component
 {
@@ -15,6 +16,14 @@ class SearchForm extends Component
     public $children = 0;
     public $infants = 0;
     public $cabinClass = 'Economy';
+
+    public $airports = [];
+
+public function mount()
+{
+    // Load airports for dropdown
+    $this->airports = Airport::orderBy('city')->get();
+}
 
     public function submit()
     {

@@ -127,7 +127,7 @@
                         <div class="menu-wrapper">
                             <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
                             <div class="logo">
-                                <a href="/"><img src="{{ asset('guest/images/rsz_travelai.png') }}"
+                                <a href="/"><img src="{{ asset('guest/images/rsz_travel-ai.png') }}"
                                         alt="logo" /></a>
                                 <div class="menu-toggler">
                                     <i class="la la-bars"></i>
@@ -166,7 +166,12 @@
          END HEADER AREA
 ================================= -->
 
-    @yield('content')
+    {{-- This will render Livewire OR Blade views safely --}}
+    @isset($slot)
+        {{ $slot }}
+    @else
+        @yield('content')
+    @endisset
 
 
     <!-- ================================
@@ -524,7 +529,7 @@
     <script src="{{ asset('guest/js/jquery.ripples-min.js') }}"></script>
     <script src="{{ asset('guest/js/quantity-input.js') }}"></script>
     <script src="{{ asset('guest/js/main.js') }}"></script>
-    
+
     @stack('scripts')
 </body>
 
