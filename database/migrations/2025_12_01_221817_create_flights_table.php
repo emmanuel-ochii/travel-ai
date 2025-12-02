@@ -17,15 +17,16 @@ return new class extends Migration
             $table->string('flight_number');
             $table->foreignId('origin_airport_id')->constrained('airports');
             $table->foreignId('destination_airport_id')->constrained('airports');
-            $table->timestamp('depart_at');
-            $table->timestamp('arrive_at');
+            $table->dateTime('depart_at');
+            $table->dateTime('arrive_at');
+
             $table->integer('duration_minutes')->unsigned();
             $table->integer('stops')->default(0);
             $table->bigInteger('base_price_cents')->unsigned();
             $table->string('currency', 8)->default('USD');
             $table->timestamps();
 
-            $table->index(['origin_airport_id','destination_airport_id','depart_at']);
+            $table->index(['origin_airport_id', 'destination_airport_id', 'depart_at']);
         });
     }
 

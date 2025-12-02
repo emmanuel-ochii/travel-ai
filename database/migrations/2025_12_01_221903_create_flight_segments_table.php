@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('segment_index')->default(0);
             $table->foreignId('origin_airport_id')->constrained('airports');
             $table->foreignId('destination_airport_id')->constrained('airports');
-            $table->timestamp('depart_at');
-            $table->timestamp('arrive_at');
+            $table->dateTime('depart_at');
+            $table->dateTime('arrive_at');
             $table->integer('duration_minutes')->unsigned();
             $table->string('equipment')->nullable();
             $table->timestamps();

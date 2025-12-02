@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
+
 use GuzzleHttp\Client;
 
-class FlightApiProvider
+class FlightApiProvider extends ServiceProvider
 {
     protected $client;
     protected $baseUrl;

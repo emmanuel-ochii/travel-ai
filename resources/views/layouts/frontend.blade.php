@@ -29,6 +29,10 @@
     <link rel="stylesheet" href="{{ asset('guest/css/style.css') }}" />
 
 
+    @livewireStyles
+
+    @stack('styles')
+
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
@@ -123,7 +127,8 @@
                         <div class="menu-wrapper">
                             <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
                             <div class="logo">
-                                <a href="/"><img src="{{ asset('guest/images/rsz_travelai.png') }}" alt="logo" /></a>
+                                <a href="/"><img src="{{ asset('guest/images/rsz_travelai.png') }}"
+                                        alt="logo" /></a>
                                 <div class="menu-toggler">
                                     <i class="la la-bars"></i>
                                     <i class="la la-times"></i>
@@ -173,7 +178,8 @@
                 <div class="col-lg-3 responsive-column">
                     <div class="footer-item">
                         <div class="footer-logo padding-bottom-30px">
-                            <a href="/" class="foot__logo"><img src="{{asset('guest/images/rsz_travel-ai.png')}}" alt="logo" /></a>
+                            <a href="/" class="foot__logo"><img
+                                    src="{{ asset('guest/images/rsz_travel-ai.png') }}" alt="logo" /></a>
                         </div>
                         <!-- end logo -->
                         <p class="footer__desc">
@@ -392,16 +398,20 @@
                                     <p class="font-size-14">Or Sign up Using</p>
                                     <ul class="social-profile py-3">
                                         <li>
-                                            <a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a>
+                                            <a href="#" class="bg-5 text-white"><i
+                                                    class="lab la-facebook-f"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a>
+                                            <a href="#" class="bg-6 text-white"><i
+                                                    class="lab la-twitter"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a>
+                                            <a href="#" class="bg-7 text-white"><i
+                                                    class="lab la-instagram"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a>
+                                            <a href="#" class="bg-5 text-white"><i
+                                                    class="lab la-linkedin-in"></i></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -470,16 +480,20 @@
                                     <p class="font-size-14">Or Login Using</p>
                                     <ul class="social-profile py-3">
                                         <li>
-                                            <a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a>
+                                            <a href="#" class="bg-5 text-white"><i
+                                                    class="lab la-facebook-f"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a>
+                                            <a href="#" class="bg-6 text-white"><i
+                                                    class="lab la-twitter"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a>
+                                            <a href="#" class="bg-7 text-white"><i
+                                                    class="lab la-instagram"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a>
+                                            <a href="#" class="bg-5 text-white"><i
+                                                    class="lab la-linkedin-in"></i></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -492,6 +506,8 @@
         </div>
     </div>
     <!-- end modal-popup -->
+
+    @livewireScripts
 
     <!-- Template JS Files -->
     <script src="{{ asset('guest/js/jquery-3.7.1.min.js') }}"></script>
@@ -508,8 +524,9 @@
     <script src="{{ asset('guest/js/jquery.ripples-min.js') }}"></script>
     <script src="{{ asset('guest/js/quantity-input.js') }}"></script>
     <script src="{{ asset('guest/js/main.js') }}"></script>
+    
+    @stack('scripts')
 </body>
 
-<!-- Mirrored from techydevs.com/demos/themes/html/trizen-demo/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 01 Dec 2025 19:37:47 GMT -->
 
 </html>
