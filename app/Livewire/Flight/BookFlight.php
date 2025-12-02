@@ -6,52 +6,84 @@ use Livewire\Component;
 use App\Models\Flight;
 use App\Models\Fare;
 use App\Models\Booking;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 
+#[Layout('layouts.frontend')]
 class BookFlight extends Component
 {
     public Flight $flight;
+
+    public int $fareId;
     public Fare $fare;
 
-    public int $passengers = 1;
+    public int $adults = 1;
+    public int $children = 0;
+    public int $infants = 0;
+
+    // Real-time computed totals (not stored)
     public int $totalPriceCents = 0;
 
-    public function mount($flightId, $fareId)
+    public function mount(Flight $flight, ?Fare $defaultFare = null)
     {
-        $this->flight = Flight::findOrFail($flightId);
-        $this->fare   = Fare::findOrFail($fareId);
+        $this->flight = $flight;
+
+        // auto-select default fare (lowest)
+        $selectedFare = $defaultFare ?? $flight->fares->sortBy('price_cents')->first();
+
+        $this->fareId = $selectedFare->id;
+        $this->fare   = $selectedFare;
 
         $this->calculateTotal();
     }
 
-    public function updatedPassengers()
+    /** When the user changes fare selection */
+    public function updatedFareId()
     {
-        if ($this->passengers < 1) $this->passengers = 1;
+        $this->fare = Fare::findOrFail($this->fareId);
         $this->calculateTotal();
     }
 
+    /** Auto-recalculate on passenger change */
+    public function updatedAdults()   { $this->sanitizePassengers(); }
+    public function updatedChildren() { $this->sanitizePassengers(); }
+    public function updatedInfants()  { $this->sanitizePassengers(); }
+
+    private function sanitizePassengers()
+    {
+        if ($this->adults < 1) $this->adults = 1;
+        if ($this->children < 0) $this->children = 0;
+        if ($this->infants < 0) $this->infants = 0;
+
+        $this->calculateTotal();
+    }
+
+    /** MAIN REAL-TIME CALCULATION **/
     private function calculateTotal()
     {
-        $this->totalPriceCents = $this->fare->price_cents * $this->passengers;
+        $totalPassengers = $this->adults + $this->children + $this->infants;
+
+        $this->totalPriceCents = $this->fare->price_cents * $totalPassengers;
     }
 
+    /** Save booking */
     public function submitBooking()
     {
         $booking = Booking::create([
-            'user_id' => auth()->id(),
-            'flight_id' => $this->flight->id,
-            'fare_id' => $this->fare->id,
-            'passengers' => $this->passengers,
+            'user_id'      => Auth::id(),
+            'flight_id'    => $this->flight->id,
+            'fare_id'      => $this->fare->id,
+            'passengers'   => $this->adults + $this->children + $this->infants,
             'total_price_cents' => $this->totalPriceCents,
-            'currency' => $this->fare->currency,
-            'status' => 'pending',
+            'currency'     => $this->fare->currency,
+            'status'       => 'pending',
             'booking_reference' => Booking::generateReference(),
         ]);
 
-        return redirect()->route('booking.success', [
-            'reference' => $booking->booking_reference,
-        ]);
-    }
+        session()->flash('success', "Booking confirmed! Reference: {$booking->booking_reference}");
 
+        return redirect()->route('flights.details', $this->flight->id);
+    }
 
     public function render()
     {

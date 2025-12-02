@@ -162,16 +162,3 @@
 
 
 </div>
-
-
-@push('scripts')
-    <script>
-        document.addEventListener('livewire:initialized', () => {
-            $('#my-select2').select2(); // Initialize Select2
-
-            $('#my-select2').on('change', function(e) {
-                @this.set('from', e.target.value); // Update Livewire property
-            });
-        });
-    </script>
-@endpush
