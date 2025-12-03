@@ -79,7 +79,8 @@
                                                 </h3>
                                                 <span
                                                     class="font-size-13">{{ $flight->depart_at->format('D, M d, Y
-                                                                                                        H:i') ?? '-' }}
+                                                                                                                                                                                                                H:i') ??
+                                                        '-' }}
                                                 </span>
                                             </div>
                                         </div>
@@ -100,7 +101,8 @@
                                                 </h3>
                                                 <span
                                                     class="font-size-13">{{ $flight->arrive_at->format('D, M d, Y
-                                                                                                        H:i') ?? '-' }}</span>
+                                                                                                                                                                                                                H:i') ??
+                                                        '-' }}</span>
                                             </div>
                                         </div>
                                         <!-- end col-lg-4 -->
@@ -145,45 +147,35 @@
                                 <div class="sidebar-widget-item">
                                     <div class="sidebar-book-title-wrap mb-3">
                                         <h3>{{ $flight->airline->name }} {{ $flight->flight_number }}</h3>
-                                        @php
-                                            $lowestFare = $flight->fares->sortBy('price_cents')->first();
-                                        @endphp
 
-                                        @if ($lowestFare)
-                                            <p>
-                                                <span class="text-form">From</span>
-                                                <span class="text-value ms-2 me-1">
-                                                    {{ number_format($lowestFare->price_cents / 100, 2) }}
-                                                    {{ $lowestFare->currency }}
-                                                </span>
-                                            </p>
+                                        <!-- Integrated Booking Form -->
+                                        {{-- @livewire('flight.book-flight', [
+                                            'flight' => $flight,
+                                            'defaultFare' => $flight->fares->sortBy('price_cents')->first(),
+                                        ]) --}}
+
+                                        @auth
+                                            <livewire:flight.book-flight :flight="$flight" />
                                         @else
-                                            <p class="text-muted">No fare data available</p>
-                                        @endif
+                                            <a href="{{ route('login') }}" class="theme-btn text-center w-100 mb-2">
+                                                <i class="la la-sign-in me-2 font-size-18"></i>
+                                                Login to Book
+                                            </a>
+                                        @endauth
+
+                                        <!-- end sidebar-widget-item -->
                                     </div>
+                                    <!-- end sidebar-widget -->
                                 </div>
-                                <!-- end sidebar-widget-item -->
-
-
-                                <!-- Integrated Booking Form -->
-                                @livewire('flight.book-flight', [
-                                    'flight' => $flight,
-                                    'defaultFare' => $flight->fares->sortBy('price_cents')->first(),
-                                ])
-
-                                <!-- end sidebar-widget-item -->
+                                <!-- end sidebar -->
                             </div>
-                            <!-- end sidebar-widget -->
+                            <!-- end col-lg-4 -->
                         </div>
-                        <!-- end sidebar -->
+                        <!-- end row -->
                     </div>
-                    <!-- end col-lg-4 -->
+                    <!-- end container -->
                 </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </div>
-        <!-- end single-content-box -->
+                <!-- end single-content-box -->
     </section>
     <!-- end tour-detail-area -->
     <!-- ================================

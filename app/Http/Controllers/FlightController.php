@@ -13,9 +13,4 @@ class FlightController extends Controller
         return view('Flights.results');
     }
 
-    public function details(Flight $flight)
-    {
-        // dd($flight);
-        return view('Flights.details', compact('flight'));
-    }
 }

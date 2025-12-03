@@ -17,15 +17,16 @@ class FareSeeder extends Seeder
         $fares = [];
 
         foreach ($flights as $flight_id) {
+
             // Economy
             $fares[] = [
                 'flight_id' => $flight_id,
                 'fare_class' => 'economy',
-                'price_cents' => rand(20000, 80000),
+                'price_cents' => rand(20000, 90000),
                 'currency' => 'USD',
                 'refundable' => false,
                 'baggage_allowance' => '1 bag',
-                'rules_json' => json_encode(['changeable' => false, 'cancelable' => false]),
+                'rules_json' => json_encode(['changeable' => false]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -34,11 +35,11 @@ class FareSeeder extends Seeder
             $fares[] = [
                 'flight_id' => $flight_id,
                 'fare_class' => 'business',
-                'price_cents' => rand(90000, 150000),
+                'price_cents' => rand(100000, 250000),
                 'currency' => 'USD',
                 'refundable' => true,
                 'baggage_allowance' => '2 bags',
-                'rules_json' => json_encode(['changeable' => true, 'cancelable' => true]),
+                'rules_json' => json_encode(['changeable' => true]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

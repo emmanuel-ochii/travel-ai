@@ -19,15 +19,10 @@ Route::get('/flights/{flight}', FlightDetails::class)->name('flights.details');
 // Route::get('/flight/{flightId}/book/{fareId}', BookFlight::class)
 //     ->name('flight.book');
 
-// Route::get('/booking/success/{reference}', function ($reference) {
-//     return view('booking.success', compact('reference'));
-// })->name('booking.success');
 
-Route::get('/flight/{flightId}/book/{fareId}', BookFlight::class)
-    ->name('flight.book');
-
-
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/flight/{flight}/book', BookFlight::class)->name('flight.book');
+});
 
 
 Route::view('dashboard', 'dashboard')
