@@ -13,10 +13,6 @@ class FlightSearchService
     protected $apiProvider;
     protected $cacheTtl;
 
-    // public function __construct()
-    // {
-
-    // }
 
     public function __construct(\App\Providers\FlightApiProvider $apiProvider = null)
     {
@@ -43,9 +39,9 @@ class FlightSearchService
         return Cache::remember($key, $this->cacheTtl, function () use ($params, $perPage) {
             // Try local DB results
             $query = Flight::query()
-                ->with(['airline','origin','destination'])
-                ->whereHas('origin', fn($q)=> $q->where('iata', $params['origin']))
-                ->whereHas('destination', fn($q)=> $q->where('iata', $params['destination']))
+                ->with(['airline', 'origin', 'destination'])
+                ->whereHas('origin', fn($q) => $q->where('iata', $params['origin']))
+                ->whereHas('destination', fn($q) => $q->where('iata', $params['destination']))
                 ->whereDate('depart_at', $params['depart_date'])
                 ->orderBy('base_price_cents', 'asc');
 
@@ -79,6 +75,6 @@ class FlightSearchService
     protected function cacheKey(array $params): string
     {
         ksort($params);
-        return 'flight_search_'.md5(json_encode($params));
+        return 'flight_search_' . md5(json_encode($params));
     }
 }
