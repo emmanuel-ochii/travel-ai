@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             FlightSeeder::class,
             FareSeeder::class,
             BookingsSeeder::class,
+            UsersPersonaSeeder::class,
         ]);
 
         // Re-enable foreign key checks
