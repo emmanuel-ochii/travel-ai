@@ -1,7 +1,8 @@
 <div>
     <div class="card-item flight-card flight--card">
         <div class="card-img">
-            <img src="{{ $flight->airline_logo ?? 'guest/images/delta-airline.png' }}" alt="flight-logo-img" />
+            <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}" alt="flight-logo-img" width="100"/>
+
         </div>
         <div class="card-body">
             <div class="card-top-title d-flex justify-content-between">

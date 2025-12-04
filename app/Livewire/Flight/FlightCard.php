@@ -3,11 +3,13 @@
 namespace App\Livewire\Flight;
 
 use Livewire\Component;
+use App\Models\Flight;
+use App\Services\InteractionLogger;
 
 class FlightCard extends Component
 {
     public $flight;
-    
+
     public function mount($flight)
     {
         $this->flight = $flight;
