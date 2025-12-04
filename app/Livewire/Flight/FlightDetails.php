@@ -5,6 +5,7 @@ namespace App\Livewire\Flight;
 use App\Models\Flight;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use App\Services\InteractionLogger;
 
 #[Layout('layouts.frontend')]
 class FlightDetails extends Component
@@ -20,10 +21,17 @@ class FlightDetails extends Component
             'segments',
             'fares'
         ]);
+
+        // Log flight view interaction
+        InteractionLogger::log('view', [
+            'flight_id' => $flight->id,
+            'airline_id' => $flight->airline_id,
+            'depart_at' => $flight->depart_at?->toIso8601String(),
+        ]);
     }
+
     public function render()
     {
-        // dd($this->flight);
         return view('livewire.flight.flight-details');
     }
 }

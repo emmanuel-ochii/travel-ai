@@ -12,6 +12,7 @@ Route::prefix('/')->controller(FlightController::class)->group(function () {
     Route::get('search', 'search')->name('flights.search');
     // Route::get('details', 'details')->name('flights.details');
 });
+
 Route::get('/flights/{flight}', FlightDetails::class)->name('flights.details');
 
 
@@ -25,10 +26,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
 });
 
+Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->middleware('auth')->name('recommendations.feedback');
 
 
 

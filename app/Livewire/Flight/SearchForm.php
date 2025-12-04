@@ -4,6 +4,7 @@ namespace App\Livewire\Flight;
 
 use Livewire\Component;
 use App\Models\Airport;
+use App\Services\InteractionLogger;
 
 class SearchForm extends Component
 {
@@ -19,11 +20,11 @@ class SearchForm extends Component
 
     public $airports = [];
 
-public function mount()
-{
-    // Load airports for dropdown
-    $this->airports = Airport::orderBy('city')->get();
-}
+    public function mount()
+    {
+        // Load airports for dropdown
+        $this->airports = Airport::orderBy('city')->get();
+    }
 
     public function submit()
     {
@@ -37,6 +38,16 @@ public function mount()
             'children' => 'nullable|integer|min:0',
             'infants' => 'nullable|integer|min:0',
         ]);
+
+        InteractionLogger::log('search', [
+            'origin' => $this->from,
+            'destination' => $this->to,
+            'departing' => $this->departing,
+            'tripType' => $this->tripType,
+            'adults' => $this->adults,
+            'cabinClass' => $this->cabinClass,
+        ]);
+
 
         // Redirect to results with query params
         return redirect()->route('flights.search', [

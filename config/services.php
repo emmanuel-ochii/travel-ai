@@ -39,5 +39,9 @@ return [
         'base_url' => env('FLIGHT_API_BASE_URL', null),
         'key' => env('FLIGHT_API_KEY', null),
     ],
+    'llm' => [
+        'endpoint' => env('LLM_ENDPOINT', ''),
+        'key' => env('LLM_KEY', null),
+    ],
 
 ];

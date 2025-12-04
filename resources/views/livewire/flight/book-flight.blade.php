@@ -43,6 +43,7 @@
 
     <div class="sidebar-widget-item mb-3">
         <h5>Total: {{ $fare->currency ?? 'USD' }} {{ number_format($totalPriceCents / 100, 2) }}</h5>
+
     </div>
 
     <div class="sidebar-widget-item">

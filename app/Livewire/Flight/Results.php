@@ -45,7 +45,8 @@ class Results extends Component
 
     public function updating($name, $value)
     {
-        if ($name !== 'page') $this->resetPage();
+        if ($name !== 'page')
+            $this->resetPage();
     }
 
     public function render(FlightSearchService $searchService)
@@ -71,7 +72,5 @@ class Results extends Component
         ]);
     }
 
-    // public function render(){
-    //     return view('livewire.flight.results');
-    // }
+
 }

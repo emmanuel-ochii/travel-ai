@@ -8,15 +8,15 @@ use App\Models\Fare;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
+use App\Services\InteractionLogger;
 
 #[Layout('layouts.frontend')]
 class BookFlight extends Component
 {
     public Flight $flight;
 
-    public int $fareId;
-    public Fare $fare;
-
+    public ?int $fareId = null;
+    public ?Fare $fare = null;
     public int $adults = 1;
     public int $children = 0;
     public int $infants = 0;
@@ -32,7 +32,12 @@ class BookFlight extends Component
         $selectedFare = $defaultFare ?? $flight->fares->sortBy('price_cents')->first();
 
         $this->fareId = $selectedFare->id;
-        $this->fare   = $selectedFare;
+        $this->fare = $selectedFare;
+
+        // Initialize passengers
+        $this->adults = 1;
+        $this->children = 0;
+        $this->infants = 0;
 
         $this->calculateTotal();
     }
@@ -45,15 +50,27 @@ class BookFlight extends Component
     }
 
     /** Auto-recalculate on passenger change */
-    public function updatedAdults()   { $this->sanitizePassengers(); }
-    public function updatedChildren() { $this->sanitizePassengers(); }
-    public function updatedInfants()  { $this->sanitizePassengers(); }
+    public function updatedAdults()
+    {
+        $this->sanitizePassengers();
+    }
+    public function updatedChildren()
+    {
+        $this->sanitizePassengers();
+    }
+    public function updatedInfants()
+    {
+        $this->sanitizePassengers();
+    }
 
     private function sanitizePassengers()
     {
-        if ($this->adults < 1) $this->adults = 1;
-        if ($this->children < 0) $this->children = 0;
-        if ($this->infants < 0) $this->infants = 0;
+        if ($this->adults < 1)
+            $this->adults = 1;
+        if ($this->children < 0)
+            $this->children = 0;
+        if ($this->infants < 0)
+            $this->infants = 0;
 
         $this->calculateTotal();
     }
@@ -70,15 +87,23 @@ class BookFlight extends Component
     public function submitBooking()
     {
         $booking = Booking::create([
-            'user_id'      => Auth::id(),
-            'flight_id'    => $this->flight->id,
-            'fare_id'      => $this->fare->id,
-            'passengers'   => $this->adults + $this->children + $this->infants,
+            'user_id' => Auth::id(),
+            'flight_id' => $this->flight->id,
+            'fare_id' => $this->fare->id,
+            'passengers' => $this->adults + $this->children + $this->infants,
             'total_price_cents' => $this->totalPriceCents,
-            'currency'     => $this->fare->currency,
-            'status'       => 'pending',
+            'currency' => $this->fare->currency,
+            'status' => 'pending',
             'booking_reference' => Booking::generateReference(),
         ]);
+
+        InteractionLogger::log('book', [
+            'flight_id' => $this->flight->id,
+            'fare_id' => $this->fare->id,
+            'passengers' => $this->adults + $this->children + $this->infants,
+            'total_price_cents' => $this->totalPriceCents,
+        ]);
+
 
         session()->flash('success', "Booking confirmed! Reference: {$booking->booking_reference}");
 
