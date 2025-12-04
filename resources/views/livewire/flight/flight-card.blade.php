@@ -1,7 +1,8 @@
 <div>
     <div class="card-item flight-card flight--card">
-        <div class="card-img">
-            <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}" alt="flight-logo-img" width="100"/>
+        <div class="card-img" style="width: 100%; height: 250px;">
+            <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}"
+                alt="flight-logo-img" />
 
         </div>
         <div class="card-body">
@@ -63,9 +64,34 @@
                     View Details
                 </a>
             </div>
+            {{-- Feedback --}}
+
+            <div class="btn-box text-center mt-2">
+                @auth
+                    @if ($hasVoted)
+                        <button class="btn btn-secondary disabled" style="opacity:0.6; cursor:not-allowed;">
+                            {{ $alreadyLiked ? '👍 Feedback submitted (Liked)' : '👎 Feedback submitted (Disliked)' }}
+                        </button>
+                    @else
+                        <button wire:click="vote(true)" class="btn btn-success me-2">
+                            👍 Like
+                        </button>
+
+                        <button wire:click="vote(false)" class="btn btn-danger">
+                            👎 Dislike
+                        </button>
+
+
+                    @endif
+                @else
+                    {{-- <a href="{{ route('login') }}" class="btn btn-outline-primary">
+                        Login to give feedback
+                    </a> --}}
+                @endauth
+
+            </div>
         </div>
         <!-- end card-body -->
     </div>
     <!-- end card-item -->
-
 </div>

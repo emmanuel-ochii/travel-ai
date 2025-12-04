@@ -28,9 +28,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
+    Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->name('recommendations.feedback');
 });
 
-Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->middleware('auth')->name('recommendations.feedback');
+
 
 
 
