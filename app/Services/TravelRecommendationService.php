@@ -28,6 +28,7 @@ class TravelRecommendationService
      * @param bool $useLlm
      * @return Collection
      */
+
     public function getRecommendations(int $limit = 5, bool $useLlm = false): Collection
     {
         $cacheKey = "user_{$this->user->id}_recommendations_" . ($useLlm ? 'llm' : 'local') . "_limit{$limit}";
@@ -39,47 +40,45 @@ class TravelRecommendationService
              * ------------------------------------------------------- */
             $signals = \App\Services\UserPreferenceAnalyzer::getUserSignals();
 
-            $origin = null;
-            $destination = null;
-
-            if (!empty($signals['top_route'])) {
-                [$origin, $destination] = explode('-', $signals['top_route']);
-
+            // Safely handle top_route
+            $topRoute = $signals['top_route'] ?? null;
+            if ($topRoute) {
+                [$origin, $destination] = explode('-', $topRoute);
             } else {
-                // fallback: use booking history
-                $lastBooking = $this->user->bookings()->latest()->first();
-                $origin = optional($lastBooking->flight->origin)->iata ?? null;
-                $destination = optional($lastBooking->flight->destination)->iata ?? null;
+                $origin = $destination = null;
             }
 
-            // If still no data → use trending routes
+            // Fallback to last booking if no top_route
+            if (!$origin || !$destination) {
+                $lastBooking = $this->user->bookings()->latest()->first();
+                $origin = $origin ?? $lastBooking?->flight?->origin?->iata;
+                $destination = $destination ?? $lastBooking?->flight?->destination?->iata;
+            }
+
+            // Fallback to popular routes if still missing
             if (!$origin || !$destination) {
                 $popular = PopularRoute::orderBy('search_count', 'desc')->first();
-
                 if ($popular) {
-                    $origin = $popular->origin;
-                    $destination = $popular->destination;
+                    $origin = $origin ?? $popular->origin;
+                    $destination = $destination ?? $popular->destination;
                 }
             }
 
-            // final fallback if NO personalization data exists
+            // If still no personalization data, return empty collection
             if (!$origin || !$destination) {
-                return Flight::inRandomOrder()->take($limit)->get();
+                return collect(); // NO random flights for cold-start
             }
-
 
             /** -------------------------------------------------------
              *  ✈️ STEP 2 — Generate baseline local recommendations
              * ------------------------------------------------------- */
             $recommendations = $this->localRecommender
-                ->recommend($origin, $destination, $limit * 2);
-
-            $recommendations = $recommendations->map(fn($item) => [
-                'flight' => is_array($item) && isset($item['flight']) ? $item['flight'] : $item,
-                'score' => $item['score'] ?? 0,
-                'reason' => strval($item['reason'] ?? ''),
-            ]);
-
+                ->recommend($origin, $destination, $limit * 2)
+                ->map(fn($item) => [
+                    'flight' => is_array($item) && isset($item['flight']) ? $item['flight'] : $item,
+                    'score' => $item['score'] ?? 0,
+                    'reason' => strval($item['reason'] ?? ''),
+                ]);
 
             /** -------------------------------------------------------
              *  🤖 STEP 3 — Apply LLM intelligence (optional)
@@ -89,13 +88,13 @@ class TravelRecommendationService
                 $context = [
                     'persona' => $this->user->persona,
                     'recent_bookings' => $this->user->bookings()->latest()->take(8)->get()->toArray(),
-                    'signals' => $signals, // 🚀 extra context for LLM reasoning
+                    'signals' => $signals,
                     'candidates' => $recommendations->map(fn($f) => [
-                        'id' => $f['flight']->id,
-                        'origin' => $f['flight']->origin->iata,
-                        'destination' => $f['flight']->destination->iata,
-                        'depart_at' => $f['flight']->depart_at->toIso8601String(),
-                        'price' => optional($f['flight']->fares->sortBy('price_cents')->first())->price_cents / 100,
+                        'id' => $f['flight']->id ?? null,
+                        'origin' => $f['flight']->origin?->iata ?? null,
+                        'destination' => $f['flight']->destination?->iata ?? null,
+                        'depart_at' => $f['flight']->depart_at?->toIso8601String() ?? null,
+                        'price' => optional($f['flight']->fares->sortBy('price_cents')->first())->price_cents / 100 ?? null,
                     ])->values()->all(),
                 ];
 
@@ -108,45 +107,52 @@ class TravelRecommendationService
                     $llmRecommendations = [];
                 }
 
-                $byId = $recommendations->keyBy(fn($f) => $f['flight']->id);
+                $byId = $recommendations->keyBy(fn($f) => $f['flight']->id ?? null);
 
                 foreach ($llmRecommendations as $rec) {
-                    if (!isset($byId[$rec['flight_id']]))
+                    $flightId = $rec['flight_id'] ?? null;
+                    if (!$flightId || !isset($byId[$flightId]))
                         continue;
 
-                    $flightItem = $byId[$rec['flight_id']];
+                    $flightItem = $byId[$flightId];
                     $localScore = $flightItem['score'];
                     $llmScore = min(1, max(0, $rec['score']));
 
                     // Weighted scoring
                     $flightItem['score'] = ($localScore * 0.6) + ($llmScore * 0.4);
 
-                    // Append LLM reasoning
-                    $llmReason = strval($rec['reason'] ?? '');
+                    // Merge LLM reason
                     $flightItem['reason'] = $flightItem['reason']
-                        ? $flightItem['reason'] . '; ' . $llmReason
-                        : $llmReason;
+                        ? $flightItem['reason'] . '; ' . strval($rec['reason'] ?? '')
+                        : strval($rec['reason'] ?? '');
 
-                    $byId[$rec['flight_id']] = $flightItem;
+                    $byId[$flightId] = $flightItem;
                 }
 
                 $recommendations = collect($byId);
             }
 
-
             /** -------------------------------------------------------
-             *  📦 STEP 4 — Format & return response
+             *  📦 STEP 4 — Filter and dynamically select cards
              * ------------------------------------------------------- */
-            return $recommendations
-                ->sortByDesc('score')
-                ->take($limit)
-                ->map(function ($item) {
-                    $flight = $item['flight'];
+            $sorted = $recommendations->sortByDesc('score');
+
+            // Only keep flights with score > 0 or a reason
+            $filtered = $sorted->filter(fn($item) => $item['score'] > 0 || !empty($item['reason']));
+
+            // Ensure at least 1 recommendation if possible
+            if ($filtered->isEmpty() && $sorted->isNotEmpty()) {
+                $filtered = $sorted->take(1);
+            }
+
+            return $filtered->map(function ($item) {
+                $flight = $item['flight'];
+                if ($flight) {
                     $flight->score = $item['score'];
-                    // $flight->reason = $item['reason'] ?: 'Recommended based on your travel interest';
                     $flight->reason = trim((string) ($item['reason'] ?? ''));
-                    return $flight;
-                });
+                }
+                return $flight;
+            })->filter(); // remove null flights
         });
     }
 }

@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class InteractionLogger
 {
-    public static function log(string $type, array $payload = [], ?Request $request = null)
-    {
-        $request ??= request();
+    // public static function log(string $type, array $payload = [], ?Request $request = null)
+    // {
+    //     $request ??= request();
 
-        return UserInteraction::create([
-            'user_id' => Auth::id(),
-            'type' => $type,
-            'payload' => $payload,
-            'ip' => $request->ip(),
-            'user_agent' => substr($request->userAgent() ?? '', 0, 500),
-            'created_at' => now(),
-        ]);
-    }
+    //     return UserInteraction::create([
+    //         'user_id' => Auth::id(),
+    //         'type' => $type,
+    //         'payload' => $payload,
+    //         'ip' => $request->ip(),
+    //         'user_agent' => substr($request->userAgent() ?? '', 0, 500),
+    //         'created_at' => now(),
+    //     ]);
+    // }
 }

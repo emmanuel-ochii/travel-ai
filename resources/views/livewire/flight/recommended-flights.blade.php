@@ -17,13 +17,15 @@
             @forelse($recommendedFlights as $flight)
                 @php
                     $lowestFare = $flight->fares->sortBy('price_cents')->first();
-                    $llmInfluenced = str_contains($flight->reason ?? '', ';');
+
+                    // Determine if the reason came from LLM
+                    $llmInfluenced = $useLlm && !empty($flight->reason);
 
                     // Log that the user viewed this flight card
-                    \App\Services\InteractionLogger::log('view', [
-                        'flight_id' => $flight->id,
-                        'fare_id' => $lowestFare->id ?? null,
-                    ]);
+                    // \App\Services\InteractionLogger::log('view', [
+                    //     'flight_id' => $flight->id,
+                    //     'fare_id' => $lowestFare->id ?? null,
+                    // ]);
                 @endphp
 
                 <div class="col-md-6 mb-4">
