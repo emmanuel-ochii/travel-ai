@@ -62,4 +62,6 @@
             @endforelse
         </div>
     </div>
+
+    {{-- @livewire('flight.recommended-flights') --}}
 @endsection

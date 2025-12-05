@@ -4,6 +4,7 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\RecommendationController;
 use App\Livewire\Flight\FlightDetails;
 use App\Livewire\Flight\BookFlight;
+use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -28,10 +29,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
-    Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->name('recommendations.feedback');
+    // Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->name('recommendations.feedback');
 });
 
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/recommendations', RecommendedFlights::class)->name('recommendations.index');
+});
 
 
 
