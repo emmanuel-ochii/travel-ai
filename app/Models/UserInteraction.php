@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UserInteraction extends Model
 {
@@ -30,7 +31,7 @@ class UserInteraction extends Model
     /**
      * Log a user interaction.
      */
-    public static function log(string $type, array $payload = [], ?\Illuminate\Http\Request $request = null)
+    public static function log(string $type, array $payload = [], ?Request $request = null)
     {
         $request ??= request();
 

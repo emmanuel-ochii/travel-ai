@@ -28,7 +28,6 @@ class LocalRecommender
     public function recommend(string $originIata, string $destinationIata, int $limit = 10): Collection
     {
         $flights = Flight::with(['fares', 'airline', 'origin', 'destination'])->get();
-
         $popularRoutes = Cache::get('popular_routes', collect());
         $userHistory = $this->getUserFlightHistory();
 
@@ -46,36 +45,31 @@ class LocalRecommender
     {
         $score = 0;
 
-        // Match origin
-        if ($flight->origin->iata === $originIata) {
+        // Origin & destination match
+        if ($flight->origin->iata === $originIata)
             $score += $this->weights['match_origin'];
-        }
-
-        // Match destination
-        if ($flight->destination->iata === $destinationIata) {
+        if ($flight->destination->iata === $destinationIata)
             $score += $this->weights['match_destination'];
-        }
 
-        // Popularity
+        // Popular route
         $popularity = $popularRoutes->firstWhere(
             fn($pr) =>
             $pr->origin === $flight->origin->iata && $pr->destination === $flight->destination->iata
         );
-
         if ($popularity) {
             $score += $this->weights['popular_route'] * min($popularity->search_count / 50, 1);
         }
 
-        // Past interactions
+        // Past interactions: views, clicks, likes, abandoned bookings
         if ($this->userId && $userHistory->isNotEmpty()) {
-            if ($userHistory->contains('airline_id', $flight->airline_id)) {
+            if ($userHistory->contains('flight_id', $flight->id)) {
                 $score += $this->weights['past_interests'];
             }
         }
 
         // Fare score (cheaper is better)
         $cheapest = $flight->fares->min('price_cents') ?? 99999999;
-        $normalizedPrice = max(0, 1 - ($cheapest / 200000)); // normalize threshold ~$2000
+        $normalizedPrice = max(0, 1 - ($cheapest / 200000)); // ~2000 USD threshold
         $score += $normalizedPrice * $this->weights['fare_score'];
 
         return (int) $score;
@@ -83,16 +77,15 @@ class LocalRecommender
 
     protected function getUserFlightHistory(): Collection
     {
-        if (!$this->userId) {
+        if (!$this->userId)
             return collect();
-        }
 
         return Cache::remember("user_history_{$this->userId}", now()->addHours(6), function () {
             return UserInteraction::where('user_id', $this->userId)
-                ->whereIn('type', ['feedback', 'booking', 'search'])
+                ->whereIn('type', ['search', 'view', 'select_fare', 'book', 'feedback', 'like', 'abandon'])
                 ->get()
                 ->pluck('payload')
-                ->collect();
+                ->flatten(1); // flatten so flight_id is accessible
         });
     }
 }
