@@ -43,5 +43,10 @@ return [
         'endpoint' => env('LLM_ENDPOINT', ''),
         'key' => env('LLM_KEY', null),
     ],
+    'groq' => [
+        'key' => env('GROQ_API_KEY'),
+        'model' => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
+        'endpoint' => 'https://api.groq.com/openai/v1/chat/completions',
+    ],
 
 ];

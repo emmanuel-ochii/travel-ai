@@ -39,6 +39,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::get('/test-groq', function () {
+    $service = app(\App\Services\AI\GroqLLMService::class);
+
+    return $service->getRecommendations([
+        'persona' => 'budget traveler',
+        'recent_bookings' => [],
+        'candidates' => [
+            ['id' => 1, 'origin' => 'LOS', 'destination' => 'DXB', 'price' => 450],
+            ['id' => 2, 'origin' => 'LOS', 'destination' => 'LHR', 'price' => 820],
+        ],
+    ]);
+});
 
 
 

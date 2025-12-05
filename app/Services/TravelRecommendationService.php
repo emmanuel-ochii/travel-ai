@@ -62,7 +62,8 @@ class TravelRecommendationService
                     ])->values()->all(),
                 ];
 
-                $llm = app(\App\Services\LLMService::class);
+                // $llm = app(\App\Services\LLMService::class);
+                $llm = app(\App\Services\AI\GroqLLMService::class);
 
                 try {
                     $llmRecommendations = $llm->getRecommendations($context);
