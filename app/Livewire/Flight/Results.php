@@ -40,7 +40,10 @@ class Results extends Component
     public function mount()
     {
         // basic guard
-        abort_if(!$this->from || !$this->to || !$this->departing, 400);
+        // abort_if(!$this->from || !$this->to || !$this->departing, 400);
+        if (!($this->from && $this->to && $this->departing)) {
+            return redirect()->route('home')->with('warning', 'Please search for flights first.');
+        }
     }
 
     public function updating($name, $value)
@@ -49,9 +52,9 @@ class Results extends Component
             $this->resetPage();
     }
 
-    public function render(FlightSearchService $searchService)
+    private function getParams()
     {
-        $params = [
+        return [
             'origin' => strtoupper($this->from),
             'destination' => strtoupper($this->to),
             'depart_date' => $this->departing,
@@ -64,12 +67,13 @@ class Results extends Component
             'class' => $this->cabinClass,
             'tripType' => $this->tripType,
         ];
+    }
 
-        $flights = $searchService->search($params, $this->perPage);
+    public function render(FlightSearchService $service)
+    {
+        $flights = $service->search($this->getParams(), 10);
 
-        return view('livewire.flight.results', [
-            'flights' => $flights,
-        ]);
+        return view('livewire.flight.results', compact('flights'));
     }
 
 

@@ -1,61 +1,7 @@
 <div>
-    {{-- <form wire:submit.prevent="submit" class="row align-items-center">
-
-        <!-- Flying From -->
-        <div class="col-lg-4">
-            <label>Flying from</label>
-            <input type="text" wire:model="from" class="form-control" placeholder="City or airport" />
-        </div>
-
-        <!-- Flying To -->
-        <div class="col-lg-4">
-            <label>Flying to</label>
-            <input type="text" wire:model="to" class="form-control" placeholder="City or airport" />
-        </div>
-
-        <!-- Departing -->
-        <div class="col-lg-4">
-            <label>Departing</label>
-            <input type="date" wire:model="depart_date" class="form-control" />
-        </div>
-
-        <!-- Returning (round-trip only) -->
-        @if ($tripType === 'round-trip')
-            <div class="col-lg-4">
-                <label>Returning</label>
-                <input type="date" wire:model="returning" class="form-control" />
-            </div>
-        @endif
-
-        <!-- Passengers -->
-        <div class="col-lg-4">
-            <label>Adults</label>
-            <input type="number" wire:model="passengers.adult" min="1" class="form-control" />
-        </div>
-        <div class="col-lg-4">
-            <label>Children</label>
-            <input type="number" wire:model="passengers.children" min="0" class="form-control" />
-        </div>
-        <div class="col-lg-4">
-            <label>Infants</label>
-            <input type="number" wire:model="passengers.infants" min="0" class="form-control" />
-        </div>
-
-        <!-- Cabin -->
-        <div class="col-lg-4">
-            <label>Cabin</label>
-            <select wire:model="cabin" class="form-control">
-                <option>Economy</option>
-                <option>Business</option>
-                <option>First class</option>
-            </select>
-        </div>
-
-        <div class="col-lg-4">
-            <button type="submit" class="theme-btn w-100 mt-2">Search Now</button>
-        </div>
-    </form> --}}
-
+    @if (session('warning'))
+        <div class="alert alert-warning">{{ session('warning') }}</div>
+    @endif
     <form wire:submit.prevent="submit" class="row align-items-center">
 
         <!-- Flying From -->

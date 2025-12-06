@@ -26,11 +26,18 @@ class SearchForm extends Component
         $this->airports = Airport::orderBy('city')->get();
     }
 
+    public function updatedTripType()
+    {
+        if ($this->tripType === 'one-way') {
+            $this->returning = null;
+        }
+    }
+
     public function submit()
     {
         // Validate input
         $this->validate([
-            'from' => 'required|string',
+            'from' => 'required|string|different:to',
             'to' => 'required|string',
             'departing' => 'required|date',
             'returning' => $this->tripType === 'round-trip' ? 'required|date|after_or_equal:departing' : 'nullable',
@@ -45,12 +52,18 @@ class SearchForm extends Component
         //     'departing' => $this->departing,
         //     'tripType' => $this->tripType,
         //     'adults' => $this->adults,
+        //     'children' => $this->children,
+        //     'infants' => $this->infants,
         //     'cabinClass' => $this->cabinClass,
         // ]);
 
+        return redirect()->route('flights.search', $this->params());
 
-        // Redirect to results with query params
-        return redirect()->route('flights.search', [
+    }
+
+    private function params()
+    {
+        return [
             'from' => $this->from,
             'to' => $this->to,
             'departing' => $this->departing,
@@ -60,7 +73,7 @@ class SearchForm extends Component
             'infants' => $this->infants,
             'cabinClass' => $this->cabinClass,
             'tripType' => $this->tripType,
-        ]);
+        ];
     }
 
 
