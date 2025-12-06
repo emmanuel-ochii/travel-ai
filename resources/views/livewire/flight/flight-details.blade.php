@@ -57,6 +57,8 @@
                         <div class="single-content-wrap padding-top-60px">
                             <div id="description" class="page-scroll">
                                 <div class="single-content-item pb-4">
+                                    <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}"
+                                        alt="flight-logo-img" width="280" />
                                     <h3 class="title font-size-26">{{ $flight->origin->city }} to
                                         {{ $flight->destination->city }}</h3>
                                     <div class="d-flex align-items-center pt-2">
@@ -77,10 +79,8 @@
                                                 <h3 class="title font-size-15 font-weight-medium">
                                                     Flight Take off
                                                 </h3>
-                                                <span
-                                                    class="font-size-13">{{ $flight->depart_at->format('D, M d, Y
-                                                                                                                                                                                                                H:i') ??
-                                                        '-' }}
+                                                <span class="font-size-13">{{ $flight->depart_at->format('D, M d, Y
+                                                    H:i') ?? '-' }}
                                                 </span>
                                             </div>
                                         </div>
@@ -88,8 +88,8 @@
                                         <div class="col-lg-4 col-sm-4">
                                             <div class="single-feature-titles text-center mb-3">
                                                 <i class="la la-clock-o text-color font-size-22"></i>
-                                                <span
-                                                    class="font-size-13 mt-n2">{{ intdiv($flight->duration_minutes, 60) }}h
+                                                <span class="font-size-13 mt-n2">{{ intdiv($flight->duration_minutes,
+                                                    60) }}h
                                                     {{ $flight->duration_minutes % 60 }}m</span>
                                             </div>
                                         </div>
@@ -99,10 +99,9 @@
                                                 <h3 class="title font-size-15 font-weight-medium">
                                                     Flight Landing
                                                 </h3>
-                                                <span
-                                                    class="font-size-13">{{ $flight->arrive_at->format('D, M d, Y
-                                                                                                                                                                                                                H:i') ??
-                                                        '-' }}</span>
+                                                <span class="font-size-13">{{ $flight->arrive_at->format('D, M d, Y
+                                                    H:i') ??
+                                                    '-' }}</span>
                                             </div>
                                         </div>
                                         <!-- end col-lg-4 -->
@@ -111,7 +110,8 @@
                                                 class="single-feature-titles text-center border-top border-bottom py-3 mb-4">
                                                 <h3 class="title font-size-15 font-weight-medium">
                                                     Total flight time:<span
-                                                        class="font-size-13 d-inline-block ms-1 text-gray">{{ intdiv($flight->duration_minutes, 60) }}h
+                                                        class="font-size-13 d-inline-block ms-1 text-gray">{{
+                                                        intdiv($flight->duration_minutes, 60) }}h
                                                         {{ $flight->duration_minutes % 60 }}m</span>
                                                 </h3>
                                             </div>
@@ -126,6 +126,7 @@
                                                     <h3 class="title font-size-15 font-weight-medium">
                                                         Airline
                                                     </h3>
+
                                                     <span class="font-size-13">{{ $flight->airline->name }}
                                                         {{ $flight->flight_number }}</span>
                                                 </div>
@@ -146,21 +147,23 @@
                             <div class="sidebar-widget single-content-widget">
                                 <div class="sidebar-widget-item">
                                     <div class="sidebar-book-title-wrap mb-3">
+                                        <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}"
+                                            alt="flight-logo-img" width="150" />
                                         <h3>{{ $flight->airline->name }} {{ $flight->flight_number }}</h3>
 
                                         <!-- Integrated Booking Form -->
                                         {{-- @livewire('flight.book-flight', [
-                                            'flight' => $flight,
-                                            'defaultFare' => $flight->fares->sortBy('price_cents')->first(),
+                                        'flight' => $flight,
+                                        'defaultFare' => $flight->fares->sortBy('price_cents')->first(),
                                         ]) --}}
 
                                         @auth
-                                            <livewire:flight.book-flight :flight="$flight" />
+                                        <livewire:flight.book-flight :flight="$flight" />
                                         @else
-                                            <a href="{{ route('login') }}" class="theme-btn text-center w-100 mb-2">
-                                                <i class="la la-sign-in me-2 font-size-18"></i>
-                                                Login to Book
-                                            </a>
+                                        <a href="{{ route('login') }}" class="theme-btn text-center w-100 mb-2">
+                                            <i class="la la-sign-in me-2 font-size-18"></i>
+                                            Login to Book
+                                        </a>
                                         @endauth
 
                                         <!-- end sidebar-widget-item -->

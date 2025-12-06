@@ -148,12 +148,17 @@
                                 </nav>
                             </div>
                             <!-- end main-menu-content -->
-                            <div class="nav-btn">
-                                <a href="become-local-expert.html" class="theme-btn">Become An Agent</a>
-                            </div>
+                            @auth
+                                <div class="nav-btn">
+                                    <a href="{{ url('/dashboard') }}" class="theme-btn"> Dashboard </a>
+
+                                </div>
+                                @else
+                                <div class="nav-btn">
+                                    <a href="{{ route('login') }}" class="theme-btn">Become An Agent</a>
+                                </div>
+                            @endauth
                             <!-- end nav-btn -->
-                        </div>
-                        <!-- end menu-wrapper -->
                     </div>
                     <!-- end col-lg-12 -->
                 </div>

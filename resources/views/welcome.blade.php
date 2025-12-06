@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ================================
-                START HERO-WRAPPER AREA
-            ================================= -->
+                    START HERO-WRAPPER AREA
+                ================================= -->
     <section class="hero-wrapper">
         <div class="hero-box hero-bg">
             <span class="line-bg line-bg1"></span>
@@ -1124,12 +1124,12 @@
     </section>
     <!-- end hero-wrapper -->
     <!-- ================================
-                END HERO-WRAPPER AREA
-            ================================= -->
+                    END HERO-WRAPPER AREA
+                ================================= -->
 
     <!-- ================================
-                START INFO AREA
-            ================================= -->
+                    START INFO AREA
+                ================================= -->
     <section class="info-area info-bg padding-top-50px padding-bottom-50px text-center">
         <div class="container">
             <div class="row">
@@ -1196,27 +1196,27 @@
     </section>
     <!-- end info-area -->
     <!-- ================================
-                END INFO AREA
-            ================================= -->
+                    END INFO AREA
+                ================================= -->
 
     <div class="section-block"></div>
 
-
     <!-- ================================
-         START ROUND-TRIP AREA
-         ================================= -->
+             START ROUND-TRIP AREA
+             ================================= -->
     <livewire:homepage.popular-routes />
     <!-- end round-trip-flight -->
 
 
     <!-- end round-trip-flight -->
     <!-- ================================
-                END ROUND-TRIP AREA
-            ================================= -->
+                    END ROUND-TRIP AREA
+                ================================= -->
 
     <!-- ================================
-                START HOTEL AREA
-            ================================= -->
+                    START HOTEL AREA
+                ================================= -->
+
     <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
         <div class="container-fluid">
             <div class="row">
@@ -1510,12 +1510,13 @@
     </section>
     <!-- end hotel-area -->
     <!-- ================================
-                END HOTEL AREA
-            ================================= -->
+                    END HOTEL AREA
+                ================================= -->
 
     <!-- ================================
-                START DESTINATION AREA
-            ================================= -->
+                    START DESTINATION AREA
+                ================================= -->
+
     <section class="destination-area section--padding">
         <div class="container">
             <div class="row align-items-center">
@@ -1700,12 +1701,13 @@
     </section>
     <!-- end destination-area -->
     <!-- ================================
-                END DESTINATION AREA
-            ================================= -->
+                    END DESTINATION AREA
+                ================================= -->
 
     <!-- ================================
-                   START TESTIMONIAL AREA
-            ================================= -->
+                       START TESTIMONIAL AREA
+                ================================= -->
+
     <section class="testimonial-area section-padding">
         <div class="container">
             <div class="row">
@@ -1842,12 +1844,12 @@
     </section>
     <!-- end testimonial-area -->
     <!-- ================================
-                   START TESTIMONIAL AREA
-            ================================= -->
+                       START TESTIMONIAL AREA
+                ================================= -->
 
     <!-- ================================
-                START CTA AREA
-            ================================= -->
+                    START CTA AREA
+                ================================= -->
     <section class="cta-area padding-top-100px padding-bottom-180px text-center">
         <div class="video-bg">
             <video autoplay loop>
@@ -1880,6 +1882,6 @@
     </section>
     <!-- end cta-area -->
     <!-- ================================
-                END CTA AREA
-            ================================= -->
+                    END CTA AREA
+                ================================= -->
 @endsection

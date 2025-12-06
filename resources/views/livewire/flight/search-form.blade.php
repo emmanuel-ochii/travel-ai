@@ -103,8 +103,6 @@
         <div class="col-lg-4">
             <button type="submit" class="theme-btn w-100 mt-2">Search Now</button>
         </div>
-
     </form>
-
 
 </div>
