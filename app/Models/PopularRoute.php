@@ -14,4 +14,7 @@ class PopularRoute extends Model
     ];
 
     public $timestamps = false;
+    protected $casts = [
+        'calculated_at' => 'datetime',
+    ];
 }

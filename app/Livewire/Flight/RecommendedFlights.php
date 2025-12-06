@@ -24,6 +24,7 @@ class RecommendedFlights extends Component
     public function toggleLLM()
     {
         $this->useLlm = !$this->useLlm;
+
         $service = new TravelRecommendationService(Auth::user());
         $this->recommendedFlights = $service->getRecommendations($this->limit, $this->useLlm);
     }

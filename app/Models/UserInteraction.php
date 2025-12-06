@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserInteraction extends Model
 {
+    use HasFactory;
+
     public $timestamps = false;
     protected $fillable = [
         'user_id',
@@ -31,17 +34,24 @@ class UserInteraction extends Model
     /**
      * Log a user interaction.
      */
-    public static function log(string $type, array $payload = [], ?Request $request = null)
-    {
-        $request ??= request();
+    // public static function log(string $type, array $payload = [], ?Request $request = null)
+    // {
+    //     $request ??= request();
 
-        return self::create([
-            'user_id' => Auth::id(),
-            'type' => $type,
-            'payload' => $payload,
-            'ip' => $request->ip(),
-            'user_agent' => substr($request->userAgent() ?? '', 0, 500),
-            'created_at' => now(),
-        ]);
+    //     return self::create([
+    //         'user_id' => Auth::id(),
+    //         'type' => $type,
+    //         'payload' => $payload,
+    //         'ip' => $request->ip(),
+    //         'user_agent' => substr($request->userAgent() ?? '', 0, 500),
+    //         'created_at' => now(),
+    //     ]);
+    // }
+
+
+
+    public static function log(string $type, array $payload = [], ?\Illuminate\Http\Request $request = null)
+    {
+        return \App\Services\InteractionLogger::log($type, $payload, $request);
     }
 }

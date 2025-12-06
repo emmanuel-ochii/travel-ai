@@ -15,10 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withSchedule(function (Schedule $schedule) {
-        // ⏳ Run your analytics command daily
-        $schedule->command('routes:update-popular')->daily();
-        // Or every hour if you want fresher data:
-        // $schedule->command('analytics:build-popular-routes')->hourly();
+        // $schedule->command('routes:update-popular')->everyThirtyMinutes();
+        $schedule->job(new \App\Jobs\CalculatePopularRoutes())->everyFifteenMinutes();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

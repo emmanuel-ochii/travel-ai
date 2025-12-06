@@ -2,32 +2,22 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Flight;
 use App\Models\PopularRoute;
-use App\Services\AI\GroqLLMService;
 use App\Services\AI\LocalRecommender;
+use App\Services\AI\GroqLLMService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class TravelRecommendationService
 {
-    protected User $user;
+    protected $user;
     protected LocalRecommender $localRecommender;
 
-    public function __construct(User $user)
+    public function __construct($user)
     {
         $this->user = $user;
-        $this->localRecommender = new LocalRecommender();
+        $this->localRecommender = new LocalRecommender($user->id ?? null);
     }
-
-    /**
-     * Get travel recommendations.
-     *
-     * @param int $limit
-     * @param bool $useLlm
-     * @return Collection
-     */
 
     public function getRecommendations(int $limit = 5, bool $useLlm = false): Collection
     {
@@ -35,12 +25,12 @@ class TravelRecommendationService
 
         return Cache::remember($cacheKey, now()->addMinutes(15), function () use ($limit, $useLlm) {
 
-            /** -------------------------------------------------------
+            /** ------------------------------------------------------
              *  🧠 STEP 1 — Determine personalization source
              * ------------------------------------------------------- */
             $signals = \App\Services\UserPreferenceAnalyzer::getUserSignals();
 
-            // Safely handle top_route
+            // Safely handle top_route (format "ORIGIN-DEST")
             $topRoute = $signals['top_route'] ?? null;
             if ($topRoute) {
                 [$origin, $destination] = explode('-', $topRoute);
@@ -64,12 +54,12 @@ class TravelRecommendationService
                 }
             }
 
-            // If still no personalization data, return empty collection
+            // If still no personalization data, return empty collection (strict cold-start)
             if (!$origin || !$destination) {
                 return collect(); // NO random flights for cold-start
             }
 
-            /** -------------------------------------------------------
+            /** ------------------------------------------------------
              *  ✈️ STEP 2 — Generate baseline local recommendations
              * ------------------------------------------------------- */
             $recommendations = $this->localRecommender
@@ -80,7 +70,7 @@ class TravelRecommendationService
                     'reason' => strval($item['reason'] ?? ''),
                 ]);
 
-            /** -------------------------------------------------------
+            /** ------------------------------------------------------
              *  🤖 STEP 3 — Apply LLM intelligence (optional)
              * ------------------------------------------------------- */
             if ($useLlm && $recommendations->isNotEmpty() && config('services.groq.key')) {
@@ -99,7 +89,6 @@ class TravelRecommendationService
                 ];
 
                 $llm = app(GroqLLMService::class);
-
                 try {
                     $llmRecommendations = $llm->getRecommendations($context);
                 } catch (\Exception $e) {
@@ -107,32 +96,36 @@ class TravelRecommendationService
                     $llmRecommendations = [];
                 }
 
+                // Map existing recommendations by flight id for easy lookup
                 $byId = $recommendations->keyBy(fn($f) => $f['flight']->id ?? null);
 
                 foreach ($llmRecommendations as $rec) {
                     $flightId = $rec['flight_id'] ?? null;
-                    if (!$flightId || !isset($byId[$flightId]))
+                    if (!$flightId || !isset($byId[$flightId])) {
                         continue;
+                    }
 
                     $flightItem = $byId[$flightId];
-                    $localScore = $flightItem['score'];
-                    $llmScore = min(1, max(0, $rec['score']));
+                    $localScore = floatval($flightItem['score']);
+                    $llmScore = min(1, max(0, floatval($rec['score'] ?? 0)));
 
-                    // Weighted scoring
-                    $flightItem['score'] = ($localScore * 0.6) + ($llmScore * 0.4);
+                    // Weighted scoring (you can tune weights here)
+                    $combinedScore = ($localScore * 0.6) + ($llmScore * 0.4);
 
-                    // Merge LLM reason
-                    $flightItem['reason'] = $flightItem['reason']
-                        ? $flightItem['reason'] . '; ' . strval($rec['reason'] ?? '')
-                        : strval($rec['reason'] ?? '');
+                    // OVERWRITE reason with LLM reason — do not merge, per requirement
+                    $flightItem['score'] = round($combinedScore, 2);
+                    $flightItem['reason'] = strval($rec['reason'] ?? '');
+
+                    // mark that this flight was influenced by LLM
+                    $flightItem['llm_influenced'] = true;
 
                     $byId[$flightId] = $flightItem;
                 }
 
-                $recommendations = collect($byId);
+                $recommendations = collect($byId)->values();
             }
 
-            /** -------------------------------------------------------
+            /** ------------------------------------------------------
              *  📦 STEP 4 — Filter and dynamically select cards
              * ------------------------------------------------------- */
             $sorted = $recommendations->sortByDesc('score');
@@ -145,11 +138,14 @@ class TravelRecommendationService
                 $filtered = $sorted->take(1);
             }
 
+            // Attach score/reason to flight models and add llm flag (false if not present)
             return $filtered->map(function ($item) {
+                /** @var \App\Models\Flight $flight */
                 $flight = $item['flight'];
                 if ($flight) {
-                    $flight->score = $item['score'];
+                    $flight->score = $item['score'] ?? 0;
                     $flight->reason = trim((string) ($item['reason'] ?? ''));
+                    $flight->llm_influenced = !empty($item['llm_influenced']);
                 }
                 return $flight;
             })->filter(); // remove null flights
