@@ -1,10 +1,8 @@
-# Use official PHP image with extensions for Laravel
 FROM php:8.2-fpm
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -15,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl gd
+    libicu-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl gd intl
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,7 +28,7 @@ RUN composer install --optimize-autoloader --no-dev
 # Generate Laravel key
 RUN php artisan key:generate
 
-# Expose port 8080 for Render
+# Expose port for Render
 EXPOSE 8080
 
 # Start Laravel
