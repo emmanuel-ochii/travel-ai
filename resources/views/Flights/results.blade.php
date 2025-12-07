@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ================================
-            START BREADCRUMB AREA
-        ================================= -->
+                START BREADCRUMB AREA
+            ================================= -->
     <section class="breadcrumb-area bread-bg-6">
         <div class="breadcrumb-wrap">
             <div class="container">
@@ -43,12 +43,12 @@
     </section>
     <!-- end breadcrumb-area -->
     <!-- ================================
-            END BREADCRUMB AREA
-        ================================= -->
+                END BREADCRUMB AREA
+            ================================= -->
 
     <!-- ================================
-            START CARD AREA
-        ================================= -->
+                START CARD AREA
+            ================================= -->
     <section class="card-area section--padding">
         <div class="container">
             <div class="row">
@@ -174,73 +174,404 @@
     </section>
     <!-- end card-area -->
     <!-- ================================
-            END CARD AREA
-        ================================= -->
+                END CARD AREA
+            ================================= -->
 
     <div class="section-block"></div>
 
-    {{-- <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
-        <div class="container-fluid">
+    @livewire('flight.recommended-carousel')
+
+
+    <!-- ================================
+        START BOOKING AREA
+    ================================= -->
+    <section class="booking-area padding-top-100px padding-bottom-70px">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading text-center">
-                        <h2 class="sec__title line-height-55">
-                            Recommendations <br />
-                            From Your Search
-                        </h2>
+                <div class="col-lg-8">
+                    <div class="form-box">
+                        <div class="form-title-wrap">
+                            <h3 class="title">Booking Submission</h3>
+                        </div>
+                        <!-- form-title-wrap -->
+                        <div class="form-content">
+                            <div class="contact-form-action">
+                                <form method="post">
+                                    <div class="row">
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">First Name</label>
+                                                <div class="form-group">
+                                                    <span class="la la-user form-icon"></span>
+                                                    <input class="form-control" type="text" name="text"
+                                                        placeholder="First name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Last Name</label>
+                                                <div class="form-group">
+                                                    <span class="la la-user form-icon"></span>
+                                                    <input class="form-control" type="text" name="text"
+                                                        placeholder="Last name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Your Email</label>
+                                                <div class="form-group">
+                                                    <span class="la la-envelope-o form-icon"></span>
+                                                    <input class="form-control" type="email" name="email"
+                                                        placeholder="Email address" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Phone Number</label>
+                                                <div class="form-group">
+                                                    <span class="la la-phone form-icon"></span>
+                                                    <input class="form-control" type="text" name="text"
+                                                        placeholder="Phone Number" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <div class="col-lg-12 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Address Line</label>
+                                                <div class="form-group">
+                                                    <span class="la la-map-marked form-icon"></span>
+                                                    <input class="form-control" type="text" name="text"
+                                                        placeholder="Address line" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-12 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Country</label>
+                                                <div class="form-group select2-container-wrapper">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="select-contain-select">
+                                                            <option value="select-country">
+                                                                Select country
+                                                            </option>
+                                                            <option value="Afghanistan">Afghanistan</option>
+                                                            <option value="Zimbabwe">Zimbabwe</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <div class="col-lg-6 responsive-column">
+                                            <div class="input-box">
+                                                <label class="label-text">Country Code</label>
+                                                <div class="form-group select2-container-wrapper">
+                                                    <div class="select-contain w-auto">
+                                                        <select class="select-contain-select">
+                                                            <option value="country-code">
+                                                                Select country code
+                                                            </option>
+                                                            <option value="1">United Kingdom (+44)</option>
+                                                            <option value="2">United States (+1)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end col-lg-6 -->
+                                        <!-- end col-lg-12 -->
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- end contact-form-action -->
+                        </div>
+                        <!-- end form-content -->
                     </div>
-                    <!-- end section-heading -->
-                </div>
-                <!-- end col-lg-12 -->
-            </div>
-            <!-- end row -->
-            <div class="row padding-top-50px">
-                <div class="col-lg-12">
-                    <div class="hotel-card-wrap">
-                        <div class="hotel-card-carousel carousel-action">
-                            <div class="card-item mb-0">
-                                <div class="card-img">
-                                    <a href="flight-details" class="d-block">
-                                        <img src="images/img1.jpg" alt="airline-img" />
-                                    </a>
-                                    <span class="badge">Cheaper</span>
+                    <!-- end form-box -->
+                    <div class="form-box">
+                        <div class="form-title-wrap">
+                            <h3 class="title">Your Card Information</h3>
+                        </div>
+                        <!-- form-title-wrap -->
+                        <div class="form-content">
+                            <div class="section-tab check-mark-tab text-center pb-4">
+                                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="credit-card-tab" data-bs-toggle="tab"
+                                            href="#credit-card" role="tab" aria-controls="credit-card"
+                                            aria-selected="false">
+                                            <i class="la la-check icon-element"></i>
+                                            <img src="{{asset('guest/images/payment-img.png')}}" alt="" />
+                                            <span class="d-block pt-2">Payment with credit card</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="paypal-tab" data-bs-toggle="tab" href="#paypal"
+                                            role="tab" aria-controls="paypal" aria-selected="true">
+                                            <i class="la la-check icon-element"></i>
+                                            <img src="{{asset('guest/images/paypal.png')}}" alt="" />
+                                            <span class="d-block pt-2">Payment with PayPal</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="payoneer-tab" data-bs-toggle="tab" href="#payoneer"
+                                            role="tab" aria-controls="payoneer" aria-selected="true">
+                                            <i class="la la-check icon-element"></i>
+                                            <img src="{{asset('guest/images/bank_transfer.png')}}" alt="" />
+                                            <span class="d-block pt-2">Payment with Bank Transfer</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end section-tab -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="credit-card" role="tabpanel"
+                                    aria-labelledby="credit-card-tab">
+                                    <div class="contact-form-action">
+                                        <form method="post">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Card Holder Name</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-credit-card form-icon"></span>
+                                                            <input class="form-control" type="text" name="text"
+                                                                placeholder="Card holder name" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Card Number</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-credit-card form-icon"></span>
+                                                            <input class="form-control" type="text" name="text"
+                                                                placeholder="Card number" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="input-box">
+                                                                <label class="label-text">Expiry Month</label>
+                                                                <div class="form-group">
+                                                                    <span class="la la-credit-card form-icon"></span>
+                                                                    <input class="form-control" type="text"
+                                                                        name="text" placeholder="MM" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="input-box">
+                                                                <label class="label-text">Expiry Year</label>
+                                                                <div class="form-group">
+                                                                    <span class="la la-credit-card form-icon"></span>
+                                                                    <input class="form-control" type="text"
+                                                                        name="text" placeholder="YY" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">CVV</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-pencil form-icon"></span>
+                                                            <input class="form-control" type="text" name="text"
+                                                                placeholder="CVV" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-12">
+                                                    <div class="input-box">
+                                                        <div class="form-group">
+                                                            <div class="custom-checkbox">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                    id="agreechb" />
+                                                                <label for="agreechb">By continuing, you agree to the
+                                                                    <a href="#">Terms and Conditions</a>.</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-12 -->
+                                                <div class="col-lg-12">
+                                                    <div class="btn-box">
+                                                        <button class="theme-btn" type="submit">
+                                                            Confirm Booking
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-12 -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- end contact-form-action -->
                                 </div>
-                                <div class="card-body">
-                                    <h3 class="card-title">
-                                        <a href="hotel-single.html">Airline_name</a>
-                                    </h3>
-                                    <p class="card-meta"> date_of_departure -> date_of_arrival </p>
-                                    <div class="card-rating">
-                                        <span class="badge text-white"> stops </span>
-                                        <span class="review__text">Average</span>
+                                <!-- end tab-pane-->
+                                <div class="tab-pane fade" id="paypal" role="tabpanel" aria-labelledby="paypal-tab">
+                                    <div class="contact-form-action">
+                                        <form method="post">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Email Address</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-envelope form-icon"></span>
+                                                            <input class="form-control" type="email" name="email"
+                                                                placeholder="Enter email address" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Password</label>
+                                                        <div class="form-group">
+                                                            <span class="la la-lock form-icon"></span>
+                                                            <input class="form-control" type="text" name="text"
+                                                                placeholder="Enter password" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-12">
+                                                    <div class="btn-box">
+                                                        <button class="theme-btn" type="submit">
+                                                            Login Account
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-12 -->
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="card-price d-flex align-items-center justify-content-between">
-                                        <p>
-                                            <span class="price__from">From</span>
-                                            <span class="price__num">$88.00</span>
-                                        </p>
-                                        <a href="flight_details_url" class="btn-text">See details<i
-                                                class="la la-angle-right"></i></a>
+                                    <!-- end contact-form-action -->
+                                </div>
+                                <!-- end tab-pane-->
+                                <div class="tab-pane fade" id="payoneer" role="tabpanel"
+                                    aria-labelledby="payoneer-tab">
+                                    <div class="contact-form-action">
+                                        <form method="post">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Bank Name</label>
+                                                        <h3>BANK NAME HERE</h3>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-6">
+                                                    <div class="input-box">
+                                                        <label class="label-text">Account name</label>
+                                                       <h4>Account name</h4>
+
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-6 -->
+                                                <div class="col-lg-12">
+                                                    <div class="btn-box">
+                                                        <button class="theme-btn" type="submit">
+                                                           I confirm i have made the transfer
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- end col-lg-12 -->
+                                            </div>
+                                        </form>
                                     </div>
+                                    <!-- end contact-form-action -->
+                                </div>
+                                <!-- end tab-pane-->
+                            </div>
+                            <!-- end tab-content -->
+                        </div>
+                        <!-- end form-content -->
+                    </div>
+                    <!-- end form-box -->
+                </div>
+                <!-- end col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="form-box booking-detail-form">
+                        <div class="form-title-wrap">
+                            <h3 class="title">Your Booking</h3>
+                        </div>
+                        <!-- end form-title-wrap -->
+                        <div class="form-content">
+                            <div class="card-item shadow-none radius-none mb-0">
+                                <div class="card-img pb-4">
+                                     <img src="airline_logo_here" alt="room-img" />
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h3 class="card-title">Airline_name and Flight_number</h3>
+                                        </div>
+                                    </div>
+                                    <div class="section-block"></div>
+                                    <ul class="list-items list-items-2 list-items-flush py-2">
+                                        <li class="font-size-15">
+                                            <span class="w-auto d-block mb-n1"><i
+                                                    class="la la-calendar me-1 font-size-17"></i>From: Origin</span>12 May 2020
+                                            7:40am
+                                        </li>
+                                        <li class="font-size-15">
+                                            <span class="w-auto d-block mb-n1"><i
+                                                    class="la la-calendar me-1 font-size-17"></i>To: Destination</span>16 May 2020
+                                            8:40am
+                                        </li>
+                                    </ul>
+                                    <h3 class="card-title pb-3">Order Details</h3>
+                                    <div class="section-block"></div>
+                                    <ul class="list-items list-items-2 py-3">
+                                        <li><span>Class Type:</span>Economy</li>
+                                        <li><span>Adults:</span>1</li>
+                                        <li><span>Children:</span>1</li>
+                                        <li><span>Infants:</span>2 </li>
+                                    </ul>
+                                    <div class="section-block"></div>
+                                    <ul class="list-items list-items-2 pt-3">
+                                        <li><span>Sub Total:</span>$240</li>
+                                        <li><span>Taxes And Fees:</span>$5</li>
+                                        <li><span>Total Price:</span>$245</li>
+                                    </ul>
                                 </div>
                             </div>
                             <!-- end card-item -->
                         </div>
-                        <!-- end hotel-card-carousel -->
+                        <!-- end form-content -->
                     </div>
+                    <!-- end form-box -->
                 </div>
-                <!-- end col-lg-12 -->
+                <!-- end col-lg-4 -->
             </div>
             <!-- end row -->
         </div>
-        <!-- end container-fluid -->
-    </section> --}}
+        <!-- end container -->
+    </section>
+    <!-- end booking-area -->
+    <!-- ================================
+        END BOOKING AREA
+    ================================= -->
 
-    @livewire('flight.recommended-carousel')
 
     <!-- ================================
-            START INFO AREA
-        ================================= -->
+                START INFO AREA
+            ================================= -->
     <section class="info-area info-bg padding-top-90px padding-bottom-70px">
         <div class="container">
             <div class="row">
@@ -299,6 +630,6 @@
     </section>
     <!-- end info-area -->
     <!-- ================================
-            END INFO AREA
-        ================================= -->
+                END INFO AREA
+            ================================= -->
 @endsection

@@ -4,6 +4,9 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\RecommendationController;
 use App\Livewire\Flight\FlightDetails;
 use App\Livewire\Flight\BookFlight;
+use App\Livewire\Flight\CheckoutFlight;
+use App\Livewire\Flight\PaymentFlight;
+use App\Livewire\Flight\CheckoutPaymentFlight;
 use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 
@@ -20,11 +23,11 @@ Route::prefix('/')->controller(FlightController::class)->group(function () {
 Route::get('/flights/{flight}', FlightDetails::class)->name('flights.details');
 
 
-// Route::get('/flight/{flightId}/book/{fareId}', BookFlight::class)
-//     ->name('flight.book');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/flight/{flight}/book', BookFlight::class)->name('flight.book');
+    Route::get('/flights/{booking}/checkout', CheckoutFlight::class)->name('flights.checkout');
+    Route::get('/flights/{booking}/payment', PaymentFlight::class)->name('flights.payment');
+    Route::get('/flights/{booking}/checkout-payment', CheckoutPaymentFlight::class)->name('flights.checkout_payment');
 });
 
 

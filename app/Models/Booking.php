@@ -14,9 +14,16 @@ class Booking extends Model
         'flight_id',
         'fare_id',
         'passengers',
+        'adults',
+        'children',
+        'infants',
         'total_price_cents',
         'currency',
         'status',
+        'first_name',
+        'last_name',
+        'phone',
+        'address',
         'booking_reference'
     ];
 
