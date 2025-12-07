@@ -25,14 +25,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application code
 COPY . .
 
-# Copy .env.example to .env so Laravel can run key:generate
-RUN cp .env.example .env
-
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
-
-# Generate Laravel key
-RUN php artisan key:generate
 
 # Expose port for Render
 EXPOSE 8080
