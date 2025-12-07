@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BookingResource\Pages;
-use App\Filament\Resources\BookingResource\RelationManagers;
 use App\Models\Booking;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BookingResource extends Resource
 {
@@ -43,10 +40,17 @@ class BookingResource extends Resource
                     ->required()
                     ->maxLength(8)
                     ->default('USD'),
-                Forms\Components\TextInput::make('status')
+
+                // ✅ Status as Select Dropdown
+                Forms\Components\Select::make('status')
                     ->required()
-                    ->maxLength(255)
+                    ->options([
+                        'pending' => 'Pending',
+                        'confirmed' => 'Confirmed',
+                        'cancelled' => 'Cancelled',
+                    ])
                     ->default('pending'),
+
                 Forms\Components\TextInput::make('booking_reference')
                     ->maxLength(255)
                     ->default(null),
@@ -57,41 +61,38 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('flight_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('fare_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('passengers')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total_price_cents')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('currency')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('booking_reference')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('user_id')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('flight_id')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('fare_id')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('passengers')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('total_price_cents')->numeric()->sortable(),
+                Tables\Columns\TextColumn::make('currency')->searchable(),
+
+                // ✅ Status column as BadgeColumn
+                Tables\Columns\BadgeColumn::make('status')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->colors([
+                        'primary' => 'pending',
+                        'success' => 'confirmed',
+                        'danger' => 'cancelled',
+                    ])
+                    ->getStateUsing(fn(Booking $record) => match ($record->status) {
+                        'pending' => 'Pending',
+                        'confirmed' => 'Confirmed',
+                        'cancelled' => 'Cancelled',
+                        default => $record->status,
+                    }),
+
+                Tables\Columns\TextColumn::make('booking_reference')->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // ✅ Removed confirm payment button because status is now editable
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
