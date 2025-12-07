@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Booking::class);
     }
+    /** Restrict Filament access to only users with admin role */
+    public function canAccessFilament(): bool
+    {
+        return $this->hasRole('admin');
+    }
 }

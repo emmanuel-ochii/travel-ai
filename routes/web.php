@@ -25,8 +25,6 @@ Route::get('/flights/{flight}', FlightDetails::class)->name('flights.details');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/flight/{flight}/book', BookFlight::class)->name('flight.book');
-    Route::get('/flights/{booking}/checkout', CheckoutFlight::class)->name('flights.checkout');
-    Route::get('/flights/{booking}/payment', PaymentFlight::class)->name('flights.payment');
     Route::get('/flights/{booking}/checkout-payment', CheckoutPaymentFlight::class)->name('flights.checkout_payment');
 });
 
