@@ -27,9 +27,7 @@ class Booking extends Model
         'booking_reference'
     ];
 
-    // -----------------------------
     // RELATIONSHIPS
-    // -----------------------------
     public function flight()
     {
         return $this->belongsTo(Flight::class);
@@ -45,9 +43,7 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    // -----------------------------
     // GENERATE BOOKING REFERENCE
-    // -----------------------------
     public static function generateReference()
     {
         return 'BK-' . strtoupper(uniqid());
