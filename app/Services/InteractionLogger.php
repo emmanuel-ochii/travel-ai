@@ -21,55 +21,49 @@ class InteractionLogger
      * @param Request|null $request
      * @return UserInteraction|null
      */
-    // public static function log(string $type, array $payload = [], ?Request $request = null)
-    // {
-    //     $request ??= request();
-
-    //     return UserInteraction::create([
-    //         'user_id' => Auth::id(),
-    //         'type' => $type,
-    //         'payload' => $payload,
-    //         'ip' => $request->ip(),
-    //         'user_agent' => substr($request->userAgent() ?? '', 0, 500),
-    //         'created_at' => now(),
-    //     ]);
-    // }
-
 
 
     public static function log(string $type, array $payload = [], ?Request $request = null)
     {
-        $request ??= request();
+        // Only log authenticated users
         $userId = Auth::id();
-
-        // Minimal payload sanitization + truncate
-        $payloadJson = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        // limit to 1500 chars to avoid huge columns unless explicitly allowed
-        if (strlen($payloadJson) > 1500) {
-            $payloadJson = substr($payloadJson, 0, 1500) . '...';
+        if (!$userId) {
+            return null; // Prevent guest spam logs
         }
 
-        // Build a dedupe key to avoid duplicate logs in a short timeframe
-        $dedupeKey = 'interaction_dedupe:' . md5("u:{$userId}|t:{$type}|p:{$payloadJson}");
-        if (Cache::add($dedupeKey, true, 10)) {
-            $recordData = [
-                'user_id' => $userId,
-                'type' => $type,
-                // store as JSON string in DB payload column (DB field probably json/text)
-                'payload' => $payloadJson,
-                'created_at' => now(),
-            ];
+        $request ??= request();
 
-            // Optionally include ip and user_agent when allowed or in non-production
-            if (config('app.log_extra_interaction', false)) {
-                $recordData['ip'] = $request->ip();
-                $recordData['user_agent'] = substr($request->userAgent() ?? '', 0, 500);
-            }
+        // Sanitize + compact payload
+        $payloadJson = json_encode(
+            $payload,
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        );
 
-            return UserInteraction::create($recordData);
+        // Truncate if oversized
+        $payloadJson = strlen($payloadJson) > 1500
+            ? substr($payloadJson, 0, 1500) . '...'
+            : $payloadJson;
+
+        // Deduplication key (prevents repeated logs within 10 seconds)
+        $dedupeKey = 'interaction:' . md5("u:$userId|t:$type|p:$payloadJson");
+        if (!Cache::add($dedupeKey, true, 10)) {
+            return null; // Already logged recently — skip
         }
 
-        // If we've recently logged identical payload, skip duplicate
-        return null;
+        $record = [
+            'user_id' => $userId,
+            'type' => $type,
+            'payload' => $payloadJson,
+            'created_at' => now(),
+        ];
+
+        // Attach device info only when explicitly enabled
+        if (config('app.log_extra_interaction', false)) {
+            $record['ip'] = $request->ip();
+            $record['user_agent'] = substr($request->userAgent() ?? '', 500);
+        }
+
+        return UserInteraction::create($record);
     }
+
 }

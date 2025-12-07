@@ -20,7 +20,7 @@ class Booking extends Model
         'booking_reference'
     ];
 
-   // -----------------------------
+    // -----------------------------
     // RELATIONSHIPS
     // -----------------------------
     public function flight()
@@ -45,5 +45,12 @@ class Booking extends Model
     {
         return 'BK-' . strtoupper(uniqid());
         // Example: BK-65FA4C9923A8
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($booking) {
+            $booking->booking_reference = strtoupper('BK-' . uniqid());
+        });
     }
 }

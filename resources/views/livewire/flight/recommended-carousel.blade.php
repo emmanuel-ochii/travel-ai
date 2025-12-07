@@ -54,8 +54,12 @@
                                         <p>
                                             <span class="price__from">From</span>
                                             <span class="price__num">
-                                                {{ $flight->currency }}{{ number_format($flight->price / 100, 0) }}
+                                                @php
+                                                    $lowestFare = $flight->fares->min('price_cents') ?? 0;
+                                                @endphp
+                                                {{ number_format($lowestFare / 100, 2) }}
                                             </span>
+
                                         </p>
                                         <a href="{{ route('flights.details', $flight->id) }}" class="btn-text">
                                             See details <i class="la la-angle-right"></i>

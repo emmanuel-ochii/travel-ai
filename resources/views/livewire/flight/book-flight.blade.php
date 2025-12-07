@@ -16,6 +16,7 @@
     <div class="sidebar-widget-item mb-3">
         <label class="label-text">Select Fare Class</label>
         <select wire:model="fareId" class="form-select">
+            <option value="">Select Class</option>
             @foreach ($flight->fares as $f)
                 <option value="{{ $f->id }}">
                     {{ ucfirst($f->fare_class) }} — {{ number_format($f->price_cents / 100, 2) }} {{ $f->currency }}

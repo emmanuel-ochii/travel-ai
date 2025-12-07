@@ -6,6 +6,7 @@ use App\Models\Flight;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Services\InteractionLogger;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('layouts.frontend')]
 class FlightDetails extends Component
@@ -23,11 +24,14 @@ class FlightDetails extends Component
         ]);
 
         // Log flight view interaction
-        InteractionLogger::log('view', [
-            'flight_id' => $flight->id,
-            'airline_id' => $flight->airline_id,
-            'depart_at' => $flight->depart_at?->toIso8601String(),
-        ]);
+        if (Auth::check()) {
+            InteractionLogger::log('flight_view', [
+                'flight_id' => $flight->id,
+                'airline' => $flight->airline?->name,
+                'route' => ($flight->origin?->iata ?? '') . '-' . ($flight->destination?->iata ?? ''),
+                'depart_at' => $flight->depart_at?->toIso8601String(),
+            ]);
+        }
     }
 
     public function render()

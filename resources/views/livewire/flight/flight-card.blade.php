@@ -3,7 +3,6 @@
         <div class="card-img" style="width: 100%; height: 250px;">
             <img src="{{ $flight->airline->logo_url ?? asset('guest/images/delta-airline.png') }}"
                 alt="flight-logo-img" />
-
         </div>
         <div class="card-body">
             <div class="card-top-title d-flex justify-content-between">
@@ -80,8 +79,6 @@
                         <button wire:click="vote(false)" class="btn btn-danger">
                             👎 Dislike
                         </button>
-
-
                     @endif
                 @else
                     {{-- <a href="{{ route('login') }}" class="btn btn-outline-primary">
