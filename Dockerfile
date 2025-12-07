@@ -25,11 +25,20 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application code
 COPY . .
 
-# Install PHP dependencies
+# Copy .env.example so Laravel can generate key if needed
+RUN cp .env.example .env || true
+
+# Install dependencies
 RUN composer install --optimize-autoloader --no-dev
+
+# Generate app key (only if missing)
+RUN php artisan key:generate --force || true
+
+# Make start script executable
+RUN chmod +x start.sh
 
 # Expose port for Render
 EXPOSE 8080
 
-# Start Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8080
+# 🔥 Use custom startup script
+CMD ["./start.sh"]
