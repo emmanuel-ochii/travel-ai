@@ -1204,8 +1204,8 @@
     <!-- ================================
              START ROUND-TRIP AREA
              ================================= -->
+
     <livewire:homepage.popular-routes />
-    <!-- end round-trip-flight -->
 
 
     <!-- end round-trip-flight -->
@@ -1517,7 +1517,7 @@
                     START DESTINATION AREA
                 ================================= -->
 
-    <section class="destination-area section--padding">
+    {{-- <section class="destination-area section--padding">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
@@ -1698,7 +1698,7 @@
             <!-- end row -->
         </div>
         <!-- end container -->
-    </section>
+    </section> --}}
     <!-- end destination-area -->
     <!-- ================================
                     END DESTINATION AREA

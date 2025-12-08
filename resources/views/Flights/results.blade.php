@@ -56,14 +56,14 @@
                     <div class="filter-wrap margin-bottom-30px">
                         <div class="filter-top d-flex align-items-center justify-content-between pb-4">
                             <div>
-                                <h3 class="title font-size-24">24 Flights found</h3>
+
                                 <p class="font-size-14">
                                     <span class="me-1 pt-1">Book with confidence:</span>No
                                     flight booking fees
                                 </p>
                             </div>
                             <div class="layout-view d-flex align-items-center">
-                                <a href="flight-grid.html" data-bs-toggle="tooltip" data-placement="top" title="Grid View"
+                                <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Grid View"
                                     class="active"><i class="la la-th-large"></i></a>
                                 <a href="flight-list.html" data-bs-toggle="tooltip" data-placement="top"
                                     title="List View"><i class="la la-th-list"></i></a>
