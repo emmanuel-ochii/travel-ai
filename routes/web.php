@@ -4,11 +4,10 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\RecommendationController;
 use App\Livewire\Flight\FlightDetails;
 use App\Livewire\Flight\BookFlight;
-use App\Livewire\Flight\CheckoutFlight;
-use App\Livewire\Flight\PaymentFlight;
 use App\Livewire\Flight\CheckoutPaymentFlight;
 use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 // Route::view('/', 'welcome');
 Route::get('/', fn() => view('welcome'));
@@ -53,6 +52,17 @@ Route::get('/test-groq', function () {
         ],
     ]);
 });
+
+// clear
+Route::get('/fix-cache', function () {
+    Artisan::call('permission:cache-reset');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+
+    return 'Cache cleared!';
+});
+
 
 
 
