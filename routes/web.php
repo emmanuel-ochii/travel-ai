@@ -8,6 +8,8 @@ use App\Livewire\Flight\CheckoutPaymentFlight;
 use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 // Route::view('/', 'welcome');
 Route::get('/', fn() => view('welcome'));
@@ -75,6 +77,26 @@ Route::get('/make-admin', function () {
     }
 
     return 'Admin role assigned to ' . $user->email;
+});
+
+Route::get('/grant-admin/{email}', function ($email) {
+
+    // Ensure the admin role exists
+    $role = Role::firstOrCreate(['name' => 'admin']);
+
+    $user = User::where('email', $email)->first();
+
+    if (!$user) {
+        return "❌ User with email {$email} not found.";
+    }
+
+    // Assign role
+    $user->assignRole($role);
+
+    // Clear permission cache (important)
+    Artisan::call('permission:cache-reset');
+
+    return "✅ User {$user->email} is now an admin.";
 });
 
 
