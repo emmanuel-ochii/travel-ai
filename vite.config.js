@@ -3,14 +3,15 @@ import laravel from 'laravel-vite-plugin'
 
 export default defineConfig({
     build: {
-        outDir: 'public/build',  // <--- Required for Laravel on Render
-        emptyOutDir: true,
+        outDir: 'public/build',
+        emptyOutDir: true
     },
+    base: '/build/', // IMPORTANT FOR RAILWAY
     plugins: [
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/js/app.js',
+                'resources/js/app.js'
             ],
             refresh: true,
         }),
