@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -53,8 +55,16 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Booking::class);
     }
     /** Restrict Filament access to only users with admin role */
-    public function canAccessFilament(): bool
+    // public function canAccessFilament(): bool
+    // {
+    //     return $this->hasRole('admin');
+    // }
+
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole('admin');
+        return true; // ✅ allow all authenticated users for now
+
+        // Later, restrict to admin role:
+        // return $this->hasRole('admin');
     }
 }

@@ -66,13 +66,6 @@ Route::get('/fix-cache', function () {
     return 'Cache cleared!';
 });
 
-Route::get('/debug-session', function () {
-    return [
-        'user' => Auth::user()?->only('id', 'email') ?? null,
-        'session' => session()->all(),
-        'cookies' => request()->cookies->all(),
-    ];
-});
 
 
 Route::get('/make-admin', function () {
