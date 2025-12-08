@@ -9,6 +9,7 @@ use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 // Route::view('/', 'welcome');
@@ -64,6 +65,15 @@ Route::get('/fix-cache', function () {
 
     return 'Cache cleared!';
 });
+
+Route::get('/debug-session', function () {
+    return [
+        'user' => Auth::user()?->only('id', 'email') ?? null,
+        'session' => session()->all(),
+        'cookies' => request()->cookies->all(),
+    ];
+});
+
 
 Route::get('/make-admin', function () {
     $user = \App\Models\User::where('email', 'admin@test.com')->first();
