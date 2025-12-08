@@ -108,11 +108,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="header-right-action">
+                                {{-- <div class="header-right-action">
                                     <a href="#" class="theme-btn theme-btn-small theme-btn-transparent me-1"
                                         data-bs-toggle="modal" data-bs-target="#signupPopupForm">Sign Up</a>
                                     <a href="#" class="theme-btn theme-btn-small" data-bs-toggle="modal"
                                         data-bs-target="#loginPopupForm">Login</a>
+                                </div> --}}
+                                <div class="header-right-action">
+                                    @auth
+                                        <a href="{{ route('dashboard') }}" class="theme-btn theme-btn-small">
+                                            Dashboard
+                                        </a>
+                                    @else
+                                        <a href="{{ route('register') }}" class="theme-btn theme-btn-small theme-btn-transparent me-1">Sign Up</a>
+                                        <a href="{{ route('login') }}" class="theme-btn">Login</a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -148,25 +158,14 @@
                                 </nav>
                             </div>
                             <!-- end main-menu-content -->
-                            @auth
-                                <div class="nav-btn">
-                                    <a href="{{ url('/dashboard') }}" class="theme-btn"> Dashboard </a>
-
-                                </div>
-                                @else
-                                <div class="nav-btn">
-                                    <a href="{{ route('login') }}" class="theme-btn">Become An Agent</a>
-                                </div>
-                            @endauth
-                            <!-- end nav-btn -->
+                        </div>
+                        <!-- end col-lg-12 -->
                     </div>
-                    <!-- end col-lg-12 -->
+                    <!-- end row -->
                 </div>
-                <!-- end row -->
+                <!-- end container-fluid -->
             </div>
-            <!-- end container-fluid -->
-        </div>
-        <!-- end header-menu-wrapper -->
+            <!-- end header-menu-wrapper -->
     </header>
     <!-- ================================
          END HEADER AREA

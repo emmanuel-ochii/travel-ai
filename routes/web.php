@@ -66,8 +66,6 @@ Route::get('/fix-cache', function () {
     return 'Cache cleared!';
 });
 
-
-
 Route::get('/make-admin', function () {
     $user = \App\Models\User::where('email', 'admin@test.com')->first();
 
@@ -81,27 +79,6 @@ Route::get('/make-admin', function () {
 
     return 'Admin role assigned to ' . $user->email;
 });
-
-Route::get('/grant-admin/{email}', function ($email) {
-
-    // Ensure the admin role exists
-    $role = Role::firstOrCreate(['name' => 'admin']);
-
-    $user = User::where('email', $email)->first();
-
-    if (!$user) {
-        return "❌ User with email {$email} not found.";
-    }
-
-    // Assign role
-    $user->assignRole($role);
-
-    // Clear permission cache (important)
-    Artisan::call('permission:cache-reset');
-
-    return "✅ User {$user->email} is now an admin.";
-});
-
 
 
 
