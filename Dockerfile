@@ -8,25 +8,32 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+
 # ---------- Stage 2: Runtime with Nginx + PHP ----------
 FROM richarvey/nginx-php-fpm:latest
 WORKDIR /var/www/html
 
-# Copy application code
+# Copy Laravel application
 COPY . .
 
-# Copy built assets
+# Copy Vite build output
 COPY --from=asset-builder /app/public/build ./public/build
 
-# Install PCNTL for Horizon + Composer deps
+# Install PHP extensions + composer dependencies
 RUN apk update && apk add --no-cache $PHPIZE_DEPS \
     && docker-php-ext-install pcntl \
     && composer install --optimize-autoloader --no-dev
 
-# Permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Publish Filament assets
+RUN php artisan filament:assets --force
 
-# Start script
+# Cache configs, routes, and views
+RUN php artisan optimize
+
+# Fix permissions
+RUN chown -R www-data:www-data storage bootstrap/cache public/vendor
+
+# Add startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
