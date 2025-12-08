@@ -15,7 +15,7 @@ class FilamentAuthenticate
     {
         $user = $request->user();
 
-        // Allow login page to be accessed freely
+        // Allow the Filament login page to be accessed freely
         if ($request->is('admin/login')) {
             return $next($request);
         }
@@ -25,7 +25,14 @@ class FilamentAuthenticate
             return redirect('/admin/login');
         }
 
-        // If logged in, allow access to any /admin/* page
+        // If logged in but not an admin, redirect to normal login page
+        if (!$user->hasRole('admin')) {
+            return redirect('/login')->withErrors([
+                'email' => 'You are not authorized to access the admin panel.',
+            ]);
+        }
+
+        // If logged in and is admin, allow access
         return $next($request);
     }
 }
