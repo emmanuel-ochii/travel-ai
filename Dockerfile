@@ -13,27 +13,30 @@ RUN npm run build
 FROM richarvey/nginx-php-fpm:latest
 WORKDIR /var/www/html
 
-# Copy Laravel application
+# Copy Laravel app
 COPY . .
 
-# Copy Vite build output
+# Copy built Vite assets
 COPY --from=asset-builder /app/public/build ./public/build
 
-# Install PHP extensions + composer dependencies
-RUN apk update && apk add --no-cache $PHPIZE_DEPS \
+# Install PHP extensions + Composer packages
+RUN apk update && apk add --no-cache \
+        autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c \
     && docker-php-ext-install pcntl \
     && composer install --optimize-autoloader --no-dev
 
-# Publish Filament assets
-RUN php artisan filament:assets --force
+# Build Filament assets
+RUN php artisan filament:assets
 
-# Cache configs, routes, and views
+# Create symlink for public storage
+RUN php artisan storage:link || true
+
+# Cache config, views, and routes
 RUN php artisan optimize
 
 # Fix permissions
-RUN chown -R www-data:www-data storage bootstrap/cache public/vendor
+RUN chown -R www-data:www-data storage bootstrap/cache public/vendor public/build
 
-# Add startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
