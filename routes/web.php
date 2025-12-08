@@ -64,13 +64,17 @@ Route::get('/fix-cache', function () {
 });
 
 Route::get('/make-admin', function () {
-    $user = \App\Models\User::first(4); // or specific email
+    $user = \App\Models\User::where('email', 'admin@test.com')->first();
+
+    if (!$user) {
+        return "User not found.";
+    }
 
     if (!$user->hasRole('admin')) {
         $user->assignRole('admin');
     }
 
-    return 'Admin role assigned to user ' . $user->email;
+    return 'Admin role assigned to ' . $user->email;
 });
 
 
