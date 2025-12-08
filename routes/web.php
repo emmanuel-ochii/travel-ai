@@ -63,7 +63,15 @@ Route::get('/fix-cache', function () {
     return 'Cache cleared!';
 });
 
+Route::get('/make-admin', function () {
+    $user = \App\Models\User::first(4); // or specific email
 
+    if (!$user->hasRole('admin')) {
+        $user->assignRole('admin');
+    }
+
+    return 'Admin role assigned to user ' . $user->email;
+});
 
 
 
