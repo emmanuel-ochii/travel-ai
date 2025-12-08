@@ -8,7 +8,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-
 # ---------- Stage 2: Runtime with Nginx + PHP ----------
 FROM richarvey/nginx-php-fpm:latest
 WORKDIR /var/www/html
@@ -28,14 +27,16 @@ RUN apk update && apk add --no-cache \
 # Build Filament assets
 RUN php artisan filament:assets
 
-# Create symlink for public storage
+# Create symlink for public storage (ignore if already exists)
 RUN php artisan storage:link || true
 
-# Cache config, views, and routes
+# Optimize for production
 RUN php artisan optimize
 
-# Fix permissions
-RUN chown -R www-data:www-data storage bootstrap/cache public/vendor public/build
+# Fix permissions safely
+RUN for dir in storage bootstrap/cache public/build; do \
+    [ -d "$dir" ] && chown -R www-data:www-data "$dir"; \
+done
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
