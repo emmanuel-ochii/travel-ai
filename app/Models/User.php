@@ -59,4 +59,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
+    public function interactions()
+    {
+        return $this->hasMany(UserInteraction::class);
+    }
+
+    public function searchInteractions()
+    {
+        return $this->interactions()->where('type', 'search');
+    }
 }

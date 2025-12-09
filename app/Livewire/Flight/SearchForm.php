@@ -46,16 +46,16 @@ class SearchForm extends Component
             'infants' => 'nullable|integer|min:0',
         ]);
 
-        // InteractionLogger::log('search', [
-        //     'origin' => $this->from,
-        //     'destination' => $this->to,
-        //     'departing' => $this->departing,
-        //     'tripType' => $this->tripType,
-        //     'adults' => $this->adults,
-        //     'children' => $this->children,
-        //     'infants' => $this->infants,
-        //     'cabinClass' => $this->cabinClass,
-        // ]);
+        InteractionLogger::log('search', [
+            'origin' => $this->from,
+            'destination' => $this->to,
+            'departing' => $this->departing,
+            'tripType' => $this->tripType,
+            'adults' => $this->adults,
+            'children' => $this->children,
+            'infants' => $this->infants,
+            'cabinClass' => $this->cabinClass,
+        ]);
 
         return redirect()->route('flights.search', $this->params());
 
