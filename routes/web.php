@@ -12,8 +12,10 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
-// Route::view('/', 'welcome');
-Route::get('/', fn() => view('welcome'));
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 
 
