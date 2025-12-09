@@ -31,24 +31,6 @@ class UserInteraction extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Log a user interaction.
-     */
-    // public static function log(string $type, array $payload = [], ?Request $request = null)
-    // {
-    //     $request ??= request();
-
-    //     return self::create([
-    //         'user_id' => Auth::id(),
-    //         'type' => $type,
-    //         'payload' => $payload,
-    //         'ip' => $request->ip(),
-    //         'user_agent' => substr($request->userAgent() ?? '', 0, 500),
-    //         'created_at' => now(),
-    //     ]);
-    // }
-
-
 
     public static function log(string $type, array $payload = [], ?\Illuminate\Http\Request $request = null)
     {

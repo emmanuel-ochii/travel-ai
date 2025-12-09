@@ -92,10 +92,10 @@
                     $llmInfluenced = !empty($flight->llm_influenced);
 
                     // Log that the user viewed this flight card (lightweight payload)
-                    // \App\Services\InteractionLogger::log('view', [
-                    //     'flight_id' => $flight->id,
-                    //     'fare_id' => $lowestFare->id ?? null,
-                    // ]);
+                    \App\Services\InteractionLogger::log('view', [
+                        'flight_id' => $flight->id,
+                        'fare_id' => $lowestFare->id ?? null,
+                    ]);
                 @endphp
 
                 <div class="col-md-6 mb-4">

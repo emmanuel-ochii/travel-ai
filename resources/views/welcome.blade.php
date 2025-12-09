@@ -1739,7 +1739,7 @@
                             </div>
                             <div class="author-content d-flex align-items-center">
                                 <div class="author-img">
-                                    <img src="images/team8.jpg" alt="testimonial image" />
+                                    <img src="{{asset('guest/images/team8.jpg')}}" alt="testimonial image" />
                                 </div>
                                 <div class="author-bio">
                                     <h4 class="author__title">Leroy Bell</h4>
@@ -1765,7 +1765,7 @@
                             </div>
                             <div class="author-content d-flex align-items-center">
                                 <div class="author-img">
-                                    <img src="images/team9.jpg" alt="testimonial image" />
+                                    <img src="{{asset('guest/images/team9.jpg')}}" alt="testimonial image" />
                                 </div>
                                 <div class="author-bio">
                                     <h4 class="author__title">Richard Pam</h4>
@@ -1791,37 +1791,11 @@
                             </div>
                             <div class="author-content d-flex align-items-center">
                                 <div class="author-img">
-                                    <img src="images/team10.jpg" alt="testimonial image" />
+                                    <img src="{{asset('guest/images/team10.jpg')}}" alt="testimonial image" />
                                 </div>
                                 <div class="author-bio">
                                     <h4 class="author__title">Luke Jacobs</h4>
                                     <span class="author__meta">Australia</span>
-                                    <span class="ratings d-flex align-items-center">
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end testimonial-card -->
-                        <div class="testimonial-card">
-                            <div class="testi-desc-box">
-                                <p class="testi__desc">
-                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
-                                    officia deserunt mollit anim laborum sint occaecat cupidatat
-                                    non proident. Occaecat cupidatat non proident des.
-                                </p>
-                            </div>
-                            <div class="author-content d-flex align-items-center">
-                                <div class="author-img">
-                                    <img src="images/team8.jpg" alt="testimonial image" />
-                                </div>
-                                <div class="author-bio">
-                                    <h4 class="author__title">Chulbul Panday</h4>
-                                    <span class="author__meta">Italy</span>
                                     <span class="ratings d-flex align-items-center">
                                         <i class="la la-star"></i>
                                         <i class="la la-star"></i>
