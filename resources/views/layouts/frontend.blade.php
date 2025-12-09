@@ -201,7 +201,7 @@
                                 Cerrick Way, FL 12345
                             </li>
                             <li>+123-456-789</li>
-                            <li><a href="#">trizen@yourwebsite.com</a></li>
+                            <li><a href="#">info@travelai.com</a></li>
                         </ul>
                     </div>
                     <!-- end footer-item -->
@@ -230,12 +230,12 @@
                             Other Links
                         </h4>
                         <ul class="list-items list--items">
-                            <li><a href="#">USA Vacation Packages</a></li>
-                            <li><a href="#">USA Flights</a></li>
-                            <li><a href="#">USA Hotels</a></li>
-                            <li><a href="#">USA Car Hire</a></li>
+                            <li><a href="#"> Vacation Packages</a></li>
+                            <li><a href="#"> Flights</a></li>
+                            <li><a href="#"> Hotels</a></li>
+                            <li><a href="#"> Car Hire</a></li>
                             <li><a href="#">Create an Account</a></li>
-                            <li><a href="#">Trizen Reviews</a></li>
+                            <li><a href="#"> Reviews</a></li>
                         </ul>
                     </div>
                     <!-- end footer-item -->
