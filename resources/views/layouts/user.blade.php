@@ -32,7 +32,7 @@
 
     @livewireStyles
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 
 </head>
 
@@ -181,38 +181,47 @@
                         <img src="{{ asset('guest/images/team8.jpg') }}" alt="testimonial image" />
                     </div>
                     <div class="author-bio">
-                        <h4 class="author__title">Ali Tufan</h4>
-                        <span class="author__meta">Member Since May 2017</span>
+                        <h4 class="author__title"> {{ auth()->user()->name }} </h4>
+                        <span class="author__meta">{{ auth()->user()->email }}</span>
                     </div>
                 </div>
             </div>
             <div class="sidebar-menu-wrap">
                 <ul class="sidebar-menu list-items">
-                    <li class="page-active">
-                        <a href="{{ route('dashboard') }}"><i class="la la-dashboard me-2"></i>Dashboard</a>
-                    </li>
+
+                    <x-sidebar-link route="dashboard" icon="la la-dashboard">
+                        Dashboard
+                    </x-sidebar-link>
+
+                    <x-sidebar-link route="user.booking" icon="la la-shopping-cart text-color">
+                        My Booking
+                    </x-sidebar-link>
+
+                    <x-sidebar-link route="profile" icon="la la-user text-color-2">
+                        My Profile
+                    </x-sidebar-link>
+
+                    <x-sidebar-link route="profile" icon="la la-star text-color-3">
+                        My Reviews
+                    </x-sidebar-link>
+
+                    <x-sidebar-link route="profile" icon="la la-heart text-color-4">
+                        Wishlist
+                    </x-sidebar-link>
+
+                    <x-sidebar-link route="profile" icon="la la-cog text-color-5">
+                        Settings
+                    </x-sidebar-link>
+                    
                     <li>
-                        <a href="{{ route('user.booking') }}"><i class="la la-shopping-cart me-2 text-color"></i>My
-                            Booking</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn text-secondary">
+                                <i class="la la-power-off me-2 text-color-6"></i>Logout
+                            </button>
+                        </form>
                     </li>
-                    <li>
-                        <a href="{{ route('profile') }}"><i class="la la-user me-2 text-color-2"></i>My
-                            Profile</a>
-                    </li>
-                    <li>
-                        <a href="user-dashboard-reviews.html"><i class="la la-star me-2 text-color-3"></i>My
-                            Reviews</a>
-                    </li>
-                    <li>
-                        <a href="user-dashboard-wishlist.html"><i
-                                class="la la-heart me-2 text-color-4"></i>Wishlist</a>
-                    </li>
-                    <li>
-                        <a href="user-dashboard-settings.html"><i class="la la-cog me-2 text-color-5"></i>Settings</a>
-                    </li>
-                    <li>
-                        <a href="index.html"><i class="la la-power-off me-2 text-color-6"></i>Logout</a>
-                    </li>
+
                 </ul>
             </div>
             <!-- end sidebar-menu-wrap -->
