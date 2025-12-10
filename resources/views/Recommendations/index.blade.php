@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2>Recommended Flights for {{ auth()->user()->name }} (Persona: {{ auth()->user()->persona }})</h2>
+        <h2>Recommended Flights for {{ auth()->user()->name }}. (Persona: {{ auth()->user()->persona }})</h2>
 
         <div class="row mt-4">
             @forelse($recommendedFlights as $flight)
