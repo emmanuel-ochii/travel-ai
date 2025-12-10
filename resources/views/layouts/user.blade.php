@@ -28,11 +28,11 @@
     <link rel="stylesheet" href="{{ asset('guest/css/style.css') }}" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 
     @livewireStyles
 
-    @stack('styles')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
@@ -419,9 +419,6 @@
     </div>
     <!-- end scroll top -->
 
-
-    @livewireScripts
-
     <!-- Template JS Files -->
     <script src="{{ asset('guest/js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('guest/js/jquery-ui.js') }}"></script>
@@ -438,12 +435,11 @@
     <script src="{{ asset('guest/js/quantity-input.js') }}"></script>
     <script src="{{ asset('guest/js/main.js') }}"></script>
 
-    @stack('scripts')
-
-
     <script src="{{ asset('guest/js/chart.js') }}"></script>
     <script src="{{ asset('guest/js/chart.extension.js') }}"></script>
     <script src="{{ asset('guest/js/bar-chart.js') }}"></script>
+
+    @stack('scripts')
 
     @livewireScripts
 </body>

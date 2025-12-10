@@ -27,7 +27,15 @@ class DashboardController extends Controller
 
     public function bookings()
     {
-        return view('user.bookings');
+        $user = Auth::user();
+
+        // Paginated bookings
+        $recentFlights = $user->bookings()
+            ->with(['flight', 'flight.origin', 'flight.destination'])
+            ->latest()
+            ->paginate(10); // <-- change the number per page if needed
+
+        return view('user.bookings', compact('recentFlights'));
     }
 
     public function reviews()
