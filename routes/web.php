@@ -8,10 +8,8 @@ use App\Livewire\Flight\CheckoutPaymentFlight;
 use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-
+use App\Http\Controllers\User\DashboardController;
+use App\Livewire\Actions\Logout;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,6 +42,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', RecommendedFlights::class)->name('recommendations.index');
 });
 
+Route::post('/logout', function (Logout $logout) {
+    $logout();
+    return redirect('/');
+})->name('logout');
 
 Route::get('/test-groq', function () {
     $service = app(\App\Services\AI\GroqLLMService::class);
@@ -84,10 +86,17 @@ Route::get('/make-admin', function () {
 
 
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/bookings', [DashboardController::class, 'bookings'])->name('user.booking');
+    Route::get('/account', [DashboardController::class, 'account'])->name('user.account')
+    ;
+});
 
 
 Route::view('profile', 'profile')

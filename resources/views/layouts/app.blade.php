@@ -31,11 +31,10 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+
             </main>
-        </div>
-        <div>
-            i can
         </div>
         @livewireScripts
     </body>
 </html>
+
