@@ -89,7 +89,7 @@
                                 <!-- end info-icon-->
                                 <div class="info-content">
                                     <p class="info__desc">Reviews</p>
-                                    <h4 class="info__title">20</h4>
+                                    <h4 class="info__title">{{ $totalReviews }}</h4>
                                 </div>
                                 <!-- end info-content -->
                             </div>

@@ -32,12 +32,21 @@
                             <div class="form-content contact-form-action">
                                 <form wire:submit.prevent="submitReview" class="row">
 
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="input-box">
                                             <label class="label-text">Total time of flight</label>
                                             <div class="form-group">
                                                 <span class="la la-clock form-icon"></span>
                                                 <input wire:model="total_flight_time" readonly class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="input-box">
+                                            <label class="label-text"> Give a rating (1-5)</label>
+                                            <div class="form-group">
+                                                <span class="la la-star form-icon"></span>
+                                                <input wire:model="rating" class="form-control" type="number" min="1">
                                             </div>
                                         </div>
                                     </div>

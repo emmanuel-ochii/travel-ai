@@ -17,6 +17,9 @@ class DashboardController extends Controller
         // Total booked flights
         $totalFlights = $user->bookings()->count();
 
+        // Total reviews made by the user
+        $totalReviews = $user->reviews()->count(); // assuming User has a reviews() relationship
+
         // Most recent flights (latest 5)
         $recentFlights = $user->bookings()
             ->with(['flight', 'flight.origin', 'flight.destination'])
@@ -24,7 +27,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('user.dashboard', compact('totalFlights', 'recentFlights'));
+        return view('user.dashboard', compact('totalFlights', 'recentFlights', 'totalReviews'));
     }
 
     public function bookings()

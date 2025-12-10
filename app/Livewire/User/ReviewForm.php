@@ -14,6 +14,7 @@ class ReviewForm extends Component
     public $name;
     public $airline;
     public $class_type;
+    public $rating;
     public $review_text;
     public $bookingId;
     public $booking;
@@ -45,7 +46,8 @@ class ReviewForm extends Component
         }
 
         $this->validate([
-            'review_text' => 'required|max:400'
+            'review_text' => 'required|max:400',
+            'rating' => 'required|integer|min:1|max:5',
         ]);
 
         Review::create([
@@ -56,6 +58,7 @@ class ReviewForm extends Component
             'airline' => $this->airline,
             'class_type' => $this->class_type,
             'review_text' => $this->review_text,
+            'rating' => $this->rating,
         ]);
 
         $this->hasReviewed = true;
