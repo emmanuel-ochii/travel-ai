@@ -75,11 +75,14 @@ class DashboardController extends Controller
     }
 
     public function viewReview(Review $review)
-    {
-        abort_if($review->user_id !== auth()->id(), 403);
+{
+    abort_if($review->user_id !== Auth::id(), 403);
 
-        return view('user.view-review', compact('review'));
-    }
+    // Eager load booking and flight
+    $review->load('booking.flight');
+
+    return view('user.view-review', compact('review'));
+}
 
     public function wishlist()
     {
