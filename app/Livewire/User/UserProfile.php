@@ -62,11 +62,6 @@ class UserProfile extends Component
     {
         $this->validate();
 
-        // if ($this->profile_pic instanceof \Livewire\TemporaryUploadedFile) {
-        //     $path = $this->profile_pic->store('profile_pics', 'public');
-        //     $this->user->profile_pic = $path;
-        // }
-
         if ($this->new_profile_pic instanceof TemporaryUploadedFile) {
             $path = $this->new_profile_pic->store('profile_pics', 'public');
             $this->user->profile_pic = $path;

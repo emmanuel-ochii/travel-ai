@@ -96,7 +96,7 @@
                             <a href="user-dashboard-profile.html" class="dropdown-item">
                                 <div class="d-flex align-items-center">
                                     <div class="avatar avatar-sm flex-shrink-0 me-2">
-                                        <img src="{{ asset('guest/images/team8.jpg') }}" alt="team-img" />
+                                        <img src="{{ asset('guest/images/avatar.png') }}" alt="team-img" />
                                     </div>
                                     <span class="font-size-14 font-weight-bold">Ali Tufan</span>
                                 </div>
@@ -178,7 +178,7 @@
             <div class="author-content">
                 <div class="d-flex align-items-center">
                     <div class="author-img avatar-sm">
-                        <img src="{{ asset('guest/images/team8.jpg') }}" alt="testimonial image" />
+                        <img src="{{ asset('guest/images/avatar.png') }}" alt="testimonial image" />
                     </div>
                     <div class="author-bio">
                         <h4 class="author__title"> {{ auth()->user()->name }} </h4>
@@ -315,7 +315,7 @@
                                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm flex-shrink-0 me-2">
-                                                        <img src="{{ asset('guest/images/team8.jpg') }}"
+                                                        <img src="{{ asset('guest/images/avatar.png') }}"
                                                             alt="team-img" />
                                                     </div>
                                                     <span class="font-size-14 font-weight-bold">Ali Tufan</span>
