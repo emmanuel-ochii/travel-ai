@@ -12,16 +12,20 @@ use App\Services\TravelRecommendationService;
 
 class RecommendationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        if (!$user) {
-            abort(403, 'You must be logged in to view recommendations.');
-        }
+        if (!$user)
+            abort(403);
+
+        $useLlm = $request->boolean('use_llm', false);
+
         $service = new TravelRecommendationService($user);
-        $recommendedFlights = $service->getRecommendations(5);
+        $recommendedFlights = $service->getRecommendations(5, $useLlm);
+
         return view('recommendations.index', compact('recommendedFlights'));
     }
+
 
     public function feedback(Request $req, Flight $flight)
     {
