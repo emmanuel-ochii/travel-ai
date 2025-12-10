@@ -2,8 +2,8 @@
 
 @section('content')
     <!-- ================================
-                    START HERO-WRAPPER AREA
-                ================================= -->
+                                START HERO-WRAPPER AREA
+                            ================================= -->
     <section class="hero-wrapper">
         <div class="hero-box hero-bg">
             <span class="line-bg line-bg1"></span>
@@ -1124,12 +1124,12 @@
     </section>
     <!-- end hero-wrapper -->
     <!-- ================================
-                    END HERO-WRAPPER AREA
-                ================================= -->
+                                END HERO-WRAPPER AREA
+                            ================================= -->
 
     <!-- ================================
-                    START INFO AREA
-                ================================= -->
+                                START INFO AREA
+                            ================================= -->
     <section class="info-area info-bg padding-top-50px padding-bottom-50px text-center">
         <div class="container">
             <div class="row">
@@ -1196,26 +1196,26 @@
     </section>
     <!-- end info-area -->
     <!-- ================================
-                    END INFO AREA
-                ================================= -->
+                                END INFO AREA
+                            ================================= -->
 
     <div class="section-block"></div>
 
     <!-- ================================
-             START ROUND-TRIP AREA
-             ================================= -->
+                         START ROUND-TRIP AREA
+                         ================================= -->
 
     <livewire:homepage.popular-routes />
 
 
     <!-- end round-trip-flight -->
     <!-- ================================
-                    END ROUND-TRIP AREA
-                ================================= -->
+                                END ROUND-TRIP AREA
+                            ================================= -->
 
     <!-- ================================
-                    START HOTEL AREA
-                ================================= -->
+                                START HOTEL AREA
+                            ================================= -->
 
     <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
         <div class="container-fluid">
@@ -1510,203 +1510,203 @@
     </section>
     <!-- end hotel-area -->
     <!-- ================================
-                    END HOTEL AREA
-                ================================= -->
+                                END HOTEL AREA
+                            ================================= -->
 
     <!-- ================================
-                    START DESTINATION AREA
-                ================================= -->
+                                START DESTINATION AREA
+                            ================================= -->
 
     {{-- <section class="destination-area section--padding">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <div class="section-heading">
-                        <h2 class="sec__title">Top Visited Places</h2>
-                        <p class="sec__desc pt-3">
-                            Morbi convallis bibendum urna ut viverra Maecenas quis
-                        </p>
-                    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="section-heading">
+                    <h2 class="sec__title">Top Visited Places</h2>
+                    <p class="sec__desc pt-3">
+                        Morbi convallis bibendum urna ut viverra Maecenas quis
+                    </p>
+                </div>
 
-                    <!-- end section-heading -->
-                </div>
-                <!-- end col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="btn-box btn--box text-end">
-                        <a href="tour-grid.html" class="theme-btn">Discover More</a>
-                    </div>
+                <!-- end section-heading -->
+            </div>
+            <!-- end col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="btn-box btn--box text-end">
+                    <a href="tour-grid.html" class="theme-btn">Discover More</a>
                 </div>
             </div>
-            <!-- end row -->
-            <div class="row padding-top-50px">
-                <div class="col-lg-4">
-                    <div class="card-item destination-card">
-                        <div class="card-img">
-                            <img src="{{ asset('guest/images/destination-img2.jpg') }}" alt="destination-img" />
-                            <span class="badge">new york</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="tour-details.html">Main Street Park</a>
-                            </h3>
-                            <div class="card-rating d-flex align-items-center">
-                                <span class="ratings d-flex align-items-center me-1">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star-o"></i>
-                                    <i class="la la-star-o"></i>
-                                </span>
-                                <span class="rating__text">(70694 Reviews)</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <p class="tour__text">50 Tours</p>
-                                <p>
-                                    <span class="price__from">Price</span>
-                                    <span class="price__num">$58.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card-item -->
-                    <div class="card-item destination-card">
-                        <div class="card-img">
-                            <img src="{{ asset('guest/images/destination-img3.jpg') }}" alt="destination-img" />
-                            <span class="badge">chicago</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="tour-details.html">Chicago Cultural Center</a>
-                            </h3>
-                            <div class="card-rating d-flex align-items-center">
-                                <span class="ratings d-flex align-items-center me-1">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star-o"></i>
-                                </span>
-                                <span class="rating__text">(70694 Reviews)</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <p class="tour__text">50 Tours</p>
-                                <p>
-                                    <span class="price__from">Price</span>
-                                    <span class="price__num">$68.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card-item -->
-                </div>
-                <!-- end col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="card-item destination-card">
-                        <div class="card-img">
-                            <img src="{{ asset('guest/images/destination-img4.jpg') }}" alt="destination-img" />
-                            <span class="badge">Hong Kong</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="tour-details.html">Lugard Road Lookout</a>
-                            </h3>
-                            <div class="card-rating d-flex align-items-center">
-                                <span class="ratings d-flex align-items-center me-1">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star-o"></i>
-                                    <i class="la la-star-o"></i>
-                                </span>
-                                <span class="rating__text">(70694 Reviews)</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <p class="tour__text">150 Tours</p>
-                                <p>
-                                    <span class="price__from">Price</span>
-                                    <span class="price__num">$79.00</span>
-                                    <span class="price__num before-price">$89.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card-item -->
-                    <div class="card-item destination-card">
-                        <div class="card-img">
-                            <img src="{{ asset('guest/images/destination-img5.jpg') }}" alt="destination-img" />
-                            <span class="badge">Las Vegas</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="tour-details.html">Planet Hollywood Resort</a>
-                            </h3>
-                            <div class="card-rating d-flex align-items-center">
-                                <span class="ratings d-flex align-items-center me-1">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star-o"></i>
-                                </span>
-                                <span class="rating__text">(70694 Reviews)</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <p class="tour__text">50 Tours</p>
-                                <p>
-                                    <span class="price__from">Price</span>
-                                    <span class="price__num">$88.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card-item -->
-                </div>
-                <!-- end col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="card-item destination-card">
-                        <div class="card-img">
-                            <img src="{{ asset('guest/images/destination-img.jpg') }}" alt="destination-img" />
-                            <span class="badge">Shanghai</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="tour-details.html">Oriental Pearl TV Tower</a>
-                            </h3>
-                            <div class="card-rating d-flex align-items-center">
-                                <span class="ratings d-flex align-items-center me-1">
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                    <i class="la la-star"></i>
-                                </span>
-                                <span class="rating__text">(70694 Reviews)</span>
-                            </div>
-                            <div class="card-price d-flex align-items-center justify-content-between">
-                                <p class="tour__text">50 Tours</p>
-                                <p>
-                                    <span class="price__from">Price</span>
-                                    <span class="price__num">$58.00</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card-item -->
-                </div>
-                <!-- end col-lg-4 -->
-            </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
-    </section> --}}
+        <!-- end row -->
+        <div class="row padding-top-50px">
+            <div class="col-lg-4">
+                <div class="card-item destination-card">
+                    <div class="card-img">
+                        <img src="{{ asset('guest/images/destination-img2.jpg') }}" alt="destination-img" />
+                        <span class="badge">new york</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="tour-details.html">Main Street Park</a>
+                        </h3>
+                        <div class="card-rating d-flex align-items-center">
+                            <span class="ratings d-flex align-items-center me-1">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-o"></i>
+                                <i class="la la-star-o"></i>
+                            </span>
+                            <span class="rating__text">(70694 Reviews)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p class="tour__text">50 Tours</p>
+                            <p>
+                                <span class="price__from">Price</span>
+                                <span class="price__num">$58.00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-item -->
+                <div class="card-item destination-card">
+                    <div class="card-img">
+                        <img src="{{ asset('guest/images/destination-img3.jpg') }}" alt="destination-img" />
+                        <span class="badge">chicago</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="tour-details.html">Chicago Cultural Center</a>
+                        </h3>
+                        <div class="card-rating d-flex align-items-center">
+                            <span class="ratings d-flex align-items-center me-1">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-o"></i>
+                            </span>
+                            <span class="rating__text">(70694 Reviews)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p class="tour__text">50 Tours</p>
+                            <p>
+                                <span class="price__from">Price</span>
+                                <span class="price__num">$68.00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-item -->
+            </div>
+            <!-- end col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="card-item destination-card">
+                    <div class="card-img">
+                        <img src="{{ asset('guest/images/destination-img4.jpg') }}" alt="destination-img" />
+                        <span class="badge">Hong Kong</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="tour-details.html">Lugard Road Lookout</a>
+                        </h3>
+                        <div class="card-rating d-flex align-items-center">
+                            <span class="ratings d-flex align-items-center me-1">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-o"></i>
+                                <i class="la la-star-o"></i>
+                            </span>
+                            <span class="rating__text">(70694 Reviews)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p class="tour__text">150 Tours</p>
+                            <p>
+                                <span class="price__from">Price</span>
+                                <span class="price__num">$79.00</span>
+                                <span class="price__num before-price">$89.00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-item -->
+                <div class="card-item destination-card">
+                    <div class="card-img">
+                        <img src="{{ asset('guest/images/destination-img5.jpg') }}" alt="destination-img" />
+                        <span class="badge">Las Vegas</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="tour-details.html">Planet Hollywood Resort</a>
+                        </h3>
+                        <div class="card-rating d-flex align-items-center">
+                            <span class="ratings d-flex align-items-center me-1">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star-o"></i>
+                            </span>
+                            <span class="rating__text">(70694 Reviews)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p class="tour__text">50 Tours</p>
+                            <p>
+                                <span class="price__from">Price</span>
+                                <span class="price__num">$88.00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-item -->
+            </div>
+            <!-- end col-lg-4 -->
+            <div class="col-lg-4">
+                <div class="card-item destination-card">
+                    <div class="card-img">
+                        <img src="{{ asset('guest/images/destination-img.jpg') }}" alt="destination-img" />
+                        <span class="badge">Shanghai</span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="tour-details.html">Oriental Pearl TV Tower</a>
+                        </h3>
+                        <div class="card-rating d-flex align-items-center">
+                            <span class="ratings d-flex align-items-center me-1">
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                                <i class="la la-star"></i>
+                            </span>
+                            <span class="rating__text">(70694 Reviews)</span>
+                        </div>
+                        <div class="card-price d-flex align-items-center justify-content-between">
+                            <p class="tour__text">50 Tours</p>
+                            <p>
+                                <span class="price__from">Price</span>
+                                <span class="price__num">$58.00</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card-item -->
+            </div>
+            <!-- end col-lg-4 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section> --}}
     <!-- end destination-area -->
     <!-- ================================
-                    END DESTINATION AREA
-                ================================= -->
+                                END DESTINATION AREA
+                            ================================= -->
 
     <!-- ================================
-                       START TESTIMONIAL AREA
-                ================================= -->
+                                   START TESTIMONIAL AREA
+                            ================================= -->
 
     <section class="testimonial-area section-padding">
         <div class="container">
@@ -1714,11 +1714,11 @@
                 <div class="col-lg-4">
                     <div class="section-heading">
                         <h2 class="sec__title line-height-50">
-                            What our customers are saying us?
+                            <!-- end cta-area -->
+                            Hear From Our Happy Travelers
                         </h2>
                         <p class="sec__desc padding-top-30px">
-                            Morbi convallis bibendum urna ut viverra. Maecenas quis
-                            consequat libero
+                            Real experiences, real journeys — see what our customers have to say about their flights and stays with us.
                         </p>
                         <div class="btn-box padding-top-35px">
                             <a href="#" class="theme-btn">Explore All</a>
@@ -1729,84 +1729,40 @@
                 <!-- end col-lg-4 -->
                 <div class="col-lg-8">
                     <div class="testimonial-carousel carousel-action">
-                        <div class="testimonial-card">
-                            <div class="testi-desc-box">
-                                <p class="testi__desc">
-                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
-                                    officia deserunt mollit anim laborum sint occaecat cupidatat
-                                    non proident. Occaecat cupidatat non proident des.
-                                </p>
-                            </div>
-                            <div class="author-content d-flex align-items-center">
-                                <div class="author-img">
-                                    <img src="{{asset('guest/images/team8.jpg')}}" alt="testimonial image" />
+                        @forelse($reviews as $review)
+                            <div class="testimonial-card">
+                                <div class="testi-desc-box">
+                                    <p class="testi__desc">
+                                        {{ $review->comment }}
+                                    </p>
                                 </div>
-                                <div class="author-bio">
-                                    <h4 class="author__title">Leroy Bell</h4>
-                                    <span class="author__meta">United States</span>
-                                    <span class="ratings d-flex align-items-center">
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                    </span>
+                                <div class="author-content d-flex align-items-center">
+                                    <div class="author-img">
+                                        <img src="{{ $review->user && $review->user->profile_pic
+                                            ? asset('storage/' . $review->user->profile_pic)
+                                            : asset('guest/images/team9.jpg') }}"
+                                            alt="{{ $review->user->name ?? 'User' }}" class="rounded-circle" />
+
+                                    </div>
+                                    <div class="author-bio">
+                                        <h4 class="author__title"> {{ $review->user->name ?? 'User' }} </h4>
+                                        <span class="author__meta">
+                                            {{ $review->airline ?? 'Airline' }} -
+                                            {{ $review->booking->flight->flight_number ?? 'N/A' }}
+                                        </span>
+                                        <span class="ratings d-flex align-items-center">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i class="la la-star{{ $i <= $review->rating ? '' : '-o' }}"></i>
+                                            @endfor
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            <p>No reviews available yet.</p>
+                        @endforelse
                         <!-- end testimonial-card -->
-                        <div class="testimonial-card">
-                            <div class="testi-desc-box">
-                                <p class="testi__desc">
-                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
-                                    officia deserunt mollit anim laborum sint occaecat cupidatat
-                                    non proident. Occaecat cupidatat non proident des.
-                                </p>
-                            </div>
-                            <div class="author-content d-flex align-items-center">
-                                <div class="author-img">
-                                    <img src="{{asset('guest/images/team9.jpg')}}" alt="testimonial image" />
-                                </div>
-                                <div class="author-bio">
-                                    <h4 class="author__title">Richard Pam</h4>
-                                    <span class="author__meta">Canada</span>
-                                    <span class="ratings d-flex align-items-center">
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end testimonial-card -->
-                        <div class="testimonial-card">
-                            <div class="testi-desc-box">
-                                <p class="testi__desc">
-                                    Excepteur sint occaecat cupidatat non proident sunt in culpa
-                                    officia deserunt mollit anim laborum sint occaecat cupidatat
-                                    non proident. Occaecat cupidatat non proident des.
-                                </p>
-                            </div>
-                            <div class="author-content d-flex align-items-center">
-                                <div class="author-img">
-                                    <img src="{{asset('guest/images/team10.jpg')}}" alt="testimonial image" />
-                                </div>
-                                <div class="author-bio">
-                                    <h4 class="author__title">Luke Jacobs</h4>
-                                    <span class="author__meta">Australia</span>
-                                    <span class="ratings d-flex align-items-center">
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                        <i class="la la-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end testimonial-card -->
+
                     </div>
                     <!-- end testimonial-carousel -->
                 </div>
@@ -1818,12 +1774,12 @@
     </section>
     <!-- end testimonial-area -->
     <!-- ================================
-                       START TESTIMONIAL AREA
-                ================================= -->
+                                   START TESTIMONIAL AREA
+                            ================================= -->
 
     <!-- ================================
-                    START CTA AREA
-                ================================= -->
+                                START CTA AREA
+                            ================================= -->
     <section class="cta-area padding-top-100px padding-bottom-180px text-center">
         <div class="video-bg">
             <video autoplay loop>
@@ -1854,8 +1810,7 @@
             <path d="M-31.31,170.22 C164.50,33.05 334.36,-32.06 547.11,196.88 L500.00,150.00 L0.00,150.00 Z"></path>
         </svg>
     </section>
-    <!-- end cta-area -->
     <!-- ================================
-                    END CTA AREA
-                ================================= -->
+                                END CTA AREA
+                            ================================= -->
 @endsection

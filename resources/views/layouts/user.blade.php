@@ -102,7 +102,7 @@
                                 </div>
                             </a>
                             <div class="list-group drop-reveal-list user-drop-reveal-list">
-                                <a href="user-dashboard-profile.html" class="list-group-item list-group-item-action">
+                                <a href="{{ route('profile') }}" class="list-group-item list-group-item-action">
                                     <div class="msg-body">
                                         <div class="msg-content">
                                             <h3 class="title">
@@ -112,7 +112,7 @@
                                     </div>
                                     <!-- end msg-body -->
                                 </a>
-                                <a href="user-dashboard-booking.html" class="list-group-item list-group-item-action">
+                                <a href="{{ route('user.booking') }}" class="list-group-item list-group-item-action">
                                     <div class="msg-body">
                                         <div class="msg-content">
                                             <h3 class="title">
@@ -122,7 +122,7 @@
                                     </div>
                                     <!-- end msg-body -->
                                 </a>
-                                <a href="user-dashboard-reviews.html" class="list-group-item list-group-item-action">
+                                <a href="{{ route('user.reviews') }}" class="list-group-item list-group-item-action">
                                     <div class="msg-body">
                                         <div class="msg-content">
                                             <h3 class="title">
@@ -132,27 +132,30 @@
                                     </div>
                                     <!-- end msg-body -->
                                 </a>
-                                <a href="user-dashboard-settings.html" class="list-group-item list-group-item-action">
+                                <a href="{{ route('profile') }}" class="list-group-item list-group-item-action">
                                     <div class="msg-body">
                                         <div class="msg-content">
                                             <h3 class="title">
-                                                <i class="la la-gear me-2"></i>Settings
+                                                <i class="la la-gear me-2"></i>Setting
                                             </h3>
                                         </div>
                                     </div>
                                     <!-- end msg-body -->
                                 </a>
                                 <div class="section-block"></div>
-                                <a href="index.html" class="list-group-item list-group-item-action">
-                                    <div class="msg-body">
-                                        <div class="msg-content">
-                                            <h3 class="title">
-                                                <i class="la la-power-off me-2"></i>Logout
-                                            </h3>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="list-group-item list-group-item-action">
+                                        <div class="msg-body">
+                                            <div class="msg-content">
+                                                <h3 class="title">
+                                                    <i class="la la-power-off me-2"></i>Logout
+                                                </h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- end msg-body -->
-                                </a>
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                         <!-- end notification-item -->
@@ -178,11 +181,8 @@
             <div class="author-content">
                 <div class="d-flex align-items-center">
                     <div class="author-img avatar-sm">
-                        <img src="{{ auth()->user()->profile_pic
-            ? asset('storage/' . auth()->user()->profile_pic)
-            : asset('guest/images/avatar.png') }}"
-     alt="{{ auth()->user()->name ?? 'User Avatar' }}"
-     class="rounded-circle" />
+                        <img src="{{ auth()->user()->profile_pic ? asset('storage/' . auth()->user()->profile_pic) : asset('guest/images/avatar.png') }}"
+                            alt="{{ auth()->user()->name ?? 'User Avatar' }}" class="rounded-circle" />
                     </div>
                     <div class="author-bio">
                         <h4 class="author__title"> {{ auth()->user()->name }} </h4>
@@ -325,7 +325,8 @@
                                                             alt="{{ auth()->user()->name ?? 'User Avatar' }}"
                                                             class="rounded-circle" />
                                                     </div>
-                                                    <span class="font-size-14 font-weight-bold">  {{ auth()->user()->name }}  </span>
+                                                    <span class="font-size-14 font-weight-bold">
+                                                        {{ auth()->user()->name }} </span>
                                                 </div>
                                             </a>
                                             <div
@@ -357,7 +358,7 @@
                                                         </div>
                                                         <!-- end msg-body -->
                                                     </a>
-                                                    <a href="user-dashboard-reviews.html"
+                                                    <a href="{{ route('user.reviews') }}"
                                                         class="list-group-item list-group-item-action">
                                                         <div class="msg-body">
                                                             <div class="msg-content">
@@ -368,7 +369,7 @@
                                                         </div>
                                                         <!-- end msg-body -->
                                                     </a>
-                                                    <a href="user-dashboard-settings.html"
+                                                    <a href="{{ route('profile') }}"
                                                         class="list-group-item list-group-item-action">
                                                         <div class="msg-body">
                                                             <div class="msg-content">
@@ -380,8 +381,8 @@
                                                         <!-- end msg-body -->
                                                     </a>
                                                     <div class="section-block"></div>
-                                                    <a href="index.html"
-                                                        class="list-group-item list-group-item-action">
+                                                    <a href="#" class="list-group-item list-group-item-action"
+                                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         <div class="msg-body">
                                                             <div class="msg-content">
                                                                 <h3 class="title">
@@ -391,6 +392,11 @@
                                                         </div>
                                                         <!-- end msg-body -->
                                                     </a>
+
+                                                    <form id="logout-form" action="{{ route('logout') }}"
+                                                        method="POST" class="d-none">
+                                                        @csrf
+                                                    </form>
                                                 </div>
                                             </div>
                                             <!-- end dropdown-menu -->

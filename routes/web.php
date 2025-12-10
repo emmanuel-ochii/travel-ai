@@ -9,11 +9,10 @@ use App\Livewire\Flight\RecommendedFlights;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Livewire\Actions\Logout;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 
