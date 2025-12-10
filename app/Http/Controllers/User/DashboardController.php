@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,7 +53,29 @@ class DashboardController extends Controller
 
     public function reviews()
     {
-        return view('user.reviews');
+        $bookings = auth()->user()
+            ->bookings()
+            ->with(['flight', 'flight.origin', 'flight.destination', 'review'])
+            ->get();
+
+        return view('user.reviews', compact('bookings'));
+    }
+
+    public function addReview($bookingId)
+    {
+        $booking = Booking::where('id', $bookingId)
+            ->where('user_id', auth()->id())
+            ->where('status', 'confirmed')
+            ->firstOrFail();
+
+        return view('user.post-review', compact('booking'));
+    }
+
+    public function viewReview(Review $review)
+    {
+        abort_if($review->user_id !== auth()->id(), 403);
+
+        return view('user.view-review', compact('review'));
     }
 
     public function wishlist()

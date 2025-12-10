@@ -51,4 +51,9 @@ class Flight extends Model
     {
         return $this->hasMany(Fare::class);
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

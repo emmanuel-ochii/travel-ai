@@ -30,7 +30,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings', [DashboardController::class, 'bookings'])->name('user.booking');
     Route::get('/account', [DashboardController::class, 'account'])->name('user.account');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+
+
     Route::get('/reviews', [DashboardController::class, 'reviews'])->name('user.reviews');
+    Route::get('/post-review/{booking}', [DashboardController::class, 'addReview'])
+        ->name('user.post.review');
+    Route::get('/view-review/{review}', [DashboardController::class, 'viewReview'])
+        ->name('user.view.review');
+
 
     Route::get('/wishlist', [DashboardController::class, 'wishlist'])->name('user.wishlist');
 
@@ -39,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/recommendations', RecommendedFlights::class)->name('recommendations.index');
 });
+Route::get('/review/{booking}', [DashboardController::class, 'addReview'])->middleware('auth');
+
 
 
 Route::middleware(['auth'])->group(function () {
