@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <!-- end col-lg-3 -->
-                    <div class="col-lg-3 responsive-column-m">
+                    {{-- <div class="col-lg-3 responsive-column-m">
                         <div class="icon-box icon-layout-2 dashboard-icon-box">
                             <div class="d-flex">
                                 <div class="info-icon icon-element bg-2 flex-shrink-0">
@@ -62,7 +62,7 @@
                                 <!-- end info-content -->
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- end col-lg-3 -->
                     <div class="col-lg-3 responsive-column-m">
                         <div class="icon-box icon-layout-2 dashboard-icon-box">
