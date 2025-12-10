@@ -62,17 +62,6 @@ class UserProfile extends Component
     {
         $this->validate();
 
-        // Debug: see what we have
-        // dd([
-        //     'first_name' => $this->first_name,
-        //     'last_name' => $this->last_name,
-        //     'email' => $this->email,
-        //     'phone' => $this->phone,
-        //     'address' => $this->address,
-        //     'new_profile_pic' => $this->new_profile_pic,
-        //     'profile_pic' => $this->profile_pic,
-        // ]);
-
         if ($this->new_profile_pic instanceof TemporaryUploadedFile) {
             $path = $this->new_profile_pic->storePublicly('profile_pics', 'public');
             $this->user->profile_pic = $path;

@@ -178,8 +178,11 @@
             <div class="author-content">
                 <div class="d-flex align-items-center">
                     <div class="author-img avatar-sm">
-                        <img src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('guest/images/avatar.png') }}"
-                            alt="{{ $user->name ?? 'User Avatar' }}" class="rounded-circle" />
+                        <img src="{{ auth()->user()->profile_pic
+            ? asset('storage/' . auth()->user()->profile_pic)
+            : asset('guest/images/avatar.png') }}"
+     alt="{{ auth()->user()->name ?? 'User Avatar' }}"
+     class="rounded-circle" />
                     </div>
                     <div class="author-bio">
                         <h4 class="author__title"> {{ auth()->user()->name }} </h4>
@@ -316,8 +319,10 @@
                                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar avatar-sm flex-shrink-0 me-2">
-                                                        <img src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('guest/images/avatar.png') }}"
-                                                            alt="{{ $user->name ?? 'User Avatar' }}"
+                                                        <img src="{{ auth()->user()->profile_pic
+                                                            ? asset('storage/' . auth()->user()->profile_pic)
+                                                            : asset('guest/images/avatar.png') }}"
+                                                            alt="{{ auth()->user()->name ?? 'User Avatar' }}"
                                                             class="rounded-circle" />
                                                     </div>
                                                     <span class="font-size-14 font-weight-bold">Ali Tufan</span>
