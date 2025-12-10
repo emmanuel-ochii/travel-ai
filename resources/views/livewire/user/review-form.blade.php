@@ -7,7 +7,7 @@
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
-    @if ($this->hasReviewed)
+    @if ($hasReviewed)
         <div class="alert alert-warning">
             You have already reviewed this flight. Thank you!
         </div>

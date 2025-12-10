@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Livewire\User;
 
 use Livewire\Component;
 use App\Models\Booking;
@@ -9,32 +9,31 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewForm extends Component
 {
-    public $booking;          // Booking model instance
+
     public $total_flight_time;
     public $name;
     public $airline;
     public $class_type;
     public $review_text;
+    public $bookingId;
+    public $booking;
     public $hasReviewed = false; // Initialize to false
 
     // Mount receives Booking model
-    public function mount(Booking $booking)
+    public function mount($bookingId)
     {
-        $this->booking = $booking;
+        $this->booking = Booking::findOrFail($bookingId);
 
-        // Only allow confirmed bookings by this user
-        if ($this->booking->user_id !== Auth::id() || $this->booking->status !== 'confirmed') {
+        if ($this->booking->user_id !== auth()->id() || $this->booking->status !== 'confirmed') {
             abort(403);
         }
 
-        // Check if review already exists
-        $this->hasReviewed = Review::where('booking_id', $booking->id)
-            ->where('user_id', Auth::id())
+        $this->hasReviewed = Review::where('booking_id', $this->booking->id)
+            ->where('user_id', auth()->id())
             ->exists();
 
-        // Populate read-only fields
         $this->total_flight_time = $this->booking->flight->duration_minutes . ' mins';
-        $this->name = Auth::user()->name;
+        $this->name = auth()->user()->name;
         $this->airline = $this->booking->flight->airline->name ?? 'Unknown';
         $this->class_type = $this->booking->fare->class_type ?? 'Economy';
     }

@@ -151,7 +151,7 @@
         </div>
         <!-- end container -->
     </section> --}}
-   @livewire('user.review-form', ['booking' => $booking])
+   @livewire('user.review-form', ['bookingId' => $booking->id])
     <!-- end listing-form -->
     <!-- ================================
         END FORM AREA
