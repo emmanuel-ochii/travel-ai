@@ -33,7 +33,8 @@
                         <div class="breadcrumb-list text-end">
                             <ul class="list-items">
                                 <li><a href="{{ route('home') }}" class="text-white">Home</a></li>
-                                <li>User Booking</li>
+                                <li>Dashboard</li>
+                                <li> Booking</li>
                             </ul>
                         </div>
                         <!-- end breadcrumb-list -->

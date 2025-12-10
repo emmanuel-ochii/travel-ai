@@ -26,21 +26,32 @@ Route::get('/flights/{flight}', FlightDetails::class)->name('flights.details');
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/bookings', [DashboardController::class, 'bookings'])->name('user.booking');
+    Route::get('/account', [DashboardController::class, 'account'])->name('user.account');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::get('/reviews', [DashboardController::class, 'reviews'])->name('user.reviews');
+
+    Route::get('/wishlist', [DashboardController::class, 'wishlist'])->name('user.wishlist');
+
     Route::get('/flight/{flight}/book', BookFlight::class)->name('flight.book');
     Route::get('/flights/{booking}/checkout-payment', CheckoutPaymentFlight::class)->name('flights.checkout_payment');
+
+    Route::get('/recommendations', RecommendedFlights::class)->name('recommendations.index');
 });
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/recommendations', [RecommendationController::class, 'index'])->name('recommendations.index');
-    // Route::post('/recommendations/{flight}/feedback', [RecommendationController::class, 'feedback'])->name('recommendations.feedback');
 });
 
 
+// Route::view('profile', 'profile')
+//     ->middleware(['auth'])
+//     ->name('profile');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/recommendations', RecommendedFlights::class)->name('recommendations.index');
-});
+
+
 
 Route::post('/logout', function (Logout $logout) {
     $logout();
@@ -86,21 +97,5 @@ Route::get('/make-admin', function () {
 
 
 
-
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/bookings', [DashboardController::class, 'bookings'])->name('user.booking');
-    Route::get('/account', [DashboardController::class, 'account'])->name('user.account')
-    ;
-});
-
-
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
 
 require __DIR__ . '/auth.php';

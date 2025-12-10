@@ -22,7 +22,7 @@
                         <div class="breadcrumb-list text-end">
                             <ul class="list-items">
                                 <li><a href="{{ route('home') }}" class="text-white">Home</a></li>
-                                <li>User Dashboard</li>
+                                <li> Dashboard</li>
                             </ul>
                         </div>
                         <!-- end breadcrumb-list -->
@@ -101,7 +101,7 @@
             </div>
         </div>
         <!-- end dashboard-bread -->
-        
+
         <div class="dashboard-main-content">
             <div class="container-fluid">
                 <div class="row">

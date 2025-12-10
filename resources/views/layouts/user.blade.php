@@ -201,18 +201,14 @@
                         My Profile
                     </x-sidebar-link>
 
-                    <x-sidebar-link route="profile" icon="la la-star text-color-3">
+                    <x-sidebar-link route="user.reviews" icon="la la-star text-color-3">
                         My Reviews
                     </x-sidebar-link>
 
-                    <x-sidebar-link route="profile" icon="la la-heart text-color-4">
+                    <x-sidebar-link route="user.wishlist" icon="la la-heart text-color-4">
                         Wishlist
                     </x-sidebar-link>
 
-                    <x-sidebar-link route="profile" icon="la la-cog text-color-5">
-                        Settings
-                    </x-sidebar-link>
-                    
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

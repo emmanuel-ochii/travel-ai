@@ -38,18 +38,24 @@ class DashboardController extends Controller
         return view('user.bookings', compact('recentFlights'));
     }
 
-    public function reviews()
-    {
-        return view('user.dashboard');
-    }
-
     public function recommendations()
     {
         return view('user.dashboard');
     }
 
-    public function account()
+    public function profile()
     {
-        return view('user.account');
+        $user = Auth::user();
+        return view('user.profile', compact('user'));
+    }
+
+    public function reviews()
+    {
+        return view('user.reviews');
+    }
+
+    public function wishlist()
+    {
+        return view('user.wishlist');
     }
 }
