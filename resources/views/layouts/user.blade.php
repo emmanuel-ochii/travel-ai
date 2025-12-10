@@ -325,7 +325,7 @@
                                                             alt="{{ auth()->user()->name ?? 'User Avatar' }}"
                                                             class="rounded-circle" />
                                                     </div>
-                                                    <span class="font-size-14 font-weight-bold">Ali Tufan</span>
+                                                    <span class="font-size-14 font-weight-bold">  {{ auth()->user()->name }}  </span>
                                                 </div>
                                             </a>
                                             <div
