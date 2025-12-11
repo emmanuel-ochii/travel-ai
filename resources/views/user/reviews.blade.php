@@ -60,63 +60,6 @@
                             </div>
                             <div class="form-content">
                                 <div class="table-form table-responsive">
-                                    {{-- <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"> Flight Number </th>
-                                                <th scope="col">Route</th>
-                                                <th scope="col"> Order Date </th>
-                                                <th scope="col"> Rating </th>
-                                                <th scope="col"> Comment </th>
-                                                <th scope="col"> Status </th>
-                                                <th scope="col"> Action </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row"></i>Flight DES123-43
-                                                </th>
-
-                                                <td>
-                                                    <div class="table-content">
-                                                        <h3 class="title"> New York -> Dubai </h3>
-                                                    </div>
-                                                </td>
-
-                                                <td>OCT, 12 2025
-                                                </td>
-
-                                                <td>
-                                                    <span class="ratings d-flex align-items-center me-1">
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                        <i class="la la-star"></i>
-                                                    </span>
-                                                </td>
-
-                                                <td>
-                                                    very comfortable flight...
-                                                </td>
-
-
-                                                <td>
-                                                    <span class="badge text-bg-secondary text-white py-1 px-2"> Not Reviewed </span>
-                                                </td>
-
-                                                <td>
-                                                    <div class="table-content">
-                                                        <a href="#" class="theme-btn theme-btn-small me-2"
-                                                            data-bs-toggle="tooltip" data-placement="top" aria-label="View"
-                                                            data-bs-original-title="View"><i class="la la-eye"></i></a>
-                                                        <a href="this_should_link_to_the_review_form" class="theme-btn theme-btn-small"
-                                                            data-bs-toggle="tooltip" data-placement="top" aria-label="Edit"
-                                                            data-bs-original-title="Give Review"><i class="la la-edit"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-
-                                    </table> --}}
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -138,9 +81,11 @@
                                                     <td>
                                                         <div class="table-content">
                                                             <h3 class="title">
-                                                                <h3 class="title"> {{ optional($booking->flight->origin)->name ?? 'Unknown' }} →
-    {{ optional($booking->flight->destination)->name ?? 'Unknown' }} 
-</h3>
+                                                                <h3 class="title">
+                                                                    {{ optional($booking->flight->origin)->name ?? 'Unknown' }}
+                                                                    →
+                                                                    {{ optional($booking->flight->destination)->name ?? 'Unknown' }}
+                                                                </h3>
                                                             </h3>
                                                         </div>
                                                     </td>

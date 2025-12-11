@@ -1,14 +1,28 @@
 <div>
     @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success d-flex flex-column align-items-start gap-2">
+            <div>
+                <i class="la la-check-circle me-1"></i>
+                {{ session('success') }}
+            </div>
+            {{-- 2. Added Back Button --}}
+            {{-- Replace 'user.reviews' with your actual route name for the reviews page --}}
+            <a href="{{ route('user.booking')}}" class="btn btn-sm btn-outline-success mt-2">
+                <i class="la la-arrow-left me-1"></i> Go Back to Reviews
+            </a>
+        </div>
     @endif
 
     @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <div class="alert alert-danger">
+            <i class="la la-times-circle me-1"></i>
+            {{ session('error') }}
+        </div>
     @endif
 
     @if ($hasReviewed)
         <div class="alert alert-warning">
+            <i class="la la-exclamation-circle me-1"></i>
             You have already reviewed this flight. Thank you!
         </div>
     @else
@@ -30,6 +44,7 @@
                             </div>
 
                             <div class="form-content contact-form-action">
+                                {{-- Form Tag Starts Here --}}
                                 <form wire:submit.prevent="submitReview" class="row">
 
                                     <div class="col-lg-6">
@@ -37,17 +52,21 @@
                                             <label class="label-text">Total time of flight</label>
                                             <div class="form-group">
                                                 <span class="la la-clock form-icon"></span>
-                                                <input wire:model="total_flight_time" readonly class="form-control" type="text">
+                                                {{-- Added defer to prevent unnecessary network requests --}}
+                                                <input wire:model.defer="total_flight_time" readonly class="form-control" type="text">
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6">
                                         <div class="input-box">
                                             <label class="label-text"> Give a rating (1-5)</label>
                                             <div class="form-group">
                                                 <span class="la la-star form-icon"></span>
-                                                <input wire:model="rating" class="form-control" type="number" min="1">
+                                                {{-- Added defer to prevent UI jumps while typing --}}
+                                                <input wire:model.defer="rating" class="form-control" type="number" min="1" max="5">
                                             </div>
+                                            @error('rating')<small class="text-danger">{{ $message }}</small>@enderror
                                         </div>
                                     </div>
 
@@ -56,7 +75,7 @@
                                             <label class="label-text">Name</label>
                                             <div class="form-group">
                                                 <span class="la la-user form-icon"></span>
-                                                <input wire:model="name" readonly class="form-control" type="text">
+                                                <input wire:model.defer="name" readonly class="form-control" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +84,7 @@
                                         <div class="input-box">
                                             <label class="label-text mb-0">Airline</label>
                                             <div class="form-group select2-container-wrapper select-contain w-100">
-                                                <input wire:model="airline" readonly class="form-control">
+                                                <input wire:model.defer="airline" readonly class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +93,7 @@
                                         <div class="input-box">
                                             <label class="label-text mb-0">Class Type</label>
                                             <div class="form-group select2-container-wrapper select-contain w-100">
-                                                <input wire:model="class_type" readonly class="form-control">
+                                                <input wire:model.defer="class_type" readonly class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -93,13 +112,21 @@
                                         </div>
                                     </div>
 
-                                </form>
-                            </div>
-                        </div>
+                                    {{-- 1. FIX: Moved submit button INSIDE the form tag --}}
+                                    <div class="col-lg-12">
+                                        <div class="submit-box">
+                                            <div class="btn-box pt-3">
+                                                {{-- Changed to type="submit" and removed wire:click to let form handle it --}}
+                                                <button type="submit" class="theme-btn">
+                                                    <span wire:loading.remove>Submit Review</span>
+                                                    <span wire:loading>Submitting...</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        <div class="submit-box">
-                            <div class="btn-box pt-3">
-                                <button wire:click="submitReview" class="theme-btn">Submit Review</button>
+                                </form>
+                                {{-- Form Tag Ends Here --}}
                             </div>
                         </div>
 

@@ -32,26 +32,12 @@ class LocalRecommender
             return collect(); // strict cold-start: don't show recommendations
         }
 
-        // $flights = Flight::with(['fares', 'airline', 'origin', 'destination'])->get();
+     
         $flights = Flight::with(['fares', 'airline', 'origin', 'destination'])
             ->whereHas('origin', fn($q) => $q->where('iata', $originIata))
             ->whereHas('destination', fn($q) => $q->where('iata', $destinationIata))
             ->get();
-        // $query = Flight::with(['fares', 'airline', 'origin', 'destination']);
 
-        // if (!empty($originIata)) {
-        //     $query->whereHas('origin', function ($q) use ($originIata) {
-        //         $q->where('iata', $originIata);
-        //     });
-        // }
-
-        // if (!empty($destinationIata)) {
-        //     $query->whereHas('destination', function ($q) use ($destinationIata) {
-        //         $q->where('iata', $destinationIata);
-        //     });
-        // }
-
-        // $flights = $query->get();
 
 
 

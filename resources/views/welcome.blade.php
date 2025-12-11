@@ -1755,6 +1755,9 @@
                                                 <i class="la la-star{{ $i <= $review->rating ? '' : '-o' }}"></i>
                                             @endfor
                                         </span>
+                                        <p>
+                                             {{ $review->review_text ?? 'Airline' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
