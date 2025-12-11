@@ -11,16 +11,28 @@ class RecommendedCarousel extends Component
 {
     public $recommendations = [];
     public $loading = true;
-    public $useLlm = true; // toggle LLM enhancements
+    public $useLlm = true;
     public $limit = 8;
+
+    // Add these properties to capture search context
+    public $origin = null;
+    public $destination = null;
+
+    // Map query string parameters to properties
+    protected $queryString = [
+        'origin' => ['except' => '', 'as' => 'from'],
+        'destination' => ['except' => '', 'as' => 'to']
+    ];
 
     public function mount()
     {
+        // Try to grab from request if not set via props
+        $this->origin = $this->origin ?? request()->query('from');
+        $this->destination = $this->destination ?? request()->query('to');
+
         $this->loadLocalRecommendations();
 
         if ($this->useLlm) {
-            // In Livewire 2.x, we cannot dispatch browser events
-            // Just load LLM recommendations in background
             $this->loadLlmRecommendations();
         }
     }
@@ -37,12 +49,21 @@ class RecommendedCarousel extends Component
         }
 
         $service = new TravelRecommendationService($user);
-        $this->recommendations = $service->getRecommendations($this->limit, useLlm: false);
+
+        // Pass the explicit origin/destination
+        $this->recommendations = $service->getRecommendations(
+            $this->limit,
+            false,
+            $this->origin,
+            $this->destination
+        );
+
         $this->loading = false;
     }
 
     /**
-     * Load LLM-enhanced recommendations and update carousel automatically.
+     * Load LLM-enhanced recommendations.
+     * We rely on the Service to handle caching to ensure the key includes the route.
      */
     public function loadLlmRecommendations()
     {
@@ -50,12 +71,15 @@ class RecommendedCarousel extends Component
         if (!$user)
             return;
 
-        $cacheKey = "user_recommendations_{$user->id}_llm";
-
-        $llmRecs = Cache::remember($cacheKey, now()->addDay(), function () use ($user) {
-            $service = new TravelRecommendationService($user);
-            return $service->getRecommendations($this->limit, useLlm: true);
-        });
+        // Call service with useLlm: true
+        // The Service handles the caching key (user + route + type)
+        $service = new TravelRecommendationService($user);
+        $llmRecs = $service->getRecommendations(
+            $this->limit,
+            true,
+            $this->origin,
+            $this->destination
+        );
 
         if ($llmRecs->isNotEmpty()) {
             $this->recommendations = $llmRecs;
@@ -63,7 +87,7 @@ class RecommendedCarousel extends Component
     }
 
     /**
-     * Optional manual refresh (button or JS trigger)
+     * Manual refresh
      */
     public function refreshRecommendations()
     {
@@ -71,7 +95,11 @@ class RecommendedCarousel extends Component
         if (!$user)
             return;
 
-        Cache::forget("user_recommendations_{$user->id}_llm");
+        // Clear the specific cache key in the service
+        // Note: This matches the key structure in the Service
+        $cacheKey = "user_{$user->id}_recs_{$this->origin}_{$this->destination}_llm";
+        Cache::forget($cacheKey);
+
         $this->loadLlmRecommendations();
     }
 

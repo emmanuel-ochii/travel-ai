@@ -20,12 +20,21 @@ class RecommendationController extends Controller
 
         $useLlm = $request->boolean('use_llm', false);
 
+        // Allow passing specific route to test recommendations
+        $origin = $request->input('from');
+        $destination = $request->input('to');
+
         $service = new TravelRecommendationService($user);
-        $recommendedFlights = $service->getRecommendations(5, $useLlm);
+
+        $recommendedFlights = $service->getRecommendations(
+            5,
+            $useLlm,
+            $origin,
+            $destination
+        );
 
         return view('recommendations.index', compact('recommendedFlights'));
     }
-
 
     public function feedback(Request $req, Flight $flight)
     {

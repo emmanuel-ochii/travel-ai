@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="section-heading text-center">
                         <h2 class="sec__title line-height-55">
-                            Most Popular Round-trip <br />
+                            Most Popular  <br />
                             Flight Destinations
                         </h2>
                     </div>

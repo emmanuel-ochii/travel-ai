@@ -20,31 +20,37 @@ class TravelRecommendationService
         $this->localRecommender = new LocalRecommender($user->id ?? null);
     }
 
-    public function getRecommendations(int $limit = 5, bool $useLlm = false): Collection
+    /**
+     * Get recommendations, optionally forcing a specific route context.
+     */
+    public function getRecommendations(int $limit = 5, bool $useLlm = false, ?string $origin = null, ?string $destination = null): Collection
     {
-        // Determine route for personalization
-        $signals = UserPreferenceAnalyzer::getUserSignals();
-        $topRoute = $signals['top_route'] ?? null;
-
-        if ($topRoute) {
-            [$origin, $destination] = explode('-', $topRoute);
-        } else {
-            $origin = $destination = null;
-        }
-
-        // Fallback to last booking
+        // 1. Determine Route Context
+        // If not passed explicitly, try to guess from signals or history
         if (!$origin || !$destination) {
-            $lastBooking = $this->user->bookings()->latest()->first();
-            $origin = $origin ?? $lastBooking?->flight?->origin?->iata;
-            $destination = $destination ?? $lastBooking?->flight?->destination?->iata;
-        }
+            $signals = UserPreferenceAnalyzer::getUserSignals();
+            $topRoute = $signals['top_route'] ?? null;
 
-        // Fallback to popular routes
-        if (!$origin || !$destination) {
-            $popular = PopularRoute::orderBy('search_count', 'desc')->first();
-            if ($popular) {
-                $origin = $origin ?? $popular->origin;
-                $destination = $destination ?? $popular->destination;
+            if ($topRoute) {
+                [$sOrigin, $sDest] = explode('-', $topRoute);
+                $origin = $origin ?? $sOrigin;
+                $destination = $destination ?? $sDest;
+            }
+
+            // Fallback to last booking
+            if (!$origin || !$destination) {
+                $lastBooking = $this->user->bookings()->latest()->first();
+                $origin = $origin ?? $lastBooking?->flight?->origin?->iata;
+                $destination = $destination ?? $lastBooking?->flight?->destination?->iata;
+            }
+
+            // Fallback to popular routes
+            if (!$origin || !$destination) {
+                $popular = PopularRoute::orderBy('search_count', 'desc')->first();
+                if ($popular) {
+                    $origin = $origin ?? $popular->origin;
+                    $destination = $destination ?? $popular->destination;
+                }
             }
         }
 
@@ -54,31 +60,33 @@ class TravelRecommendationService
         }
 
         // -------------------------
-        // Cache Key per user + route + LLM
+        // Cache Key: Must include User + Route + LLM status
         // -------------------------
-        $cacheKey = "user_{$this->user->id}_recommendations_{$origin}_{$destination}_" . ($useLlm ? 'llm' : 'local');
+        $cacheKey = "user_{$this->user->id}_recs_{$origin}_{$destination}_" . ($useLlm ? 'llm' : 'local');
 
-        return Cache::remember($cacheKey, now()->addDay(), function () use ($origin, $destination, $limit, $useLlm, $signals) {
+        return Cache::remember($cacheKey, now()->addDay(), function () use ($origin, $destination, $limit, $useLlm) {
 
             // -------------------------
             // STEP 1 — Local Recommender baseline
             // -------------------------
-            $recommendations = $this->localRecommender
-                ->recommend($origin, $destination, $limit * 2)
-                ->map(fn($item) => [
-                    'flight' => is_array($item) && isset($item['flight']) ? $item['flight'] : $item,
-                    'score' => $item['score'] ?? 0,
-                    'reason' => strval($item['reason'] ?? ''),
-                ]);
+            // We ask for more candidates (limit * 2) to allow filtering
+            $recommendations = $this->localRecommender->recommend($origin, $destination, $limit * 2)->map(fn($item) => [
+                'flight' => is_array($item) && isset($item['flight']) ? $item['flight'] : $item,
+                'score' => $item['score'] ?? 0,
+                'reason' => strval($item['reason'] ?? ''),
+            ]);
 
             // -------------------------
             // STEP 2 — LLM Enhancement (Optional)
             // -------------------------
             if ($useLlm && $recommendations->isNotEmpty() && config('services.groq.key')) {
+                // Fetch fresh signals for context
+                $signals = UserPreferenceAnalyzer::getUserSignals();
 
                 $context = [
                     'persona' => $this->user->persona,
-                    'recent_bookings' => $this->user->bookings()->latest()->take(8)->get()->toArray(),
+                    'current_search' => "$origin to $destination",
+                    'recent_bookings' => $this->user->bookings()->latest()->take(5)->get()->toArray(),
                     'signals' => $signals,
                     'candidates' => $recommendations->map(fn($f) => [
                         'id' => $f['flight']->id ?? null,
@@ -90,6 +98,7 @@ class TravelRecommendationService
                 ];
 
                 $llm = app(GroqLLMService::class);
+
                 try {
                     $llmRecommendations = $llm->getRecommendations($context);
                 } catch (\Exception $e) {
@@ -120,8 +129,9 @@ class TravelRecommendationService
             }
 
             // -------------------------
-            // STEP 3 — Filter by exact route
+            // STEP 3 — STRICT FILTER by exact route
             // -------------------------
+            // Ensure we ONLY return flights matching the requested Origin/Dest
             $recommendations = $recommendations->filter(
                 fn($item) =>
                 $item['flight']->origin->iata === $origin &&
@@ -132,6 +142,7 @@ class TravelRecommendationService
             // STEP 4 — Sort and limit
             // -------------------------
             $sorted = $recommendations->sortByDesc('score');
+
             return $sorted->take($limit)->map(function ($item) {
                 $flight = $item['flight'];
                 $flight->score = $item['score'] ?? 0;
@@ -141,5 +152,4 @@ class TravelRecommendationService
             });
         });
     }
-
 }

@@ -2,16 +2,22 @@
     <section class="hotel-area section-bg section-padding overflow-hidden padding-right-100px padding-left-100px">
         <div class="container-fluid">
             <div class="section-heading text-center">
-                <h2 class="sec__title line-height-55">Recommendations<br>From Your Search</h2>
+                <h2 class="sec__title line-height-55">Recommendations<br>For This Trip</h2>
             </div>
 
             @if ($loading && empty($recommendations))
                 <div class="text-center py-5">
-                    <p>🔄 Loading recommendations…</p>
+                    <p>🔄 Finding best flights for {{ $origin }} to {{ $destination }}...</p>
                 </div>
             @elseif (empty($recommendations))
                 <div class="text-center py-4 text-muted">
-                    <p>😮 No personalized recommendations yet. Keep searching flights to improve suggestions!</p>
+                    <p>
+                        @if($origin && $destination)
+                            No specific recommendations found for <strong>{{ $origin }} → {{ $destination }}</strong>.
+                        @else
+                            No personalized recommendations yet.
+                        @endif
+                    </p>
                 </div>
             @else
                 <div class="hotel-card-wrap padding-top-50px">
@@ -28,9 +34,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h3 class="card-title">
-                                        <a href="{{ route('flights.details', $flight->id) }}">
-                                            {{ $flight->airline->name }}
-                                        </a>
+                                        <a href="{{ route('flights.details', $flight->id) }}">{{ $flight->airline->name }}</a>
                                     </h3>
                                     <p class="card-meta">{{ $flight->origin->city }} → {{ $flight->destination->city }}</p>
                                     <div class="card-rating">
@@ -47,9 +51,7 @@
                                                 {{ number_format($lowestFare / 100, 2) }}
                                             </span>
                                         </p>
-                                        <a href="{{ route('flights.details', $flight->id) }}" class="btn-text">
-                                            See details <i class="la la-angle-right"></i>
-                                        </a>
+                                        <a href="{{ route('flights.details', $flight->id) }}" class="btn-text">See details <i class="la la-angle-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -60,18 +62,18 @@
         </div>
     </section>
 
-    {{-- Optional: Auto-refresh carousel every 30s if loading --}}
     @if($useLlm)
         <script>
             document.addEventListener('livewire:load', function () {
                 Livewire.hook('message.processed', (message, component) => {
-                    // Optional: Re-init carousel plugin after update
-                    if(typeof initCarousel === 'function') initCarousel();
+                   // Re-init carousel plugin after update if needed
+                   if(typeof initCarousel === 'function') initCarousel();
                 });
 
+                // Refresh every 30s
                 setInterval(() => {
                     @this.refreshRecommendations();
-                }, 30000); // refresh every 30s
+                }, 30000);
             });
         </script>
     @endif
