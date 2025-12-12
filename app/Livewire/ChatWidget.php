@@ -4,24 +4,29 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
+use App\Models\Flight;
 
 class ChatWidget extends Component
 {
     public $open = false;
     public $messages = [];
     public $input = '';
-    public $isTyping = false; // server-side typing flag
+    public $isTyping = false;
 
     protected $listeners = ['processAi' => 'handleAi'];
 
     public function mount()
     {
-        // Seed an initial assistant greeting
+        // Initial assistant greeting + usage guide
         $this->messages = [
             [
                 'id' => uniqid('m_'),
                 'role' => 'assistant',
-                'text' => 'Hi! I\'m TravelAI — ask me for destination ideas, seasonal tips, budgets or itineraries.',
+                'text' => "Hi! I'm TravelAI — I can help you find flights, destinations, or travel tips.\n\n"
+                    . "To get the best results, please type your requests like this:\n"
+                    . "- Flights: 'Show me flights from [Origin City/Airport] to [Destination City/Airport] on [Date]'\n"
+                    . "- Destinations: 'Suggest popular destinations in [Country/City] for [Month/Season]'\n"
+                    . "- Itineraries/Budget: 'What is a good 3-day itinerary in [City] for [Budget]?'",
                 'time' => now()->toDateTimeString(),
             ],
         ];
@@ -44,16 +49,15 @@ class ChatWidget extends Component
             return;
 
         // Append user message
-        $userMessage = [
+        $this->messages[] = [
             'id' => uniqid('m_'),
             'role' => 'user',
             'text' => $text,
             'time' => now()->toDateTimeString(),
         ];
-        $this->messages[] = $userMessage;
         $this->input = '';
 
-        // Append a typing placeholder for assistant
+        // Append typing placeholder
         $typingId = uniqid('t_');
         $this->messages[] = [
             'id' => $typingId,
@@ -65,17 +69,19 @@ class ChatWidget extends Component
 
         $this->isTyping = true;
 
-        // Livewire 3: Dispatch to the component class itself to trigger 'handleAi'
         $this->handleAi($text, $typingId);
-
-        // Scroll chat
         $this->dispatch('scroll-chat-bottom');
     }
 
     public function handleAi($userText, $typingId = null)
     {
-        // Attempt AI call or return fallback
-        $reply = $this->getAiReply($userText);
+        // Check if the prompt looks like a flight search
+        if (stripos($userText, 'flight') !== false && !preg_match('/from .* to .* on .*/i', $userText)) {
+            $reply = "It seems you want to search for flights. "
+                . "Please type your request like this: 'Show me flights from [Origin City/Airport] to [Destination City/Airport] on [Date]'.";
+        } else {
+            $reply = $this->getAiReply($userText);
+        }
 
         // Replace typing placeholder with actual reply
         foreach ($this->messages as $index => $m) {
@@ -91,14 +97,12 @@ class ChatWidget extends Component
         }
 
         $this->isTyping = false;
-
-        // Scroll after a short delay on client
         $this->dispatch('scroll-chat-bottom');
     }
+
     protected function getAiReply($prompt)
     {
         $config = config('services.groq');
-
         $apiKey = $config['key'] ?? null;
         $apiUrl = $config['endpoint'] ?? 'https://api.groq.com/openai/v1';
         $model = $config['model'] ?? 'llama-3.3-70b-versatile';
@@ -107,10 +111,32 @@ class ChatWidget extends Component
             return $this->fallbackReply($prompt, 'No valid API key loaded');
         }
 
+        // --- Fetch flights from your DB ---
+        $flights = Flight::with(['airline', 'origin', 'destination'])
+            ->take(10)
+            ->get();
+
+        $flightsText = "Available flights in our app:\n";
+        foreach ($flights as $f) {
+            $flightsText .= sprintf(
+                "- %s %s: %s -> %s departing %s, arriving %s, stops: %d, price: %s %s\n",
+                $f->airline->name ?? 'Unknown Airline',
+                $f->flight_number,
+                $f->origin->code ?? 'N/A',
+                $f->destination->code ?? 'N/A',
+                $f->depart_at->format('Y-m-d H:i'),
+                $f->arrive_at->format('Y-m-d H:i'),
+                $f->stops,
+                $f->currency,
+                number_format($f->base_price_cents / 100, 2)
+            );
+        }
+
         $messagesPayload = [
             [
                 'role' => 'system',
-                'content' => 'You are TravelAI, a helpful travel recommendations assistant. Provide concise, friendly and actionable travel suggestions. When possible, include 2-4 options with a one-line reason each.'
+                'content' => 'You are TravelAI, a helpful travel recommendations assistant. Only recommend flights from the list below: ' . $flightsText
+                    . ' If the user input is unclear, politely guide them on how to phrase their request.'
             ],
             [
                 'role' => 'user',
@@ -139,7 +165,6 @@ class ChatWidget extends Component
 
             logger()->error('Groq API request failed', ['status' => $resp->status(), 'body' => $resp->body()]);
             return $this->fallbackReply($prompt, 'API Error (' . $resp->status() . ')');
-
         } catch (\Exception $e) {
             logger()->error('Groq API exception: ' . $e->getMessage());
             return $this->fallbackReply($prompt, 'Exception: ' . $e->getMessage());
@@ -149,13 +174,13 @@ class ChatWidget extends Component
     protected function fallbackReply($prompt, $errorDetail = null)
     {
         $errorMsg = $errorDetail ? " (Error: {$errorDetail})" : '';
-        return "I don't have access to the AI engine right now{$errorMsg} — but here are 3 quick suggestions based on your request:
+        return "I don't have access to the AI engine right now{$errorMsg} — here are 3 quick suggestions based on your request:
 
-1) Try a nearby beach getaway (great for relaxation).
-2) Check a capital city for culture + nightlife.
-3) Consider a nature/resort stay if you want outdoors.
+        1) Try a nearby beach getaway (great for relaxation).
+        2) Check a capital city for culture + nightlife.
+        3) Consider a nature/resort stay if you want outdoors.
 
-If you'd like, connect this chat to the Groq LLM by ensuring GROQ_API_KEY is correct, GROQ_MODEL is a valid model name, and the Groq service is active.";
+        If you'd like, connect this chat to the Groq LLM by ensuring GROQ_API_KEY is correct, GROQ_MODEL is valid, and the Groq service is active.";
     }
 
     public function render()
