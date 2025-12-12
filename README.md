@@ -1,59 +1,196 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Travel AI – Smart Travel Recommendation & Flight Search Assistant
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🚀 Overview
 
-## About Laravel
+Travel AI is an intelligent travel assistant built with **Laravel**, **Livewire**, and **Groq AI**, designed to make travel planning seamless. Users can search for flights, explore destinations, and chat with an AI-powered assistant that provides real-time recommendations.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+### 🏠 Home Page
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+![Home Page](public/guest/images/appImage.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### ✈️ Flight Search
 
-## Laravel Sponsors
+![Flight Search](screenshots/flight-search.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 💬 AI Chat Widget
 
-### Premium Partners
+![AI Widget](screenshots/ai-widget.png)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🧾 Checkout Page
 
-## Contributing
+![Checkout](screenshots/checkout.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🛠️ Admin Panel (Filament)
 
-## Code of Conduct
+![Admin Panel](screenshots/admin-panel.png)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ✨ Features
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 🔍 Flight Search Engine
 
-## License
+* One-way, round-trip, and multi-city
+* Filters: Airlines, stops, prices
+* Real-time sorting and dynamic updates
+* Detailed checkout & traveler form
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 🤖 AI Travel Assistant (Groq-powered)
+
+Helps users with:
+
+* Destination recommendations
+* Budget travel tips
+* Airline comparisons
+* Visa requirements
+* Packing guides
+* Weather and best travel dates
+
+### 💬 Smart Floating Chat Widget
+
+* Custom TravelAI persona
+* Typing animation
+* Real-time Groq chat completions
+* Mobile-friendly design
+
+### 🧾 Booking Flow
+
+* Traveler details
+* Price breakdown
+* Smooth checkout UI
+
+### 🛠️ Admin Dashboard (FilamentPHP)
+
+* User management
+* Flight search analytics
+* Widget dashboards
+
+---
+
+## 🧠 AI Prompt Guide for Users
+
+Help users ask better:
+
+#### ✈️ Flight Search
+
+```
+Find flights from Lagos to Dubai on Feb 10 for 2 adults.
+Show me cheap flights from Abuja to Accra next week.
+Compare Qatar Airways vs Ethiopian Airlines.
+```
+
+#### 🌍 Destination Ideas
+
+```
+Suggest 3 holiday destinations under $500.
+Where can I travel visa-free from Nigeria in March?
+```
+
+#### 🧳 Trip Planning
+
+```
+Plan a 5-day trip to Kigali with activities.
+Give me a packing list for winter travel.
+```
+
+---
+
+## 🏗️ Tech Stack
+
+* Laravel 11
+* Livewire v3
+* TailwindCSS
+* Groq LLaMA 3.3 70B
+* FilamentPHP Admin
+* MySQL
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/yourusername/travel-ai.git
+cd travel-ai
+composer install
+npm install && npm run build
+cp .env.example .env
+php artisan key:generate
+```
+
+### Add environment keys
+
+```
+GROQ_API_KEY=your_key
+GROQ_API_URL=https://api.groq.com/openai/v1
+GROQ_MODEL=llama-3.3-70b-versatile
+```
+
+### Run migrations
+
+```bash
+php artisan migrate
+```
+
+### Start server
+
+```bash
+php artisan serve
+```
+
+---
+
+## 📌 Project Structure
+
+```
+app/
+  Livewire/
+    Flight/
+    ChatWidget.php
+  Services/
+    AiService.php
+resources/views/livewire/
+routes/web.php
+config/services.php
+```
+
+---
+
+## 🚧 Current Status
+
+Core modules are working:
+
+* AI Chat
+* Flight search UI
+* Checkout flow
+* Admin dashboard
+
+Development paused temporarily for documentation & cleanup.
+
+---
+
+## 🗺️ Roadmap
+
+* Payment gateway integration
+* Auto-booking API
+* Saved trips + wishlists
+* More AI-powered features
+
+---
+
+## 👨‍💻 Developer
+
+Built by **Emmanuel** using modern Laravel + AI-driven design.
+
+---
+
+## 📄 License
+
+MIT (or update to your chosen license).
+
+---
+
+> After uploading your screenshots, update the image paths above.
