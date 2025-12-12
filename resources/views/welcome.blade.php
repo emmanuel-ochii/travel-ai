@@ -1206,7 +1206,7 @@
                          ================================= -->
 
     <livewire:homepage.popular-routes />
-
+{{-- @livewire('chat-widget') --}}
 
     <!-- end round-trip-flight -->
     <!-- ================================

@@ -28,10 +28,40 @@
     <link rel="stylesheet" href="{{ asset('guest/css/flag-icon.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('guest/css/style.css') }}" />
 
+    <!-- Floating AI Chat Button -->
+    {{-- <style>
+        .chat-float-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #4f46e5;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 9999;
+        }
 
-    @livewireStyles
+
+        .chat-float-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .chat-float-btn i {
+            font-size: 28px;
+        }
+    </style> --}}
 
     @stack('styles')
+    @livewireStyles
 
     <!-- Scripts -->
     {{-- @vite(['resources/js/app.js']) --}}
@@ -120,7 +150,8 @@
                                             Dashboard
                                         </a>
                                     @else
-                                        <a href="{{ route('register') }}" class="theme-btn theme-btn-small theme-btn-transparent me-1">Sign Up</a>
+                                        <a href="{{ route('register') }}"
+                                            class="theme-btn theme-btn-small theme-btn-transparent me-1">Sign Up</a>
                                         <a href="{{ route('login') }}" class="theme-btn">Login</a>
                                     @endauth
                                 </div>
@@ -516,8 +547,19 @@
         </div>
     </div>
     <!-- end modal-popup -->
+    <div class="chat-float-btn" onclick="toggleChatWidget()">
+        <i class="fa fa-comments"></i>
+    </div>
+    <!-- Placeholder function -->
 
-    @livewireScripts
+    {{-- <script>
+        function toggleChatWidget() {
+alert('Chat widget will open here');
+}
+    </script> --}}
+    @livewire('chat-widget')
+
+
 
     <!-- Template JS Files -->
     <script src="{{ asset('guest/js/jquery-3.7.1.min.js') }}"></script>
@@ -536,6 +578,7 @@
     <script src="{{ asset('guest/js/main.js') }}"></script>
 
     @stack('scripts')
+    @livewireScripts
 </body>
 
 
